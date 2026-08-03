@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="高职教师 AI 通识认知与情境决策测评">
+  <title>高职教师 AI 通识认知测评</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c5cfc'/%3E%3Cpath d='M17 18h30v7H17zm0 12h22v7H17zm0 12h14v7H17z' fill='white'/%3E%3C/svg%3E">
+  <style>
+    :root{
+      color-scheme:light;--ink:#172033;--muted:#64748b;--line:#e5eaf2;--soft:#f7f9fc;
+      --blue:#2f6bff;--blue-soft:#eef4ff;--teal:#0f9f8f;--teal-soft:#e9fbf7;
+      --purple:#7c5cfc;--purple-soft:#f1edff;--coral:#f26f5b;--coral-soft:#fff0ed;
+      --amber:#e99a17;--amber-soft:#fff7e6;--shadow:0 12px 34px rgba(31,48,78,.08);
+      font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;background:#fff;color:var(--ink)}body.exam-screen{overflow:hidden}
+    button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}
+    :focus-visible{outline:3px solid rgba(47,107,255,.28);outline-offset:2px}
+    .topbar{position:sticky;top:0;z-index:20;height:68px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.96);backdrop-filter:blur(12px)}
+    .topbar-inner{width:min(1320px,calc(100% - 40px));height:100%;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:11px}.brand-mark{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--purple);color:#fff;font-weight:800}
+    .brand strong{display:block;font-size:16px}.brand small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+    .top-meta{display:flex;align-items:center;gap:18px;color:var(--muted);font-size:13px}.top-meta b{color:var(--ink)}.top-reset{min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--muted);font-size:12px;font-weight:700}.top-reset:hover{color:var(--coral);border-color:#ffc8be;background:var(--coral-soft)}
+    .page{width:min(1320px,calc(100% - 40px));margin:0 auto;padding:32px 0 56px}
+    h1,h2,h3,p{margin-top:0}h1{font-size:30px;line-height:1.25;letter-spacing:-.02em;margin-bottom:10px}h2{font-size:21px}h3{font-size:16px}
+    p{color:var(--muted);line-height:1.75}.eyebrow{display:inline-flex;color:var(--purple);font-size:12px;font-weight:800;letter-spacing:.08em;margin-bottom:12px}
+    .card{background:#fff;border:1px solid var(--line);border-radius:16px}.primary,.secondary,.ghost,.danger{min-height:42px;padding:0 18px;border-radius:10px;border:1px solid transparent;font-weight:700}
+    .primary{background:var(--blue);color:#fff}.primary:hover{background:#2459da}.secondary{background:#fff;color:var(--ink);border-color:var(--line)}
+    .ghost{background:var(--soft);color:var(--muted)}.danger{background:var(--coral-soft);color:#bb4d3c;border-color:#ffd6ce}
+    .register-page{min-height:100vh;display:grid;place-items:center;padding:40px 20px;background:linear-gradient(145deg,#f7f9ff 0%,#fff 42%,#f3fbf9 100%)}
+    .register-wrap{width:min(880px,100%)}.register-brand{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:22px}.register-brand .brand-mark{width:44px;height:44px;border-radius:14px;background:var(--blue)}.register-brand strong{display:block;font-size:18px}.register-brand small{display:block;margin-top:2px;color:var(--muted);font-size:12px;letter-spacing:.04em}
+    .register-card{padding:32px 36px;box-shadow:var(--shadow)}.register-head{text-align:center;padding-bottom:24px;margin-bottom:26px;border-bottom:1px solid var(--line)}.register-head h1{margin-bottom:6px}.register-head p{margin:0;font-size:13px}
+    .register-section+.register-section{margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}.register-section h2{margin-bottom:16px;font-size:16px}.register-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}.register-grid .span-2{grid-column:1/-1}.optional{margin-left:4px;color:var(--muted);font-size:11px;font-weight:400}
+    .password-hint{color:var(--muted);font-size:11px;line-height:1.5}.agreement{display:flex;align-items:flex-start;gap:9px;margin-top:22px;color:var(--muted);font-size:12px;line-height:1.6}.agreement input{width:16px;height:16px;margin:2px 0 0;flex:none}.register-actions{display:flex;justify-content:flex-end;margin-top:24px}.register-actions .primary{min-width:150px}
+    .welcome-head{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:stretch;margin-bottom:24px}
+    .welcome-copy{padding:28px;background:linear-gradient(135deg,#fff 15%,#f5f7ff 100%)}.welcome-copy p{max-width:720px;margin-bottom:0}
+    .summary-strip{padding:24px;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;background:var(--purple-soft);border-color:#ddd6ff}
+    .summary-strip div{padding:14px;background:rgba(255,255,255,.82);border-radius:12px}.summary-strip span{display:block;color:var(--muted);font-size:12px}.summary-strip strong{display:block;font-size:23px;margin-top:3px}
+    .profile-card{padding:26px}.section-title{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:22px}.section-title p{margin:4px 0 0;font-size:13px}
+    .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.field{display:grid;gap:8px;align-content:start}.field label,.field legend{font-weight:700;font-size:13px}.field input,.field select,.field textarea{width:100%;min-height:44px;border:1px solid #d9e1ec;border-radius:10px;padding:10px 12px;color:var(--ink);background:#fff}
+    .field-wide{grid-column:1/-1}.check-grid{display:flex;flex-wrap:wrap;gap:9px}.check-pill{position:relative}.check-pill input{position:absolute;opacity:0;pointer-events:none}.check-pill span{display:flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:13px}.check-pill input:checked+span{color:#2459da;background:var(--blue-soft);border-color:#bcd0ff;font-weight:700}
+    .profile-footer{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.profile-footer p{font-size:12px;margin:0}
+    .privacy-note{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;margin-top:18px;border-radius:12px;background:var(--teal-soft);color:#39736d;font-size:12px;line-height:1.6}
+    .archive-status{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:999px;background:var(--teal-soft);color:#147f72;font-size:12px;font-weight:800}
+    .exam-page{height:calc(100dvh - 68px);padding:16px 0;overflow:hidden}.exam-layout{display:grid;grid-template-columns:210px minmax(0,1fr) 250px;gap:20px;align-items:stretch;height:100%;min-height:0}.side{position:static;height:100%;padding:16px;overflow:hidden}.side h2{font-size:14px;margin:0 0 12px}
+    .stage-list{display:grid;gap:7px}.stage-button{width:100%;text-align:left;padding:11px;border:0;border-radius:10px;background:#fff;color:var(--muted)}.stage-button.active{background:var(--purple-soft);color:#5c45d6;font-weight:800}.stage-button.complete{color:var(--teal)}
+    .stage-button small{display:block;font-size:11px;margin-top:3px;color:inherit;opacity:.8}.exam-main{display:flex;flex-direction:column;min-width:0;min-height:0;height:100%}.exam-status{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;flex:none;padding:13px 18px;margin-bottom:12px}
+    .progress-copy{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:9px}.progress{height:8px;border-radius:999px;background:#edf1f7;overflow:hidden}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--blue));border-radius:inherit}
+    .save-state{color:var(--teal);font-size:12px;font-weight:700}.question-card{flex:1;min-height:0;padding:22px;overflow:auto;overscroll-behavior:contain}.question-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.chip{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:999px;background:var(--purple-soft);color:#6048da;font-size:12px;font-weight:700}.chip.gray{background:var(--soft);color:var(--muted)}.chip.amber{background:var(--amber-soft);color:#a66e0d}
+    .question-title{font-size:20px;line-height:1.55;margin-bottom:16px}
+    .options{display:grid;gap:9px}.option{position:relative;display:grid;grid-template-columns:28px 1fr;align-items:center;gap:12px;padding:12px 15px;border:1px solid var(--line);border-radius:12px;cursor:pointer}.option:hover{border-color:#b9c9e4;background:#fbfcff}.option.selected{border-color:#9fbaff;background:var(--blue-soft)}.option input{position:absolute;opacity:0}.option-key{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#f0f3f8;color:var(--muted);font-size:12px;font-weight:800}.option.selected .option-key{background:var(--blue);color:#fff}
+    .question-actions{display:flex;justify-content:space-between;gap:12px;flex:none;margin-top:12px}.action-group{display:flex;gap:10px}.mark.active{background:var(--amber-soft);color:#9d680b;border-color:#f2cb80}
+    .palette-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:13px}.palette-summary div{text-align:center;padding:9px 4px;background:var(--soft);border-radius:9px}.palette-summary b{display:block;font-size:15px}.palette-summary span{font-size:10px;color:var(--muted)}
+    .palette{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.qdot{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--muted);font-size:12px}.qdot.answered{background:var(--teal-soft);border-color:#a5ded5;color:#147f72;font-weight:800}.qdot.current{box-shadow:0 0 0 2px var(--purple);color:#5e45d8}.qdot.marked::after{content:"";position:absolute;right:4px;top:4px;width:6px;height:6px;border-radius:50%;background:var(--amber)}
+    .submit-box{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.submit-box button{width:100%}.mobile-tools{display:none}
+    .modal-backdrop{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px;background:rgba(23,32,51,.48)}.modal{width:min(560px,100%);max-height:88vh;overflow:auto;padding:24px;background:#fff;border-radius:18px;box-shadow:0 24px 70px rgba(0,0,0,.2)}.modal h2{margin-bottom:8px}.review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}.review-grid div{padding:13px;border-radius:10px;background:var(--soft)}.review-grid span{display:block;color:var(--muted);font-size:11px}.review-grid b{font-size:20px}.warning-list{max-height:180px;overflow:auto;padding:10px 14px;background:var(--amber-soft);border-radius:10px;color:#775d2d;font-size:12px;line-height:1.8}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+    .report-head{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:26px;margin-bottom:20px;background:linear-gradient(135deg,#fff,#f5f2ff)}.score-ring{display:grid;place-items:center;width:136px;height:136px;border-radius:50%;background:conic-gradient(var(--purple) calc(var(--score)*1%),#e9edf4 0);position:relative}.score-ring::after{content:"";position:absolute;inset:10px;border-radius:50%;background:#fff}.score-ring div{position:relative;z-index:1;text-align:center}.score-ring strong{display:block;font-size:36px}.score-ring span{color:var(--muted);font-size:12px}
+    .report-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.report-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}.report-section{padding:22px;margin-bottom:20px}.report-section h2{font-size:18px}.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:10px}.metric{padding:14px;border-radius:11px;background:var(--soft)}.metric span{display:block;color:var(--muted);font-size:11px}.metric strong{font-size:21px}.dimension-list{display:grid;gap:14px}.dimension-row{display:grid;grid-template-columns:140px 1fr 42px;gap:12px;align-items:center;font-size:13px}.dimension-track{height:9px;border-radius:999px;background:#edf1f6;overflow:hidden}.dimension-track span{display:block;height:100%;border-radius:inherit;background:var(--teal)}
+    .insight-list{display:grid;gap:10px}.insight{padding:13px 14px;border-left:3px solid var(--blue);border-radius:0 10px 10px 0;background:var(--blue-soft);font-size:13px;line-height:1.65}.insight.gap{border-color:var(--coral);background:var(--coral-soft)}.insight.next{border-color:var(--teal);background:var(--teal-soft)}
+    .safety-alert{padding:15px;border-radius:12px;background:var(--coral-soft);border:1px solid #ffd4cc;color:#8a4337}.review-item{padding:14px 0;border-bottom:1px solid var(--line)}.review-item:last-child{border:0}.review-item summary{cursor:pointer;font-weight:700;font-size:13px}.review-item p{font-size:12px;margin:9px 0 0}.report-actions{display:flex;gap:10px;justify-content:flex-end}
+    .archive-profile{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.archive-profile div{padding:13px;border-radius:10px;background:var(--soft);min-width:0}.archive-profile span{display:block;color:var(--muted);font-size:11px}.archive-profile strong{display:block;margin-top:5px;font-size:13px;overflow-wrap:anywhere}.archive-list{display:grid;gap:12px}.archive-question{padding:16px;border:1px solid var(--line);border-radius:12px}.archive-question-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.archive-question h3{font-size:14px;line-height:1.6;margin:0}.archive-score{flex:none;color:var(--purple);font-size:13px;font-weight:800}.archive-meta{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.archive-answer{padding:12px;border-radius:10px;background:var(--soft);font-size:12px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}.archive-answer+.archive-answer{margin-top:8px}.archive-answer b{color:var(--ink)}
+    .toast{position:fixed;left:50%;bottom:26px;z-index:80;transform:translateX(-50%);padding:11px 16px;border-radius:10px;background:#172033;color:#fff;font-size:13px;box-shadow:var(--shadow)}
+    @media(max-width:1050px){.exam-layout{grid-template-columns:180px minmax(0,1fr)}.palette-side{display:none}.mobile-tools{display:flex;gap:8px}.welcome-head{grid-template-columns:1fr}.report-grid{grid-template-columns:1fr}}
+    @media(max-width:760px){
+      .topbar{height:60px}.topbar-inner,.page{width:min(100% - 28px,1320px)}.topbar-inner{gap:8px}.brand{gap:8px}.brand strong{font-size:14px;white-space:nowrap}.brand small,.top-meta .desktop-only{display:none}.top-meta{gap:6px}.top-reset{padding:0 9px;white-space:nowrap;flex:none}.page{padding:20px 0 92px}
+      h1{font-size:24px}.welcome-copy,.profile-card,.question-card,.report-head,.report-section{padding:18px}.summary-strip{padding:14px}.form-grid{grid-template-columns:1fr}.profile-footer{align-items:stretch;flex-direction:column}.profile-footer .primary{width:100%}
+      .register-page{display:block;padding:22px 14px}.register-brand{justify-content:flex-start;margin:0 auto 18px;max-width:620px}.register-card{max-width:620px;margin:auto;padding:22px 18px}.register-head{text-align:left;padding-bottom:18px;margin-bottom:22px}.register-grid{grid-template-columns:1fr;gap:15px}.register-grid .span-2{grid-column:auto}.register-actions .primary{width:100%;min-height:46px}
+      .exam-page{height:calc(100dvh - 60px);padding:10px 0 calc(72px + env(safe-area-inset-bottom));overflow:hidden}.exam-layout{display:block;height:100%}.stage-side{display:none}.exam-main{height:100%}.exam-status{padding:10px 12px;margin-bottom:8px}.question-card{min-height:0;padding:16px}.question-meta{margin-bottom:10px}.question-title{font-size:17px;line-height:1.5;margin-bottom:12px}.options{gap:7px}.option{padding:10px 12px}
+      .question-actions{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line)}.question-actions .mark{display:none}.question-actions button{min-height:44px}.action-group{flex:1}.action-group button{flex:1}.mobile-tools{display:flex}.mobile-tools button{padding:0 12px}
+      .report-head{grid-template-columns:1fr}.score-ring{width:120px;height:120px}.metric-grid{grid-template-columns:1fr 1fr}.dimension-row{grid-template-columns:110px 1fr 38px}.report-actions{flex-direction:column}.report-actions button{width:100%}.review-grid{grid-template-columns:1fr 1fr}.archive-profile{grid-template-columns:1fr 1fr}.archive-question-head{display:block}.archive-score{display:block;margin-top:8px}
+    }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="toast-root" aria-live="polite"></div>
+  <script type="application/json" id="question-bank">{"payloadVersion":"1.0","sourceBankSchemaVersion":"2.3","sourceBankQuestionCount":340,"sourceSha256":"7614BB2BBA3E014C48F32CE864294DBCFC754AD86337FB7BE0022620D3FB9703","questionIds":["C02","C13","C44","C47","C51","C142","C05","C06","C03","D24","C163","C154","C34","C106","C37","C109","C107","C104","C121","C127","C09","E35","C67","C117","C39","E38","C40","C140","K16","C120"],"questions":[{"id":"C02","scope":"common","branch":null,"type":"单选","dimension":"AI 基础认知","tags":["大模型基础"],"difficulty":"L1","stem":"大模型中的“词元（Token）”通常指什么？","options":["模型一次对话可保存的全部上下文","用于验证接口访问权限的密钥单位","衡量模型训练轮次的计数单位","模型处理文字时使用的小单位"],"answer":["模型处理文字时使用的小单位"],"explanation":"词元是模型处理文字时使用的小单位，可以是一个字、一个词或词的一部分。","score":1,"estimatedMinutes":0.5,"primaryTag":"大模型基础"},{"id":"C13","scope":"common","branch":null,"type":"多选","dimension":"AI 基础认知","tags":["数据隐私","安全"],"difficulty":"L1","stem":"使用公共 AI 工具时，哪些做法有助于保护学生隐私？","options":["删除姓名和学号","只提供完成任务所需信息","把原始数据拆分后分别上传同一公共工具","使用学校批准的工具"],"answer":["删除姓名和学号","只提供完成任务所需信息","使用学校批准的工具"],"explanation":"应最小化数据、去标识化并使用获批工具，不能上传完整敏感记录。","score":2,"estimatedMinutes":1,"primaryTag":"数据隐私"},{"id":"C44","scope":"common","branch":null,"type":"情境判断","dimension":"AI 基础认知","tags":["机器学习基础","事实核验"],"difficulty":"L3","stem":"教师指导学生比较决策树、支持向量机、聚类和随机森林。为了避免只凭算法名称下结论，最合理的做法是什么？","options":["先区分任务是否有标签，再在相同数据划分和指标下比较适用模型，并同时考虑可解释性与计算成本","优先选择名称更先进或结构更复杂的算法，再用训练集准确率证明选择正确","把聚类结果当作分类标准答案，以便四种算法都能使用同一监督学习流程","分别为每种算法选择最有利的数据和指标，只比较各自得到的最高分"],"answer":["先区分任务是否有标签，再在相同数据划分和指标下比较适用模型，并同时考虑可解释性与计算成本"],"explanation":"算法选择应从任务范式、数据条件、统一评价和实际约束出发；聚类属于无监督学习，不能直接当作已有标签的分类任务处理。","score":2,"estimatedMinutes":1.5,"primaryTag":"机器学习基础"},{"id":"C47","scope":"common","branch":null,"type":"多选","dimension":"AI 基础认知","tags":["深度学习与神经网络","事实核验"],"difficulty":"L2","stem":"关于“预训练＋微调”的模型开发方式，哪些表述正确？","options":["微调必然更新模型全部参数，并且必须使用与预训练同等规模的数据","预训练通常先从大规模数据中学习较通用的表示或规律","微调可使用特定任务数据，让模型更适应目标任务","微调后仍应使用未参与训练和调参的数据进行评价"],"answer":["预训练通常先从大规模数据中学习较通用的表示或规律","微调可使用特定任务数据，让模型更适应目标任务","微调后仍应使用未参与训练和调参的数据进行评价"],"explanation":"预训练学习通用能力，微调用任务数据进行适配；微调可以只更新部分参数，也必须保留相对独立的评价数据。","score":2,"estimatedMinutes":1,"primaryTag":"深度学习与神经网络"},{"id":"C51","scope":"common","branch":null,"type":"多选","dimension":"AI 基础认知","tags":["AI历史与发展"],"difficulty":"L2","stem":"关于人工智能发展脉络，哪些表述较为准确？","options":["早期符号人工智能重视用规则和知识表示完成推理","人工智能自提出以来一直稳定增长，从未经历预期下降或发展低谷","专家系统是以知识库和规则推理解决特定领域问题的代表路线","近年深度学习进展与数据、算法和计算能力的发展密切相关"],"answer":["早期符号人工智能重视用规则和知识表示完成推理","专家系统是以知识库和规则推理解决特定领域问题的代表路线","近年深度学习进展与数据、算法和计算能力的发展密切相关"],"explanation":"人工智能经历过多次高潮与低谷；符号推理、专家系统和数据驱动的深度学习代表了不同阶段的重要技术路线。","score":2,"estimatedMinutes":1,"primaryTag":"AI历史与发展"},{"id":"C142","scope":"common","branch":null,"type":"判断","dimension":"AI 基础认知","tags":["人本与可持续AI","社会影响","教师责任"],"difficulty":"L1","stem":"只要 AI 系统减少了平均备课时间，就可以认定它改善了所有教师的工作福祉。","options":["正确","错误"],"answer":["错误"],"explanation":"平均时间下降不能代表所有教师受益，还需考察学习成本、额外审核工作、压力和不同群体的影响。","score":1,"estimatedMinutes":0.5,"primaryTag":"人本与可持续AI"},{"id":"C05","scope":"common","branch":null,"type":"单选","dimension":"提示词与多模态","tags":["提示词结构"],"difficulty":"L1","stem":"“提示词”通常指什么？","options":["告诉 AI 要做什么以及有什么要求的指令","用于限定模型可读取资料范围的知识库目录","用于判断模型输出正确率的评分量规","用于保存多轮对话历史的系统日志"],"answer":["告诉 AI 要做什么以及有什么要求的指令"],"explanation":"提示词是用户向 AI 说明任务、对象和具体要求的指令。","score":1,"estimatedMinutes":0.5,"primaryTag":"提示词结构"},{"id":"C06","scope":"common","branch":null,"type":"单选","dimension":"提示词与多模态","tags":["提示词迭代"],"difficulty":"L1","stem":"AI 第一次生成的内容不合适，教师可以怎么做？","options":["保留原提示词，只要求系统提高随机性","更换模型后沿用原要求并直接采纳结果","删除约束条件以扩大模型自由发挥空间","补充要求并让 AI 修改"],"answer":["补充要求并让 AI 修改"],"explanation":"补充清楚的要求并继续修改，可以让生成结果更符合需要。","score":1,"estimatedMinutes":0.5,"primaryTag":"提示词迭代"},{"id":"C03","scope":"common","branch":null,"type":"单选","dimension":"提示词与多模态","tags":["多模态应用"],"difficulty":"L1","stem":"“文生图”是什么意思？","options":["输入文字要求，让 AI 修改已有图片局部","输入图片和标签，让 AI 完成图像分类","输入文字描述，让 AI 生成图片","输入一张参考图，让 AI 生成文字说明"],"answer":["输入文字描述，让 AI 生成图片"],"explanation":"文生图是根据输入的文字描述生成图片。","score":1,"estimatedMinutes":0.5,"primaryTag":"多模态应用"},{"id":"D24","scope":"discipline","branch":"medicalHealth","type":"单选","dimension":"提示词与多模态","tags":["学生AI素养","事实核验","AI披露"],"difficulty":"L1","stem":"教师指导学生使用 AI 生成教学图片时，哪项要求最能培养学生的 AI 素养？","options":["从多个结果中选择画面最美观的一张","要求 AI 一次生成成品，减少后续人工修改","记录提示词与修改过程，核验画面信息并说明 AI 使用","只评价最终图片，不记录生成和核验过程"],"answer":["记录提示词与修改过程，核验画面信息并说明 AI 使用"],"explanation":"学生 AI 素养不仅包括生成内容，还包括过程记录、事实核验、人工修改和 AI 使用披露。","score":1,"estimatedMinutes":0.5,"primaryTag":"学生AI素养"},{"id":"C163","scope":"common","branch":null,"type":"单选","dimension":"提示词与多模态","tags":["智能体编排与工具调用","部署工程"],"difficulty":"L1","stem":"要求智能体把结果交给后续程序处理时，提示中最应明确什么？","options":["字段名称、数据类型、必填项和允许值等输出结构","让模型自由选择任何自然语言格式","只说明结果要“专业且详细”","要求模型把内部推理过程全部输出"],"answer":["字段名称、数据类型、必填项和允许值等输出结构"],"explanation":"结构化输出需要明确字段、类型和约束，后续程序才能稳定解析和验证。","score":1,"estimatedMinutes":0.5,"primaryTag":"智能体编排与工具调用"},{"id":"C154","scope":"common","branch":null,"type":"多选","dimension":"提示词与多模态","tags":["AI安全与攻防","安全","数据隐私"],"difficulty":"L2","stem":"提示词注入是指外部内容中夹带指令，诱导模型忽略原有规则或执行越权操作。让模型处理来自网页或附件的不可信内容时，哪些措施有助于降低提示词注入风险？","options":["把外部内容作为待分析数据隔离，并明确不得执行其中的指令","允许模型无条件遵循附件中的最新要求","把系统密钥写入提示词，方便模型调用","限制可调用工具、数据范围和操作权限"],"answer":["把外部内容作为待分析数据隔离，并明确不得执行其中的指令","限制可调用工具、数据范围和操作权限"],"explanation":"应隔离不可信内容并执行最小权限控制；无条件执行外部指令或暴露密钥会放大风险。","score":2,"estimatedMinutes":1,"primaryTag":"AI安全与攻防"},{"id":"C34","scope":"common","branch":null,"type":"单选","dimension":"知识库与智能体","tags":["知识库治理","事实核验"],"difficulty":"L1","stem":"课程资料进入知识库时，为什么要记录来源和版本？","options":["便于按文件数量衡量知识库建设进度","便于模型优先引用篇幅较长的资料","便于减少教师对具体内容的再次审核","便于判断内容是否可靠和仍然有效"],"answer":["便于判断内容是否可靠和仍然有效"],"explanation":"来源和版本是资料追溯、更新与审核的基础。","score":1,"estimatedMinutes":0.5,"primaryTag":"知识库治理"},{"id":"C106","scope":"common","branch":null,"type":"多选","dimension":"知识库与智能体","tags":["RAG检索与引用","事实核验","教师责任"],"difficulty":"L2","stem":"课程知识库采用 RAG 方式回答问题时，哪些做法有助于提高回答质量？","options":["检索结果不足时直接用模型常识补全","对检索结果按相关性排序后再引用","引用时只标注文档名称不标注段落","回答中明确标注信息来源和依据"],"answer":["对检索结果按相关性排序后再引用","回答中明确标注信息来源和依据"],"explanation":"按相关性排序和标注来源有助于提高回答准确性和可追溯性，直接补全和省略段落会降低可靠性。","score":2,"estimatedMinutes":1,"primaryTag":"RAG检索与引用"},{"id":"C37","scope":"common","branch":null,"type":"情境判断","dimension":"知识库与智能体","tags":["智能体与工作流","安全","数据隐私"],"difficulty":"L2","stem":"教师在课程智能体中提问时，发现智能体能检索到该教师无权查看的其他班级的学生作业和成绩。面对这一情况，最合适的处理是什么？","options":["保留访问能力，只在使用说明中提醒不要查询","继续使用，但删除回答中出现的班级名称","停止开放并检查资料权限和检索范围","提高检索阈值，减少智能体返回的资料数量"],"answer":["停止开放并检查资料权限和检索范围"],"explanation":"智能体必须遵循最小权限原则，越权访问应立即处理。","score":2,"estimatedMinutes":1.5,"primaryTag":"智能体与工作流"},{"id":"C109","scope":"common","branch":null,"type":"单选","dimension":"知识库与智能体","tags":["AI工具生态与接入","部署工程"],"difficulty":"L3","stem":"学校同时引入了通用大模型和课程知识库智能体，教师在配置教学问答系统时应如何选择？","options":["始终使用通用大模型，因为参数更大能力更强","始终使用知识库智能体，因为检索更精确","让两个系统各自独立运行，不进行任何整合","根据问题类型路由：事实性问题走知识库，开放性问题走大模型"],"answer":["根据问题类型路由：事实性问题走知识库，开放性问题走大模型"],"explanation":"不同工具有不同优势，应根据问题类型合理路由，知识库适合事实性查询，大模型适合开放生成。","score":1,"estimatedMinutes":1.5,"primaryTag":"AI工具生态与接入"},{"id":"C107","scope":"common","branch":null,"type":"情境判断","dimension":"知识库与智能体","tags":["智能体与工作流","安全"],"difficulty":"L2","stem":"教师配置课程智能体时，发现智能体在回答中自动调用了外部联网搜索，而课程要求仅基于校内知识库回答。最合适的处理是什么？","options":["关闭外部搜索权限，限制智能体仅检索校内知识库","保留外部搜索，在回答中不标注来源即可","让智能体自行判断何时需要联网搜索","删除校内知识库，完全依赖外部搜索"],"answer":["关闭外部搜索权限，限制智能体仅检索校内知识库"],"explanation":"智能体应遵循预设的知识边界，超出范围的检索能力应关闭，不能自行决定是否联网。","score":2,"estimatedMinutes":1.5,"primaryTag":"智能体与工作流"},{"id":"C104","scope":"common","branch":null,"type":"判断","dimension":"知识库与智能体","tags":["模型评估与实验","可解释"],"difficulty":"L1","stem":"评估知识库检索质量时，仅看检索返回的文档数量即可判断效果好坏。","options":["正确","错误"],"answer":["错误"],"explanation":"检索质量需要综合考虑准确率、召回率、相关性等指标，不能仅凭返回数量判断。","score":1,"estimatedMinutes":0.5,"primaryTag":"模型评估与实验"},{"id":"C121","scope":"common","branch":null,"type":"单选","dimension":"教学融合","tags":["备课与资源开发","事实核验"],"difficulty":"L1","stem":"教师用 AI 将一份传统教案快速改编为项目式学习方案后，发现 AI 生成的任务说明中包含课程未涉及的专业术语。最合适的做法是什么？","options":["直接使用，学生遇到不懂的术语会自行查阅","删除包含术语的任务，保留其余部分","将整份方案退回并改用传统教案","将术语替换为学生已学概念或补充简要解释后再使用"],"answer":["将术语替换为学生已学概念或补充简要解释后再使用"],"explanation":"AI 生成的教学方案需教师审核并适配学生认知水平，不能直接使用未经验证的内容。","score":1,"estimatedMinutes":0.5,"primaryTag":"备课与资源开发"},{"id":"C127","scope":"common","branch":null,"type":"多选","dimension":"教学融合","tags":["课堂互动与分层","无障碍"],"difficulty":"L2","stem":"教师计划让 AI 根据学生课堂答题数据自动生成分层练习题。为保障公平和有效，以下哪些做法合适？","options":["确保每层练习都覆盖相同的核心学习目标，难度递进而非内容缩减","完全信任 AI 的分层结果，不再人工调整","定期检查分层是否导致低层学生被标签化或失去信心","允许学生自主选择难度层级，而非完全由 AI 决定"],"answer":["确保每层练习都覆盖相同的核心学习目标，难度递进而非内容缩减","定期检查分层是否导致低层学生被标签化或失去信心","允许学生自主选择难度层级，而非完全由 AI 决定"],"explanation":"AI 分层练习应保证目标一致、防止标签化、保留学生自主权，不能完全依赖 AI 自动决策。","score":2,"estimatedMinutes":1,"primaryTag":"课堂互动与分层"},{"id":"C09","scope":"common","branch":null,"type":"单选","dimension":"教学融合","tags":["评价反馈与学情分析","事实核验"],"difficulty":"L1","stem":"AI 辅助批改作业时，教师最重要的职责是什么？","options":["将 AI 评分作为统一尺度直接计入成绩","复核评分依据和异常结果","优先检查全班平均分是否接近期望","仅复核被 AI 判为低分的学生作业"],"answer":["复核评分依据和异常结果"],"explanation":"教师应复核评分依据，特别关注异常和边界情况。","score":1,"estimatedMinutes":0.5,"primaryTag":"评价反馈与学情分析"},{"id":"E35","scope":"discipline","branch":"engineering","type":"判断","dimension":"教学融合","tags":["实训与产教融合","安全","事实核验"],"difficulty":"L1","stem":"AI 生成实训步骤后，教师依据现场设备、现行规程和安全条件复核，再用于教学。","options":["正确","错误"],"answer":["正确"],"explanation":"实训方案必须由教师结合现场条件和正式规程确认。","score":1,"estimatedMinutes":0.5,"primaryTag":"实训与产教融合"},{"id":"C67","scope":"common","branch":null,"type":"多选","dimension":"教学融合","tags":["AI法律法规与治理","法律治理","行业规范"],"difficulty":"L2","stem":"学校制定教师生成式 AI 使用制度时，哪些正式依据应纳入核对清单？","options":["《个人信息保护法》《数据安全法》等适用法律","AI 厂商的营销页面和未经核验的网友经验","《生成式人工智能服务管理暂行办法》等适用管理规定","教师生成式人工智能应用指引及学校现行管理制度"],"answer":["《个人信息保护法》《数据安全法》等适用法律","《生成式人工智能服务管理暂行办法》等适用管理规定","教师生成式人工智能应用指引及学校现行管理制度"],"explanation":"学校制度应结合适用法律、生成式 AI 管理规定、教育领域指引和校内制度，并核对文件版本及适用范围；厂商宣传不能替代正式依据。","score":2,"estimatedMinutes":1,"primaryTag":"AI法律法规与治理"},{"id":"C117","scope":"common","branch":null,"type":"多选","dimension":"教学融合","tags":["教师专业发展","教师责任"],"difficulty":"L2","stem":"判断一次 AI 研修是否真正转化到教学中，哪些证据更有价值？","options":["教师登录过的平台数量","培训页面的完成截图","研修前后的教学设计或学生作品对比","课堂观察、同伴反馈和教师反思记录"],"answer":["研修前后的教学设计或学生作品对比","课堂观察、同伴反馈和教师反思记录"],"explanation":"真实教学成果、课堂证据和反思能够说明能力迁移，平台数量和完成截图只能证明参与。","score":2,"estimatedMinutes":1,"primaryTag":"教师专业发展"},{"id":"C39","scope":"common","branch":null,"type":"情境判断","dimension":"研究创新","tags":["科研设计与数据分析"],"difficulty":"L1","stem":"AI 根据一份很小的课堂问卷给出全校性结论。教师应如何处理？","options":["保留全校性结论，但把措辞改为“可能”","让 AI 补充更多理由以提高结论可信度","剔除与总体结论不一致的少数回答","说明样本限制并缩小结论范围"],"answer":["说明样本限制并缩小结论范围"],"explanation":"小样本不能支持超出数据范围的概括。","score":2,"estimatedMinutes":1.5,"primaryTag":"科研设计与数据分析"},{"id":"E38","scope":"discipline","branch":"engineering","type":"情境判断","dimension":"研究创新","tags":["专业实践与行业规范","安全","事实核验"],"difficulty":"L1","stem":"学生引用 AI 生成的设备参数，但参数在手册中找不到。应如何处理？","options":["让 AI 换一种表述后再次与原回答比较","参考相近型号参数并省略具体资料来源","删除该参数或用可核验资料替换","保留该参数并标注由 AI 根据经验估计"],"answer":["删除该参数或用可核验资料替换"],"explanation":"工程参数必须来自可核验的正式资料。","score":2,"estimatedMinutes":1.5,"primaryTag":"专业实践与行业规范"},{"id":"C40","scope":"common","branch":null,"type":"情境判断","dimension":"研究创新","tags":["版权与学术诚信","事实核验"],"difficulty":"L2","stem":"教师用 AI 归纳多篇文献，发现输出混合了原文观点与 AI 推断且没有标注。应如何处理？","options":["保留归纳结果，只在方法中说明使用过 AI","让另一 AI 复核，结果相近就视为原文观点","回到原文逐条核验，区分来源观点与 AI 推断并补充引用","删除有争议的段落，仅保留表达流畅的部分"],"answer":["回到原文逐条核验，区分来源观点与 AI 推断并补充引用"],"explanation":"研究综述必须区分可追溯的来源观点与模型推断，并为原文观点补充准确引用。","score":2,"estimatedMinutes":1.5,"primaryTag":"版权与学术诚信"},{"id":"C140","scope":"common","branch":null,"type":"情境判断","dimension":"研究创新","tags":["数据标注与数据治理"],"difficulty":"L2","stem":"研究团队使用 AI 分析学生评教数据时，发现标注员对“中性”和“偏正面”的标注分歧很大，导致模型在中间地带的分类不稳定。团队负责人最合理的处理是什么？","options":["删除所有有分歧的样本，只保留标注完全一致的样本","增加多轮交叉标注，统计分歧类型并修订标注规则中模糊的边界定义","将分歧样本统一标注为“中性”，不再讨论","放弃人工标注，改为完全依赖 AI 自动标注"],"answer":["增加多轮交叉标注，统计分歧类型并修订标注规则中模糊的边界定义"],"explanation":"标注分歧说明规则不够清晰，应通过交叉标注发现分歧模式并修订规则，简单删除或统一标注会损失信息。","score":2,"estimatedMinutes":2,"primaryTag":"数据标注与数据治理"},{"id":"K16","scope":"discipline","branch":"computerAI","type":"情境判断","dimension":"研究创新","tags":["安全伦理与教师责任","安全"],"difficulty":"L3","stem":"学校试用的 AI 系统更新后，常规任务得分提高，但安全测试表现变差。最合理的处理是什么？","options":["暂不发布，分析回归并重新验证","发布新版本，并在使用说明中提示安全指标下降","按总体分数加权，综合得分提高即可继续发布","保留旧安全测试结果，仅更新常规任务测试"],"answer":["暂不发布，分析回归并重新验证"],"explanation":"调优不能以牺牲关键安全表现为代价。","score":2,"estimatedMinutes":1.5,"primaryTag":"安全伦理与教师责任"},{"id":"C120","scope":"common","branch":null,"type":"情境判断","dimension":"研究创新","tags":["教师专业发展","教师责任"],"difficulty":"L3","stem":"某教师在线课程完成率很高，但课堂观察显示其仍会直接采用 AI 输出。下一步最合理的专业发展安排是什么？","options":["继续增加同类视频课程的数量","按课程完成率直接认定其达到高级水平","结合课堂观察和作品档案安排核验型实践任务，并据结果调整计划","暂停该教师使用所有 AI 工具"],"answer":["结合课堂观察和作品档案安排核验型实践任务，并据结果调整计划"],"explanation":"课程完成率不等于能力迁移，应以真实任务证据诊断问题，再安排针对性的实践和复盘。","score":2,"estimatedMinutes":1.5,"primaryTag":"教师专业发展"}]}</script>
+  <script>
+    "use strict";
+    const STORAGE_KEY="qijing-teacher-ai-assessment-demo-v9";
+    const LEGACY_STORAGE_KEYS=["qijing-teacher-ai-assessment-demo-v1","qijing-teacher-ai-assessment-demo-v2","qijing-teacher-ai-assessment-demo-v3","qijing-teacher-ai-assessment-demo-v4","qijing-teacher-ai-assessment-demo-v5","qijing-teacher-ai-assessment-demo-v6","qijing-teacher-ai-assessment-demo-v7","qijing-teacher-ai-assessment-demo-v8"];
+    const SCHEMA_VERSION="9.0";
+    const ARCHIVE_SCHEMA_VERSION="1.0";
+    const EMBEDDED_RECORD_ID="embedded-assessment-record";
+    const BANK=JSON.parse(document.getElementById("question-bank").textContent);
+    const app=document.getElementById("app");
+    const dimensions=["AI 基础认知","提示词与多模态","知识库与智能体","教学融合","研究创新"];
+    const QUESTION_COUNT=BANK.questionIds.length;
+    const dimensionAdvice={
+      "AI 基础认知":"补强机器学习、神经网络、AI 发展脉络与可信使用基础",
+      "提示词与多模态":"练习结构化提示词，并保留多轮修改记录",
+      "知识库与智能体":"完成知识库检索、引用核验和智能体边界实训",
+      "教学融合":"把 AI 教学应用拓展到课堂评价、法律治理、公平与教师责任",
+      "研究创新":"练习文献核验、数据留痕和 AI 使用披露"
+    };
+    const stages=[
+      {name:"AI 基础认知",start:0,end:5,detail:"第 1—6 题"},
+      {name:"提示词与多模态",start:6,end:11,detail:"第 7—12 题"},
+      {name:"知识库与智能体",start:12,end:17,detail:"第 13—18 题"},
+      {name:"教学融合",start:18,end:23,detail:"第 19—24 题"},
+      {name:"研究创新",start:24,end:29,detail:"第 25—30 题"}
+    ];
+    const defaultState=()=>({schemaVersion:SCHEMA_VERSION,screen:"register",profile:null,questionIds:[],answers:{},markedIds:[],currentIndex:0,startedAt:null,submittedAt:null,report:null});
+    const embeddedRecord=readEmbeddedRecord();
+    const recordMode=!!embeddedRecord;
+    let state=loadState();
+    let questions=[];
+    let modalOpen=false;
+    function readEmbeddedRecord(){
+      try{
+        const node=document.getElementById(EMBEDDED_RECORD_ID);
+        if(!node)return null;
+        const record=JSON.parse(node.textContent);
+        if(record.archiveSchemaVersion!==ARCHIVE_SCHEMA_VERSION||record.assessmentSchemaVersion!==SCHEMA_VERSION||!record.state?.report)return null;
+        return record;
+      }catch(_){return null}
+    }
+    function loadState(){
+      if(embeddedRecord)return {...defaultState(),...embeddedRecord.state,screen:"report",schemaVersion:SCHEMA_VERSION};
+      try{
+        const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if(saved&&saved.schemaVersion===SCHEMA_VERSION)return {...defaultState(),...saved};
+        if(saved)localStorage.removeItem(STORAGE_KEY);
+        LEGACY_STORAGE_KEYS.forEach(key=>localStorage.removeItem(key));
+      }catch(_){localStorage.removeItem(STORAGE_KEY)}
+      return defaultState();
+    }
+    function saveState(){if(recordMode)return;localStorage.setItem(STORAGE_KEY,JSON.stringify(state));updateSaveLabel()}
+    function buildQuestions(){
+      if(!Array.isArray(BANK.questions)||BANK.questions.length!==30||BANK.questionIds.length!==30)throw new Error("内嵌测评题载荷必须为30题");
+      if(BANK.questions.some((q,index)=>q.id!==BANK.questionIds[index]))throw new Error("内嵌测评题顺序与ID清单不一致");
+      return BANK.questions;
+    }
+    function hydrateQuestions(){
+      if(!state.profile)return;
+      questions=buildQuestions();
+      if(!state.questionIds.length)state.questionIds=questions.map(q=>q.id);
+    }
+    function esc(v=""){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+    function toast(message){
+      const root=document.getElementById("toast-root");root.innerHTML=`<div class="toast">${esc(message)}</div>`;
+      setTimeout(()=>{root.innerHTML=""},1800);
+    }
+    function iconLogo(){return `<span class="brand-mark" aria-hidden="true">AI</span>`}
+    function shell(content,meta="",pageClass=""){
+      return `<header class="topbar"><div class="topbar-inner"><div class="brand">${iconLogo()}<div><strong>高职教师 AI 通识认知测评</strong><small>AI 通识认知与情境决策</small></div></div><div class="top-meta">${meta}${recordMode?`<span class="archive-status">只读作答档案</span>`:`<button class="top-reset" id="global-reset" type="button">重新开始</button>`}</div></div></header><main class="page ${pageClass}">${content}</main>`;
+    }
+    function render(){
+      document.body.classList.toggle("exam-screen",state.screen==="exam");
+      if(state.screen==="register")renderRegistration();
+      else if(state.screen==="exam"){hydrateQuestions();renderExam()}
+      else if(state.screen==="report"){hydrateQuestions();renderReport()}
+      document.getElementById("global-reset")?.addEventListener("click",restart);
+    }
+    function renderRegistration(){
+      const p=state.profile||{};
+      app.innerHTML=`
+        <main class="register-page">
+          <div class="register-wrap">
+            <div class="register-brand">${iconLogo()}<div><strong>教师发展平台</strong><small>TEACHER DEVELOPMENT PLATFORM</small></div></div>
+            <form class="card register-card" id="register-form">
+              <div class="register-head"><h1>创建账号</h1><p>填写以下信息完成注册</p></div>
+              <section class="register-section" aria-labelledby="register-heading">
+                <div class="register-grid">
+                  <div class="field"><label for="name">姓名</label><input id="name" name="name" maxlength="20" autocomplete="name" required value="${esc(p.name||"")}" placeholder="请输入姓名"></div>
+                  <div class="field"><label for="employeeId">工号<span class="optional">选填</span></label><input id="employeeId" name="employeeId" maxlength="24" autocomplete="username" value="${esc(p.employeeId||"")}" placeholder="请输入工号"></div>
+                  <div class="field span-2"><label for="mobile">手机号</label><input id="mobile" name="mobile" type="tel" inputmode="numeric" maxlength="11" autocomplete="tel" required value="${esc(p.mobile||"")}" placeholder="请输入手机号"></div>
+                  <div class="field"><label for="department">所在院系</label><input id="department" name="department" maxlength="40" required value="${esc(p.department||"")}" placeholder="例如：智能制造与装备学院"></div>
+                  <div class="field"><label for="age">年龄</label><input id="age" name="age" type="number" inputmode="numeric" min="18" max="100" step="1" required value="${esc(p.age??"")}" placeholder="请输入年龄"></div>
+                  <div class="field"><label for="password">登录密码</label><input id="password" name="password" type="password" minlength="8" maxlength="20" autocomplete="new-password" required placeholder="请输入登录密码"><span class="password-hint">8—20 位，须同时包含字母和数字</span></div>
+                  <div class="field"><label for="confirmPassword">确认密码</label><input id="confirmPassword" name="confirmPassword" type="password" minlength="8" maxlength="20" autocomplete="new-password" required placeholder="请再次输入登录密码"></div>
+                </div>
+              </section>
+              <label class="agreement"><input type="checkbox" name="agreement" required><span>我已阅读并同意用户服务协议和隐私政策</span></label>
+              <div class="register-actions"><button class="primary" type="submit">注册</button></div>
+            </form>
+          </div>
+        </main>`;
+      document.getElementById("register-form").addEventListener("submit",registerAccount);
+    }
+    function registerAccount(event){
+      event.preventDefault();
+      const fd=new FormData(event.currentTarget);
+      const name=fd.get("name").trim(),employeeId=fd.get("employeeId").trim(),mobile=fd.get("mobile").trim();
+      const password=fd.get("password"),confirmPassword=fd.get("confirmPassword");
+      if(name.length<2){toast("请输入正确的姓名");return}
+      if(employeeId&&employeeId.length<2){toast("工号至少填写 2 个字符");return}
+      if(!/^1\d{10}$/.test(mobile)){toast("请输入正确的 11 位手机号");return}
+      if(!/^(?=.*[A-Za-z])(?=.*\d).{8,20}$/.test(password)){toast("密码须为 8—20 位，并同时包含字母和数字");return}
+      if(password!==confirmPassword){toast("两次输入的密码不一致");return}
+      const age=Number(fd.get("age"));
+      if(!Number.isInteger(age)||age<18||age>100){toast("请填写 18—100 之间的整数年龄");return}
+      const profile={name,employeeId,mobile,department:fd.get("department").trim(),age};
+      state.profile=profile;questions=buildQuestions();state.questionIds=questions.map(q=>q.id);state.screen="exam";state.startedAt=state.startedAt||Date.now();saveState();render();
+    }
+    function getStage(index){return stages.findIndex(s=>index>=s.start&&index<=s.end)}
+    function isAnswered(question,answer=state.answers[question.id]){
+      return Array.isArray(answer)&&answer.length>0;
+    }
+    function renderExam(){
+      const q=questions[state.currentIndex],answered=questions.filter(item=>isAnswered(item)).length,currentStage=getStage(state.currentIndex);
+      app.innerHTML=shell(`
+        <div class="exam-layout">
+          <aside class="card side stage-side"><h2>测评阶段</h2><div class="stage-list">${stages.map((s,i)=>`<button class="stage-button ${i===currentStage?"active":""} ${stageComplete(s)?"complete":""}" data-stage="${i}">${i+1}. ${s.name}<small>${s.detail}</small></button>`).join("")}</div></aside>
+          <section class="exam-main">
+            <div class="card exam-status"><div><div class="progress-copy"><b>总体进度 ${answered}/${QUESTION_COUNT}</b><span>${Math.round(answered/QUESTION_COUNT*100)}%</span></div><div class="progress"><span style="width:${answered/QUESTION_COUNT*100}%"></span></div></div><span class="save-state" id="save-state">已自动保存</span></div>
+            <article class="card question-card">${questionHtml(q,state.currentIndex)}</article>
+            <div class="question-actions"><button class="secondary mark ${state.markedIds.includes(q.id)?"active":""}" id="mark-btn">${state.markedIds.includes(q.id)?"已标记复核":"标记复核"}</button><div class="mobile-tools"><button class="ghost" id="mobile-palette">题号</button></div><div class="action-group"><button class="secondary" id="prev-btn" ${state.currentIndex===0?"disabled":""}>上一题</button><button class="primary" id="next-btn">${state.currentIndex===QUESTION_COUNT-1?"检查并提交":"下一题"}</button></div></div>
+          </section>
+          <aside class="card side palette-side">${paletteHtml(answered)}</aside>
+        </div>
+      `,`<span>已用时 <b id="elapsed">${elapsed()}</b></span>`,"exam-page");
+      bindExamEvents(q);
+      updateElapsed();
+    }
+    function stageComplete(s){return questions.slice(s.start,s.end+1).every(q=>isAnswered(q))}
+    function typeLabel(type){
+      const map={单选:"单选题",多选:"多选题",判断:"判断题",情境判断:"情境判断·单选题"};
+      return map[type]||type;
+    }
+    function questionHtml(q,index){
+      return `<div class="question-meta"><span class="chip">${typeLabel(q.type)}</span><span class="chip gray">${q.dimension}</span><span class="chip amber">${q.difficulty}</span><span class="chip gray">${q.scored===false?"不计分":`${q.score} 分`}</span></div><h1 class="question-title"><span style="color:var(--purple)">第 ${index+1} 题</span>　${esc(q.stem)}</h1>${answerHtml(q)}`;
+    }
+    function answerHtml(q){
+      const answer=state.answers[q.id];
+      const multi=q.type==="多选";const selected=Array.isArray(answer)?answer:[];
+      return `<div class="options">${q.options.map((option,i)=>`<label class="option ${selected.includes(option)?"selected":""}"><input type="${multi?"checkbox":"radio"}" name="option" value="${esc(option)}" ${selected.includes(option)?"checked":""}><span class="option-key">${String.fromCharCode(65+i)}</span><span>${esc(option)}</span></label>`).join("")}</div>`;
+    }
+    function paletteHtml(answered){
+      return `<h2>答题卡</h2><div class="palette-summary"><div><b>${answered}</b><span>已答</span></div><div><b>${QUESTION_COUNT-answered}</b><span>未答</span></div><div><b>${state.markedIds.length}</b><span>标记</span></div></div><div class="palette">${questions.map((q,i)=>`<button class="qdot ${isAnswered(q)?"answered":""} ${i===state.currentIndex?"current":""} ${state.markedIds.includes(q.id)?"marked":""}" data-index="${i}" aria-label="第${i+1}题">${i+1}</button>`).join("")}</div><div class="submit-box"><button class="primary" id="submit-btn">检查并提交</button></div>`;
+    }
+    function bindExamEvents(q){
+      document.querySelectorAll('input[name="option"]').forEach(input=>input.addEventListener("change",()=>{
+        if(q.type==="多选"){
+          const checked=[...document.querySelectorAll('input[name="option"]:checked')].map(el=>el.value);
+          const exclusive=q.exclusiveOptions||[];
+          state.answers[q.id]=input.checked&&exclusive.includes(input.value)?[input.value]:checked.filter(value=>!exclusive.includes(value));
+          saveState();renderExam();
+        }
+        else{
+          state.answers[q.id]=[input.value];
+          saveState();renderExam();
+          if(state.currentIndex<QUESTION_COUNT-1){
+            setTimeout(()=>goTo(state.currentIndex+1),400);
+          }
+        }
+      }));
+      document.getElementById("prev-btn").onclick=()=>goTo(state.currentIndex-1);
+      document.getElementById("next-btn").onclick=()=>state.currentIndex===QUESTION_COUNT-1?openReview():goTo(state.currentIndex+1);
+      document.getElementById("mark-btn").onclick=()=>{state.markedIds=state.markedIds.includes(q.id)?state.markedIds.filter(id=>id!==q.id):[...state.markedIds,q.id];saveState();renderExam()};
+      document.querySelectorAll("[data-index]").forEach(el=>el.onclick=()=>goTo(Number(el.dataset.index)));
+      document.querySelectorAll("[data-stage]").forEach(el=>el.onclick=()=>goTo(stages[Number(el.dataset.stage)].start));
+      document.getElementById("submit-btn")?.addEventListener("click",openReview);
+      document.getElementById("mobile-palette")?.addEventListener("click",openPaletteModal);
+    }
+    function goTo(index){state.currentIndex=Math.max(0,Math.min(QUESTION_COUNT-1,index));saveState();renderExam();window.scrollTo({top:0,behavior:"smooth"})}
+    function updateSaveLabel(){const el=document.getElementById("save-state");if(el)el.textContent="已自动保存"}
+    function elapsed(){
+      if(!state.startedAt)return"00:00";
+      const sec=Math.floor((Date.now()-state.startedAt)/1000),m=Math.floor(sec/60),s=sec%60;
+      return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+    }
+    let timer=null;function updateElapsed(){clearInterval(timer);timer=setInterval(()=>{const el=document.getElementById("elapsed");if(el)el.textContent=elapsed();else clearInterval(timer)},1000)}
+    function openPaletteModal(){
+      modalOpen=true;const answered=questions.filter(q=>isAnswered(q)).length;
+      showModal(`<h2>答题卡</h2><p>选择题号快速跳转。</p>${paletteHtml(answered).replace('<div class="submit-box"><button class="primary" id="submit-btn">检查并提交</button></div>',"")}<div class="modal-actions"><button class="secondary" id="modal-close">关闭</button><button class="primary" id="modal-review">检查并提交</button></div>`);
+      document.querySelectorAll(".modal [data-index]").forEach(el=>el.onclick=()=>{closeModal();goTo(Number(el.dataset.index))});
+      document.getElementById("modal-close").onclick=closeModal;document.getElementById("modal-review").onclick=()=>{closeModal();openReview()};
+    }
+    function openReview(){
+      const unanswered=questions.map((q,i)=>({q,i})).filter(x=>!isAnswered(x.q));const canSubmit=unanswered.length===0;
+      showModal(`<h2>提交前检查</h2><p>提交后将生成本次测评的能力报告。</p><div class="review-grid"><div><span>已完成</span><b>${QUESTION_COUNT-unanswered.length}/${QUESTION_COUNT}</b></div><div><span>标记复核</span><b>${state.markedIds.length}</b></div></div>${unanswered.length?`<div class="warning-list">未完成题目：${unanswered.map(x=>x.i+1).join("、")}</div>`:`<div class="privacy-note"><strong>可以提交</strong><span>${QUESTION_COUNT} 道题均已完成。请确认后生成报告。</span></div>`}<div class="modal-actions"><button class="secondary" id="modal-close">返回检查</button><button class="primary" id="final-submit" ${canSubmit?"":"disabled"}>确认提交</button></div>`);
+      document.getElementById("modal-close").onclick=closeModal;document.getElementById("final-submit").onclick=submitAssessment;
+    }
+    function showModal(html){modalOpen=true;document.body.insertAdjacentHTML("beforeend",`<div class="modal-backdrop" id="modal-backdrop"><div class="modal" role="dialog" aria-modal="true">${html}</div></div>`);document.querySelector(".modal button")?.focus()}
+    function closeModal(){modalOpen=false;document.getElementById("modal-backdrop")?.remove()}
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"&&modalOpen)closeModal()});
+    function scoreQuestion(q,answer){
+      if(q.scored===false)return 0;
+      if(["单选","判断","情境判断"].includes(q.type))return answer?.[0]===q.answer[0]?q.score:0;
+      if(q.type==="多选"){
+        if(!answer?.length)return 0;const wrong=answer.some(v=>!q.answer.includes(v));if(wrong)return 0;
+        return answer.length===q.answer.length?2:1;
+      }
+      return 0;
+    }
+    function submitAssessment(){
+      const scores=questions.map(q=>({id:q.id,score:scoreQuestion(q,state.answers[q.id]),max:q.score}));
+      const byId=Object.fromEntries(scores.map(s=>[s.id,s]));
+      const rawTotal=scores.reduce((s,x)=>s+x.score,0),rawMax=scores.reduce((s,x)=>s+x.max,0);
+      const typeGroups={单选:["单选"],多选:["多选"],判断:["判断"],情境:["情境判断"]};
+      const typeScores=Object.fromEntries(Object.entries(typeGroups).map(([label,types])=>{const qs=questions.filter(q=>q.scored!==false&&types.includes(q.type));const got=qs.reduce((s,q)=>s+byId[q.id].score,0),max=qs.reduce((s,q)=>s+q.score,0);return[label,{score:got,max,percent:max?Math.round(got/max*100):0}]}));
+      const dimensionScores=Object.fromEntries(dimensions.map(d=>{const qs=questions.filter(q=>q.scored!==false&&q.dimension===d);const got=qs.reduce((s,q)=>s+byId[q.id].score,0),max=qs.reduce((s,q)=>s+q.score,0);return[d,{score:got,max,percent:max?Math.round(got/max*100):0}]}));
+      const total=Math.round(dimensions.reduce((sum,d)=>sum+dimensionScores[d].percent,0)/dimensions.length);
+      const safetyQs=questions.filter(q=>q.scored!==false&&q.tags.includes("安全"));const safetyGot=safetyQs.reduce((s,q)=>s+byId[q.id].score,0),safetyMax=safetyQs.reduce((s,q)=>s+q.score,0);
+      const level=total>=85?"L4 AI 引领者":total>=70?"L3 AI 创新者":total>=50?"L2 AI 实践者":"L1 AI 入门者";
+      state.report={total,rawTotal,rawMax,level,typeScores,dimensionScores,safety:{score:safetyGot,max:safetyMax,percent:safetyMax?Math.round(safetyGot/safetyMax*100):0},questionScores:byId};
+      state.submittedAt=Date.now();state.screen="report";closeModal();saveState();render();window.scrollTo(0,0);
+    }
+    function formatDateTime(value){
+      if(!value)return"—";
+      return new Date(value).toLocaleString("zh-CN",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false});
+    }
+    function formatDuration(start,end){
+      if(!start||!end)return"—";
+      const seconds=Math.max(0,Math.floor((end-start)/1000)),hours=Math.floor(seconds/3600),minutes=Math.floor(seconds%3600/60),rest=seconds%60;
+      return `${hours?`${hours} 小时 `:""}${minutes} 分 ${rest} 秒`;
+    }
+    function archiveAnswerHtml(q,answer){
+      const response=Array.isArray(answer)?answer.join("、"):String(answer||"未作答");
+      return `<div class="archive-answer"><b>本人作答：</b>${esc(response)}</div><div class="archive-answer"><b>正确答案：</b>${q.answer.map(esc).join("、")}<br><b>解析：</b>${esc(q.explanation)}</div>`;
+    }
+    function archiveRecordHtml(r){
+      const p=state.profile||{};
+      return `<section class="card report-section"><h2>作答人信息</h2><div class="archive-profile">
+        <div><span>姓名</span><strong>${esc(p.name||"—")}</strong></div>
+        <div><span>工号</span><strong>${esc(p.employeeId||"未填写")}</strong></div>
+        <div><span>手机号</span><strong>${esc(p.mobile||"—")}</strong></div>
+        <div><span>所在院系</span><strong>${esc(p.department||"—")}</strong></div>
+        <div><span>年龄</span><strong>${esc(p.age??"—")}</strong></div>
+      </div><div class="privacy-note"><strong>档案时间</strong><span>开始：${formatDateTime(state.startedAt)}　提交：${formatDateTime(state.submittedAt)}　用时：${formatDuration(state.startedAt,state.submittedAt)}</span></div></section>
+      <section class="card report-section"><h2>逐题作答记录</h2><p>本档案保存了本次测评的全部作答、正确答案、解析与评分结果。</p><div class="archive-list">${questions.map((q,index)=>{
+        const score=r.questionScores[q.id]||{score:0,max:q.score};
+        return `<article class="archive-question"><div class="archive-question-head"><h3>第 ${index+1} 题 · ${esc(q.stem)}</h3><span class="archive-score">${score.score}/${score.max} 分</span></div><div class="archive-meta"><span class="chip">${typeLabel(q.type)}</span><span class="chip gray">${esc(q.dimension)}</span><span class="chip amber">${esc(q.difficulty)}</span></div>${archiveAnswerHtml(q,state.answers[q.id])}</article>`;
+      }).join("")}</div></section>`;
+    }
+    function buildArchiveRecord(){
+      return {archiveSchemaVersion:ARCHIVE_SCHEMA_VERSION,assessmentSchemaVersion:SCHEMA_VERSION,exportedAt:new Date().toISOString(),state:{
+        schemaVersion:SCHEMA_VERSION,screen:"report",profile:state.profile,questionIds:[...state.questionIds],answers:state.answers,markedIds:[...state.markedIds],currentIndex:state.currentIndex,startedAt:state.startedAt,submittedAt:state.submittedAt,report:state.report
+      }};
+    }
+    function safeFilenamePart(value){
+      return String(value||"教师").replace(/[<>:"/\\|?*\u0000-\u001f]/g,"-").replace(/\s+/g," ").trim()||"教师";
+    }
+    function exportArchive(){
+      if(!state.report||!state.submittedAt)return;
+      if(!confirm("导出的 HTML 将包含姓名、工号、手机号、所在院系、年龄及全部作答记录。请仅发送给有权查看的接收者。是否继续？"))return;
+      const clone=document.documentElement.cloneNode(true);
+      clone.querySelector(`#${EMBEDDED_RECORD_ID}`)?.remove();
+      clone.querySelectorAll(".modal-backdrop").forEach(node=>node.remove());
+      clone.querySelectorAll('script[type="module"]').forEach(node=>{
+        const src=node.getAttribute("src")||"";
+        if(src.includes("/@vite/")||node.textContent.includes("/@react-refresh"))node.remove();
+      });
+      const toastRoot=clone.querySelector("#toast-root");if(toastRoot)toastRoot.innerHTML="";
+      const recordNode=document.createElement("script");
+      recordNode.type="application/json";recordNode.id=EMBEDDED_RECORD_ID;
+      recordNode.textContent=JSON.stringify(buildArchiveRecord()).replace(/</g,"\\u003c");
+      clone.querySelector("#question-bank").after(recordNode);
+      const blob=new Blob([`<!doctype html>\n${clone.outerHTML}`],{type:"text/html;charset=utf-8"});
+      const url=URL.createObjectURL(blob),link=document.createElement("a"),stamp=new Date(state.submittedAt).toISOString().replace(/[-:]/g,"").replace("T","-").slice(0,15);
+      link.href=url;link.download=`${safeFilenamePart(state.profile?.name)}-高职教师AI认知测评作答记录-${stamp}.html`;
+      document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      toast("作答记录 HTML 已生成");
+    }
+    function renderReport(){
+      const r=state.report;if(!r){state.screen="exam";render();return}
+      const sorted=Object.entries(r.dimensionScores).sort((a,b)=>a[1].percent-b[1].percent),weak=sorted.filter(([,v])=>v.percent<70).slice(0,3),recommendations=(weak.length?weak:sorted.slice(0,3)),strong=[...sorted].reverse().slice(0,2);
+      const wrong=questions.filter(q=>q.scored!==false&&["单选","多选","判断","情境判断"].includes(q.type)&&r.questionScores[q.id].score<q.score);
+      app.innerHTML=shell(`
+        <section class="card report-head"><div><span class="eyebrow">ASSESSMENT REPORT</span><h1>教师 AI 通识认知报告</h1><p>${recordMode?"此文件已内嵌本次注册信息、作答记录和能力报告，可离线查看。":"报告依据五个能力维度等权计算，反映 AI 通识认知、风险意识与情境决策表现，不代表实际工具操作熟练度。"}</p><div class="report-badges"><span class="chip">${r.level}</span><span class="chip gray">${QUESTION_COUNT} 题已完成</span>${recordMode?`<span class="chip gray">只读档案</span>`:""}</div></div><div class="score-ring" style="--score:${r.total}"><div><strong>${r.total}</strong><span>总分 / 100</span></div></div></section>
+        <div class="report-grid"><div>
+          <section class="card report-section"><h2>题型表现</h2><div class="metric-grid">${Object.entries(r.typeScores).map(([k,v])=>`<div class="metric"><span>${k}</span><strong>${v.score}/${v.max}</strong><small>${v.percent}%</small></div>`).join("")}</div></section>
+          <section class="card report-section"><h2>五维能力</h2><div class="dimension-list">${dimensions.map(d=>`<div class="dimension-row"><span>${d}</span><div class="dimension-track"><span style="width:${r.dimensionScores[d].percent}%"></span></div><b>${r.dimensionScores[d].percent}</b></div>`).join("")}</div></section>
+          <section class="card report-section"><h2>客观题复盘</h2>${wrong.length?wrong.slice(0,12).map((q,i)=>`<details class="review-item"><summary>第 ${questions.indexOf(q)+1} 题 · ${esc(q.stem)}</summary><p><b>正确答案：</b>${q.answer.map(esc).join("、")}</p><p>${esc(q.explanation)}</p></details>`).join(""):`<p>客观题全部答对。</p>`}</section>
+        </div><aside>
+          <section class="card report-section"><h2>安全与可信使用</h2><div class="${r.safety.percent<60?"safety-alert":"privacy-note"}"><strong>${r.safety.percent} 分</strong><span>${r.safety.percent<60?"安全规范优先补强。建议先完成校园数据、实训安全和事实核验训练。":"安全相关题目达到基础要求，仍需在实际工作中保持人工核验。"}</span></div></section>
+          <section class="card report-section"><h2>诊断结论</h2><div class="insight-list">${strong.map(([d,v])=>`<div class="insight"><b>优势 · ${d}</b><br>${v.percent} 分，已具备较好的基础。</div>`).join("")}${weak.length?weak.slice(0,2).map(([d,v])=>`<div class="insight gap"><b>优先补强 · ${d}</b><br>${v.percent} 分，需要增加真实任务练习。</div>`).join(""):`<div class="insight next"><b>表现稳定</b><br>五个能力维度均达到当前测评的基础要求，可进入综合应用与示范任务。</div>`}</div></section>
+          <section class="card report-section"><h2>${weak.length?"下一步建议":"拓展建议"}</h2><div class="insight-list">${recommendations.map(([d])=>`<div class="insight next">${esc(dimensionAdvice[d])}</div>`).join("")}</div></section>
+        </aside></div>
+        ${recordMode?archiveRecordHtml(r):""}
+        ${recordMode?"":`<div class="report-actions"><button class="secondary" id="back-exam">返回查看答案</button><button class="primary" id="export-record">导出作答记录 HTML</button><button class="danger" id="restart">重新开始并清除记录</button></div>`}
+      `,`<span>提交时间 <b>${formatDateTime(state.submittedAt)}</b></span>`);
+      document.getElementById("back-exam")?.addEventListener("click",()=>{state.screen="exam";saveState();render()});
+      document.getElementById("export-record")?.addEventListener("click",exportArchive);
+      document.getElementById("restart")?.addEventListener("click",restart);
+    }
+    function restart(){
+      if(!confirm("重新开始将清除本机保存的账号信息、答题记录和报告，是否继续？"))return;
+      localStorage.removeItem(STORAGE_KEY);LEGACY_STORAGE_KEYS.forEach(key=>localStorage.removeItem(key));state=defaultState();questions=[];render();window.scrollTo(0,0);
+    }
+    hydrateQuestions();render();
+  </script>
+</body>
+</html>

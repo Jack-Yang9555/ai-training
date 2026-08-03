@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="面向学校管理者的教师AI能力提升平台应用与管理手册，涵盖素养测评、学习培训、实训任务和分析报告。">
+  <title>教师 AI 能力提升平台应用与管理手册</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23356dff'/%3E%3Cpath d='M18 20h28v6H18zm0 12h20v6H18zm0 12h14v6H18z' fill='white'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink:#172033; --muted:#66758f; --line:#dfe6f2; --blue:#356dff;
+      --blue-soft:#eef4ff; --teal:#0f9f8f; --teal-soft:#eafaf7;
+      --purple:#6a5ce6; --purple-soft:#f1efff; --coral:#ef6f5b;
+      --coral-soft:#fff0ed; --amber:#e99a17; --amber-soft:#fff7e6;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:#edf1f7;color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;line-height:1.65}
+    .screen-nav{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:10px 24px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+    .screen-nav strong{font-size:14px}.screen-nav div{display:flex;gap:8px;flex-wrap:wrap}
+    .screen-nav a{color:#52627d;text-decoration:none;font-size:12px;padding:6px 10px;border-radius:999px;background:#f5f7fb}
+    .document{padding:28px 0 72px}
+    .page{position:relative;width:210mm;min-height:297mm;margin:0 auto 24px;padding:18mm 16mm 17mm;background:#fff;box-shadow:0 14px 40px rgba(31,48,78,.12);overflow:hidden;scroll-margin-top:70px}
+    .page::before{content:"";position:absolute;inset:0 0 auto;height:5mm;background:linear-gradient(90deg,var(--blue),var(--teal),var(--purple),var(--coral),var(--amber))}
+    .page-footer{position:absolute;left:16mm;right:16mm;bottom:7mm;display:flex;justify-content:space-between;align-items:center;color:#8a96a9;font-size:9px;border-top:1px solid #edf0f5;padding-top:3mm}
+    .cover{padding:23mm 20mm 18mm;background:linear-gradient(145deg,#fff 0%,#f5f9ff 48%,#f2fbf9 100%)}
+    .cover::after{content:"";position:absolute;width:94mm;height:94mm;right:-22mm;top:32mm;border:1px solid rgba(53,109,255,.16);border-radius:50%;box-shadow:0 0 0 13mm rgba(53,109,255,.04),0 0 0 27mm rgba(15,159,143,.035)}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+    .eyebrow::before{content:"";width:22px;height:3px;border-radius:3px;background:var(--blue)}
+    h1,h2,h3,p{margin-top:0}
+    h1{font-size:31px;line-height:1.22;letter-spacing:-.03em;margin:19mm 0 8mm;max-width:142mm}
+    h2{font-size:25px;line-height:1.28;margin:0 0 5mm;letter-spacing:-.02em}
+    h3{font-size:16px;margin:0 0 2mm}
+    p{font-size:12px;color:#53627b;margin-bottom:4mm}
+    .lead{font-size:15px;line-height:1.85;max-width:145mm;color:#44546e}
+    .cover-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:24mm;position:relative;z-index:1}
+    .cover-flow article{padding:6mm 4mm;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:5mm;min-height:42mm}
+    .num{display:grid;place-items:center;width:10mm;height:10mm;border-radius:3mm;color:#fff;background:var(--blue);font-weight:800;font-size:15px;margin-bottom:4mm}
+    .cover-flow article:nth-child(2) .num{background:var(--teal)}.cover-flow article:nth-child(3) .num{background:var(--purple)}.cover-flow article:nth-child(4) .num{background:var(--coral)}
+    .cover-flow strong{font-size:14px}.cover-flow span{display:block;margin-top:1mm;color:#70809a;font-size:10px}
+    .cover-flow .num{display:grid;place-items:center;margin:0 0 4mm;color:#fff;font-size:15px}
+    .cover-meta{position:absolute;left:20mm;bottom:24mm;display:flex;gap:12mm;color:#70809a;font-size:10px}
+    .section-head{display:grid;grid-template-columns:18mm 1fr;gap:5mm;align-items:center;margin-bottom:6mm}
+    .section-no{display:grid;place-items:center;width:16mm;height:16mm;border-radius:5mm;color:#fff;background:var(--blue);font-size:25px;font-weight:800}
+    .section-head p{margin:1mm 0 0}
+    .flowline{display:grid;grid-template-columns:repeat(7,1fr);align-items:center;margin:10mm 0 8mm}
+    .flow-step{display:flex;align-items:center;gap:2mm}.flow-step:nth-child(even){justify-content:center;color:#a2adbd;font-size:18px}
+    .flow-node{width:100%;padding:5mm 2mm;text-align:center;border:1px solid var(--line);border-radius:4mm;background:#fff}
+    .flow-node b{display:block;font-size:12px}.flow-node small{color:#70809a;font-size:9px}
+    .flow-step:nth-child(1) .flow-node{background:var(--blue-soft);border-color:#cfe0ff}.flow-step:nth-child(3) .flow-node{background:var(--teal-soft);border-color:#ccefe8}.flow-step:nth-child(5) .flow-node{background:var(--purple-soft);border-color:#ddd7ff}.flow-step:nth-child(7) .flow-node{background:var(--coral-soft);border-color:#ffd7cf}
+    .overview-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:5mm;margin-top:8mm}
+    .card{border:1px solid var(--line);border-radius:4mm;padding:5mm;background:#fff}
+    .card b{display:block;font-size:13px;margin-bottom:1mm}.card p{font-size:10.5px;margin:0}
+    .route{display:flex;gap:3mm;align-items:flex-start;padding:4mm 5mm;border-radius:4mm;background:#f7f9fc;margin:4mm 0 6mm}
+    .route strong{font-size:11px;white-space:nowrap}.route span{font-size:10px;color:#67768e}
+    .steps{display:grid;gap:3mm;margin:0 0 6mm;padding:0;list-style:none;counter-reset:manual}
+    .steps.follow{counter-reset:manual 3}
+    .steps li{counter-increment:manual;position:relative;padding:3mm 4mm 3mm 13mm;border-left:3px solid var(--blue);background:#f8faff;border-radius:0 3mm 3mm 0;color:#465671;font-size:11px}
+    .steps li::before{content:counter(manual);position:absolute;left:3mm;top:3mm;display:grid;place-items:center;width:6mm;height:6mm;border-radius:50%;background:var(--blue);color:#fff;font-size:9px;font-weight:800}
+    .screen-shot{margin:0;border:1px solid #dbe3ef;border-radius:4mm;background:#f5f7fb;overflow:hidden;box-shadow:0 7px 20px rgba(34,54,88,.09)}
+    .screen-shot img{display:block;width:100%;height:auto}
+    .screen-shot figcaption{display:flex;justify-content:space-between;gap:6mm;padding:3mm 4mm;background:#f8faff;color:#687792;font-size:9.5px;border-top:1px solid #e5ebf4}
+    .callout{display:grid;grid-template-columns:8mm 1fr;gap:3mm;padding:4mm 5mm;margin-top:5mm;border-radius:4mm;background:var(--blue-soft);border:1px solid #d8e5ff}
+    .callout .icon{display:grid;place-items:center;width:8mm;height:8mm;border-radius:2.5mm;background:var(--blue);color:#fff;font-weight:800}.callout b{font-size:11px}.callout p{font-size:10px;margin:0}
+    .callout.teal{background:var(--teal-soft);border-color:#ceefe9}.callout.teal .icon{background:var(--teal)}
+    .callout.purple{background:var(--purple-soft);border-color:#ded8ff}.callout.purple .icon{background:var(--purple)}
+    .legend{display:flex;gap:3mm;flex-wrap:wrap;margin:4mm 0}.legend span{font-size:9.5px;padding:1.5mm 3mm;border-radius:999px;background:#f1f4f9;color:#65748d}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+    table{width:100%;border-collapse:collapse;margin-top:5mm;font-size:10px}
+    th,td{padding:3mm;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f4f7fb;color:#43526b}td{color:#5b6a82}
+    .checklist{display:grid;grid-template-columns:1fr 1fr;gap:3mm 6mm;margin-top:6mm}.checklist div{display:flex;gap:3mm;padding:3mm 0;border-bottom:1px dashed var(--line);font-size:10.5px;color:#53627a}.checklist b{color:var(--teal)}
+    .mini-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:7mm 0}.mini-flow div{padding:4mm 3mm;border-radius:3mm;text-align:center;background:#f5f7fb;font-size:10px}.mini-flow b{display:block;color:var(--blue);font-size:16px}
+    .note{padding:4mm 5mm;background:var(--amber-soft);border-left:3px solid var(--amber);font-size:10px;color:#66563a;border-radius:0 3mm 3mm 0;margin-top:5mm}
+    .print-tip{font-size:9px;color:#8a96a9}
+    @media(max-width:860px){.screen-nav{display:none}.document{padding:0}.page{width:100%;min-height:auto;margin:0;padding:24px 18px 60px;box-shadow:none;border-bottom:10px solid #edf1f7}.cover-flow,.overview-grid,.two-col,.checklist{grid-template-columns:1fr}.flowline{grid-template-columns:1fr}.flow-step:nth-child(even){transform:rotate(90deg)}h1{font-size:29px;margin-top:70px}.cover-meta{position:static;margin-top:48px}.page-footer{left:18px;right:18px}}
+    @media print{
+      @page{size:A4 portrait;margin:0}
+      html,body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .screen-nav{display:none}.document{padding:0}.page{width:210mm;height:297mm;min-height:297mm;margin:0;padding:18mm 16mm 17mm;box-shadow:none;page-break-after:always;break-after:page}.page:last-child{page-break-after:auto;break-after:auto}
+      .cover{padding:23mm 20mm 18mm}.screen-shot,.card,.callout,.route{break-inside:avoid}.page-footer{left:16mm;right:16mm}
+      .cover-flow{grid-template-columns:repeat(4,1fr)}
+      .overview-grid,.two-col,.checklist{grid-template-columns:repeat(2,1fr)}
+      .flowline{grid-template-columns:repeat(7,1fr)}
+      .flow-step:nth-child(even){transform:none}
+      h1{font-size:31px;margin:19mm 0 8mm}
+      p{font-size:10pt}.lead{font-size:12pt}.cover-flow span{font-size:8pt}
+      .card b{font-size:10pt}.card p{font-size:8.5pt}
+      .route strong{font-size:9pt}.route span{font-size:8.5pt}
+      .steps li{font-size:9pt}.steps li::before{font-size:8pt}
+      .screen-shot figcaption{font-size:8.5pt}
+      .callout b{font-size:9pt}.callout p{font-size:8.5pt}
+      .legend span{font-size:8.5pt}table{font-size:8.5pt}
+      .checklist div{font-size:9pt}.mini-flow div{font-size:8.5pt}
+      .note{font-size:8.5pt}.print-tip{font-size:8pt}.page-footer{font-size:8pt}
+      .page:nth-of-type(4) .screen-shot{width:84%;margin-left:auto;margin-right:auto}
+      .cover-meta{position:absolute;margin-top:0}
+    }
+  </style>
+</head>
+<body>
+  <nav class="screen-nav" aria-label="手册目录"><strong>教师 AI 能力提升平台应用与管理手册</strong><div><a href="#overview">实施总览</a><a href="#step1">素养测评</a><a href="#step2">学习培训</a><a href="#step3">实训任务</a><a href="#step4">分析报告</a></div></nav>
+  <main class="document">
+    <section class="page cover" id="cover">
+      <div class="eyebrow">Teacher AI Growth Guide</div>
+      <h1>教师 AI 能力提升平台<br>应用与管理手册</h1>
+      <p class="lead">本文件面向学校领导及教师发展管理部门，系统说明学校如何依托平台组织教师 AI 能力诊断、分层培训、真实任务实践与成效评价，并以实际界面呈现关键业务环节。</p>
+      <div class="cover-flow">
+        <article><span class="num">1</span><strong>素养测评</strong><span>完成摸底并生成报告</span></article>
+        <article><span class="num">2</span><strong>学习培训</strong><span>确认计划并完成课程</span></article>
+        <article><span class="num">3</span><strong>实训任务</strong><span>选择工具并形成作品</span></article>
+        <article><span class="num">4</span><strong>分析报告</strong><span>查看变化与下一步</span></article>
+      </div>
+      <div class="cover-meta"><span>适用对象：学校领导、教师发展管理部门</span><span>文件属性：校级应用说明</span><span>交付形态：HTML / PDF</span></div>
+      <footer class="page-footer"><span>教师 AI 能力提升平台应用与管理手册</span><span>01</span></footer>
+    </section>
+
+    <section class="page" id="overview">
+      <div class="section-head"><div class="section-no">0</div><div><h2>校级实施总览：建立教师 AI 能力发展闭环</h2><p>学校通过统一测评、分层培训、真实任务实训和成长评价，形成可组织、可记录、可分析、可持续改进的教师 AI 能力发展机制。</p></div></div>
+      <div class="route"><strong>总体路径</strong><span>学校统一组织 → 教师进入“我的成长” → 平台记录全过程 → 形成个人与项目成效证据</span></div>
+      <div class="flowline" aria-label="四步操作流程">
+        <div class="flow-step"><div class="flow-node"><b>素养测评</b><small>摸清起点</small></div></div><div class="flow-step">→</div>
+        <div class="flow-step"><div class="flow-node"><b>学习培训</b><small>精准补强</small></div></div><div class="flow-step">→</div>
+        <div class="flow-step"><div class="flow-node"><b>实训任务</b><small>工作迁移</small></div></div><div class="flow-step">→</div>
+        <div class="flow-step"><div class="flow-node"><b>分析报告</b><small>持续改进</small></div></div>
+      </div>
+      <div class="overview-grid">
+        <article class="card"><b>建立能力基线</b><p>形成综合等级、五维能力分数、优势证据、能力短板和提升目标。</p></article>
+        <article class="card"><b>实施分层培养</b><p>形成个性化培训计划，并持续记录课程进度、学习笔记和资源完成情况。</p></article>
+        <article class="card"><b>推动工作迁移</b><p>沉淀实训工具、任务、时长、得分和教师作品等真实实践证据。</p></article>
+        <article class="card"><b>评价培训成效</b><p>呈现能力变化、成长里程碑、后续任务和结业复测结果。</p></article>
+      </div>
+      <div class="callout teal"><div class="icon">✓</div><div><b>校级实施原则</b><p>首次培训应统一完成摸底测评，再依据能力差异实施分层培养。课程学习、实训成果与复测结果应持续回流个人成长档案，避免培训与评价相互割裂。</p></div></div>
+      <table><thead><tr><th>阶段</th><th>学校组织重点</th><th>平台支撑</th><th>管理成果</th></tr></thead><tbody>
+        <tr><td>素养测评</td><td>统一标准与测评安排</td><td>组织测评、生成五维报告</td><td>形成教师能力基线</td></tr>
+        <tr><td>学习培训</td><td>实施分层分类培养</td><td>生成计划、记录学习数据</td><td>掌握培训进度与质量</td></tr>
+        <tr><td>实训任务</td><td>推动真实工作任务实践</td><td>提供任务地图与工具环境</td><td>沉淀校本实践成果</td></tr>
+        <tr><td>分析报告</td><td>开展过程评价与结业复测</td><td>汇总证据、呈现能力变化</td><td>评价项目成效并持续改进</td></tr>
+      </tbody></table>
+      <footer class="page-footer"><span>校级实施总览</span><span>02</span></footer>
+    </section>
+
+    <section class="page" id="step1">
+      <div class="section-head"><div class="section-no">1</div><div><h2>素养测评：建立教师 AI 能力基线</h2><p>学校统一组织教师完成理论题、情境判断和实操任务，平台据此生成综合等级与五维能力证据，为分层培养提供依据。</p></div></div>
+      <div class="route"><strong>教师端流程</strong><span>我的成长 → 摸底测评 → 完成三个部分 → 提交测评并生成报告</span></div>
+      <ol class="steps">
+        <li>教师依次完成理论题、情境判断和实操任务，覆盖知识、场景判断与实践能力。</li>
+        <li>三个部分全部完成后提交测评，平台统一记录作答状态和评价证据。</li>
+        <li>系统生成综合等级、五维分数、优势证据、能力短板和推荐提升目标。</li>
+      </ol>
+      <figure class="screen-shot"><img src="../../output/playwright/teacher-operation-manual/01-assessment.png" alt="教师AI能力摸底测评界面"><figcaption><span>核心界面：教师 AI 能力摸底包</span><span>三个部分全部完成后方可提交</span></figcaption></figure>
+      <div class="legend"><span>理论题：基础认知与安全</span><span>情境判断：教学选择与风险</span><span>实操任务：提示词与智能体</span></div>
+      <div class="callout"><div class="icon">i</div><div><b>学校管理关注</b><p>应重点关注参测完成率、能力分布、共性短板和分层比例。题目、量规和能力标准由学校认可的外部内容体系导入，平台负责组织、记录与报告。</p></div></div>
+      <footer class="page-footer"><span>第一步 · 素养测评</span><span>03</span></footer>
+    </section>
+
+    <section class="page">
+      <div class="section-head"><div class="section-no" style="font-size:16px">1B</div><div><h2>测评作答：覆盖知识、判断与实践能力</h2><p>教师在统一测评环境中完成作答，平台同步记录题型进度、作答状态与自动保存信息，确保测评过程完整可追踪。</p></div></div>
+      <div class="route"><strong>过程记录</strong><span>题目作答 → 自动保存 → 分项完成 → 统一提交</span></div>
+      <figure class="screen-shot"><img src="../../output/playwright/teacher-operation-manual/09-assessment-question.png" alt="教师AI能力测评作答界面"><figcaption><span>测评作答界面</span><span>题型、进度、剩余时间和作答状态统一呈现</span></figcaption></figure>
+      <figure class="screen-shot" style="margin-top:5mm"><img src="../../output/playwright/teacher-operation-manual/07-assessment-ready.png" alt="教师AI能力测评完成与提交界面"><figcaption><span>测评完成与提交界面</span><span>三类任务完成后统一生成能力报告</span></figcaption></figure>
+      <div class="callout" style="margin-top:5mm"><div class="icon">i</div><div><b>学校管理关注</b><p>学校可依据整体完成率、分项完成情况和异常中断记录掌握测评组织质量，并为未完成教师安排提醒与补测。</p></div></div>
+      <footer class="page-footer"><span>第一步 · 测评作答与过程记录</span><span>04</span></footer>
+    </section>
+
+    <section class="page">
+      <div class="section-head"><div class="section-no" style="font-size:16px">1C</div><div><h2>测评报告：形成分层培养决策依据</h2><p>测评完成后，平台形成综合等级、五维能力、优势证据、优先补强方向和推荐目标，支持学校识别共性问题与教师差异。</p></div></div>
+      <div class="route"><strong>报告结构</strong><span>综合等级 → 五维能力 → 证据说明 → 优先补强 → 推荐目标</span></div>
+      <figure class="screen-shot"><img src="../../output/playwright/teacher-operation-manual/08-assessment-report.png" alt="教师AI能力五维测评报告"><figcaption><span>教师五维能力报告</span><span>从能力结果直接衔接个性化培训计划</span></figcaption></figure>
+      <div class="overview-grid" style="margin-top:6mm">
+        <article class="card"><b>个人层面</b><p>明确教师当前等级、优势领域和优先补强能力。</p></article>
+        <article class="card"><b>培训层面</b><p>将能力短板映射到必修课程、专项训练和实训任务。</p></article>
+        <article class="card"><b>学校层面</b><p>汇总教师能力分布，为分层分组和资源配置提供依据。</p></article>
+        <article class="card"><b>评价层面</b><p>与过程数据和结业复测对比，判断培训投入与能力变化。</p></article>
+      </div>
+      <footer class="page-footer"><span>第一步 · 测评报告与分层依据</span><span>05</span></footer>
+    </section>
+
+    <section class="page" id="step2">
+      <div class="section-head"><div class="section-no" style="background:var(--teal)">2</div><div><h2>学习培训：形成分层分类培养方案</h2><p>平台结合教师摸底结果与学校已导入课程，生成个性化培训计划，兼顾统一必修要求与教师能力补弱需求。</p></div></div>
+      <div class="route"><strong>教师端流程</strong><span>我的成长 → 培训计划 → 设置每周投入 → 调整顺序 → 确认并开始培训</span></div>
+      <ol class="steps">
+        <li>教师查看方案状态、每周投入、预计周期和课程来源，确认计划可执行性。</li>
+        <li>在学校统一要求范围内调整学习顺序、投入时间和选修内容。</li>
+        <li>确认计划后进入执行阶段，平台持续记录计划完成情况。</li>
+      </ol>
+      <figure class="screen-shot"><img src="../../output/playwright/teacher-operation-manual/02-training-plan.png" alt="个性化培训计划界面"><figcaption><span>核心界面：个性化培训计划</span><span>由摸底结果与已导入课程生成</span></figcaption></figure>
+      <div class="callout teal"><div class="icon">✓</div><div><b>学校管理关注</b><p>学校应检查最低能力维度是否安排专项课程、公共必修是否全员覆盖，以及教师每周投入与校内教学工作节奏是否匹配。</p></div></div>
+      <footer class="page-footer"><span>第二步 · 学习培训（培训计划）</span><span>06</span></footer>
+    </section>
+
+    <section class="page">
+      <div class="section-head"><div class="section-no" style="background:var(--teal);font-size:16px">2B</div><div><h2>课程学习：记录全过程培训数据</h2><p>课程学习工作区统一呈现视频、文档、案例和实训资源，并记录教师进度、收藏、笔记与资源完成情况。</p></div></div>
+      <div class="route"><strong>教师端流程</strong><span>培训计划 → 继续课程学习，或 我的成长 → 课程学习</span></div>
+      <ol class="steps follow">
+        <li>教师依据个人培训计划进入相应课程资源，完成视频、文档、案例或实训学习。</li>
+        <li>学习过程中的进度、收藏和笔记形成过程性培训记录。</li>
+        <li>资源完成状态同步回流培训计划和个人能力档案，为过程评价提供数据支持。</li>
+      </ol>
+      <figure class="screen-shot"><img src="../../output/playwright/teacher-operation-manual/03-course-learning.png" alt="教师课程学习工作区"><figcaption><span>核心界面：教师课程学习工作区</span><span>进度、收藏和笔记均属于教师本人</span></figcaption></figure>
+      <div class="two-col" style="margin-top:5mm"><div class="callout teal" style="margin:0"><div class="icon">1</div><div><b>标准培养路径</b><p>确保学校规定的公共必修与能力补弱课程得到落实。</p></div></div><div class="callout" style="margin:0"><div class="icon">2</div><div><b>教师自主补充</b><p>支持教师围绕岗位需求收藏资源并完善自主学习路径。</p></div></div></div>
+      <footer class="page-footer"><span>学习培训与过程记录</span><span>07</span></footer>
+    </section>
+
+    <section class="page" id="step3">
+      <div class="section-head"><div class="section-no" style="background:var(--purple)">3</div><div><h2>实训任务：推动 AI 能力向工作场景迁移</h2><p>任务地图围绕知识底座、AI 助教、命题组卷和批改分析四条能力链，组织十一项与教师实际工作相关的实践任务。</p></div></div>
+      <div class="route"><strong>教师端流程</strong><span>我的成长 → 实训记录 → 进入自由实训 → 培训任务地图</span></div>
+      <ol class="steps">
+        <li>教师依据四条能力链和任务前置关系，选择已经解锁的实践任务。</li>
+        <li>任务原则上使用本人的课程资料、教案、量规或真实教学问题作为输入。</li>
+        <li>任务成果自动进入个人成长档案，并可进一步沉淀为学校校本案例与资源资产。</li>
+      </ol>
+      <figure class="screen-shot"><img src="../../output/playwright/teacher-operation-manual/04-training-map.png" alt="自由实训中心任务地图"><figcaption><span>核心界面：四条能力链与十一项任务</span><span>校级任务体系可按前置关系组织实施</span></figcaption></figure>
+      <div class="mini-flow"><div><b>01</b>知识底座</div><div><b>02</b>AI 助教</div><div><b>03</b>命题组卷</div><div><b>04</b>批改分析</div></div>
+      <div class="note">学校应建立统一的数据与伦理要求：涉及学生信息、教学评价或科研材料时使用匿名数据，并保留来源、人工确认与 AI 使用披露记录。</div>
+      <footer class="page-footer"><span>第三步 · 实训任务（任务地图）</span><span>08</span></footer>
+    </section>
+
+    <section class="page">
+      <div class="section-head"><div class="section-no" style="background:var(--purple);font-size:16px">3B</div><div><h2>工具实训：支撑教师开展自主实践</h2><p>工具广场覆盖研究、多模态、知识库、智能体、开发与评测等十三类 AI 能力，为教师提供统一实践环境。</p></div></div>
+      <div class="route"><strong>教师端流程</strong><span>自由实训 → 工具广场 → 选择工具 → 设置难度与时长 → 开始自由实训</span></div>
+      <ol class="steps follow">
+        <li>教师按能力分类筛选工具，并结合岗位任务选择推荐起步任务。</li>
+        <li>根据个人基础选择难度和练习时长，形成可执行的实践安排。</li>
+        <li>完成实训后，平台自动记录工具、任务、时长、得分和作品。</li>
+      </ol>
+      <figure class="screen-shot"><img src="../../output/playwright/teacher-operation-manual/05-training-task.png" alt="提示词实验室实训启动界面"><figcaption><span>核心界面：实训任务启动窗口</span><span>当前任务：提示词实验室</span></figcaption></figure>
+      <div class="callout purple"><div class="icon">✓</div><div><b>学校管理关注</b><p>自由实训不纳入课程成绩，但其任务完成、作品质量和能力证据可用于评价教师实践参与度与工作迁移成效。</p></div></div>
+      <footer class="page-footer"><span>工具实训与教师自主实践</span><span>09</span></footer>
+    </section>
+
+    <section class="page" id="step4">
+      <div class="section-head"><div class="section-no" style="background:var(--coral)">4</div><div><h2>分析报告：形成教师成长与项目成效证据</h2><p>能力报告汇总摸底结果、课程进度、实训成果和科研智能体等证据，持续呈现五维能力变化，为学校评价培训成效提供依据。</p></div></div>
+      <div class="route"><strong>教师端流程</strong><span>我的成长 → 能力报告 → 查看五维变化 → 完成下一任务或参加结业复测</span></div>
+      <ol class="steps">
+        <li>报告呈现教师当前能力等级及课程、实训、研究等成果证据。</li>
+        <li>通过“摸底 → 当前”的五维变化，识别个人进步与仍需补强的能力。</li>
+        <li>完成培训后参加结业复测，形成阶段性或结业发展结论。</li>
+      </ol>
+      <figure class="screen-shot"><img src="../../output/playwright/teacher-operation-manual/06-analysis-report.png" alt="教师AI能力分析报告"><figcaption><span>核心界面：教师 AI 能力报告</span><span>学习与实训证据持续回流</span></figcaption></figure>
+      <div class="legend"><span>AI 基础认知</span><span>提示词与多模态</span><span>知识库与智能体</span><span>教学融合</span><span>研究创新</span></div>
+      <div class="callout"><div class="icon">i</div><div><b>学校管理关注</b><p>项目评价不宜只看综合等级，应综合五维变化、任务完成、成果质量、人工复核与工作迁移情况，形成学校层面的后续培养决策。</p></div></div>
+      <footer class="page-footer"><span>第四步 · 分析报告</span><span>10</span></footer>
+    </section>
+
+    <section class="page">
+      <div class="section-head"><div class="section-no" style="background:var(--amber)">✓</div><div><h2>校级实施验收与管理要点</h2><p>学校可依据以下事项检查项目组织、教师参与、数据沉淀与成效评价是否形成完整闭环。</p></div></div>
+      <div class="checklist">
+        <div><b>✓</b><span>参训教师已按要求完成摸底测评</span></div><div><b>✓</b><span>学校已掌握五维能力基线与分布</span></div>
+        <div><b>✓</b><span>分层培训计划已经确认并执行</span></div><div><b>✓</b><span>课程学习过程数据持续记录</span></div>
+        <div><b>✓</b><span>教师完成与岗位相关的真实任务实训</span></div><div><b>✓</b><span>实训成果已回流个人成长档案</span></div>
+        <div><b>✓</b><span>学校已形成阶段性项目成效分析</span></div><div><b>✓</b><span>满足条件的教师已完成结业复测</span></div>
+      </div>
+      <table><thead><tr><th>管理情形</th><th>建议措施</th></tr></thead><tbody>
+        <tr><td>测评完成率不足</td><td>明确参测范围和完成时限，并按组织或学科跟踪完成情况。</td></tr>
+        <tr><td>培训计划尚未形成</td><td>先完成摸底报告，再依据能力差异生成并确认培养方案。</td></tr>
+        <tr><td>课程参与度偏低</td><td>结合教学工作安排优化学习节奏，并关注进度、笔记和资源完成数据。</td></tr>
+        <tr><td>实训任务推进缓慢</td><td>检查前置任务与输入材料，优先组织低门槛、高频工作的示范任务。</td></tr>
+        <tr><td>能力变化不明显</td><td>增加真实任务、成果复核和岗位应用证据，再开展阶段复测。</td></tr>
+        <tr><td>需要现场汇报演示</td><td>使用“重置演示”恢复初始状态，并按四步路径完整展示。</td></tr>
+      </tbody></table>
+      <div class="callout teal" style="margin-top:9mm"><div class="icon">4</div><div><b>建议校领导汇报演示路径</b><p>展示摸底基线 → 查看分层培训计划 → 展示课程过程数据 → 完成一次真实任务实训 → 查看能力变化与项目成果。</p></div></div>
+      <div class="note">当前文件用于验证功能设计与交互闭环，课程、题目、评分、AI 工具运行和报告结果均使用模拟数据；正式建设阶段将接入学校真实内容、账户、数据与持久化服务。</div>
+      <p class="print-tip" style="margin-top:11mm">打印建议：使用 Chrome 或 Edge，纸张选择 A4、纵向、边距“无”，并勾选“背景图形”。</p>
+      <footer class="page-footer"><span>校级实施验收与管理要点</span><span>11</span></footer>
+    </section>
+  </main>
+</body>
+</html>

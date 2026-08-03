@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="启境 AI Learning OS 平台定位、产品结构与核心功能说明" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232f6bff'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' font-family='Arial' font-weight='700' fill='white'%3EQ%3C/text%3E%3C/svg%3E" />
+  <title>启境 AI Learning OS｜平台结构与功能说明</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-soft: #f7f9fc;
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #e5eaf2;
+      --green: #2f6bff;
+      --green-dark: #2459da;
+      --green-soft: #eef4ff;
+      --coral: #f26f5b;
+      --coral-soft: #fff0ed;
+      --blue: #7c5cfc;
+      --blue-soft: #f1edff;
+      --amber: #e99a17;
+      --amber-soft: #fff7e6;
+      --teal: #0f9f8f;
+      --teal-soft: #e9fbf7;
+      --radius: 18px;
+      font-family: Inter, "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-width: 320px; background: var(--bg); }
+    a { color: inherit; }
+
+    .shell { width: min(1220px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(223, 229, 224, .9);
+      background: rgba(255, 255, 255, .9);
+      backdrop-filter: blur(16px);
+    }
+    .topbar .shell { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 11px; }
+    .brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 11px; background: var(--green); color: #fff; font-weight: 800; }
+    .brand-copy { display: flex; flex-direction: column; line-height: 1.1; }
+    .brand-copy strong { font-size: 16px; letter-spacing: .08em; }
+    .brand-copy small { margin-top: 4px; color: var(--muted); font-size: 8px; letter-spacing: .13em; }
+    .doc-meta { color: var(--muted); font-size: 12px; }
+
+    .hero { padding: 76px 0 54px; }
+    .hero-panel {
+      padding: 52px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, .6fr);
+      gap: 50px;
+      align-items: center;
+      border: 1px solid #dbe6ff;
+      border-radius: 28px;
+      background: linear-gradient(135deg, #f3f7ff 0%, #ffffff 62%, #f6f2ff 100%);
+    }
+    .eyebrow { display: flex; align-items: center; gap: 8px; color: var(--green); font-size: 12px; font-weight: 750; letter-spacing: .08em; }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+    h1 { max-width: 760px; margin: 18px 0 16px; font-size: clamp(38px, 5vw, 66px); line-height: 1.08; letter-spacing: -.055em; }
+    .hero-copy > p { max-width: 760px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.8; }
+    .positioning { margin-top: 26px; padding: 16px 18px; border-left: 3px solid var(--green); border-radius: 0 12px 12px 0; background: rgba(255, 255, 255, .7); }
+    .positioning small { display: block; color: var(--green); font-size: 10px; font-weight: 750; letter-spacing: .08em; }
+    .positioning strong { display: block; margin-top: 7px; font-size: 16px; line-height: 1.55; }
+    .hero-orbit { position: relative; width: 280px; height: 280px; margin-left: auto; display: grid; place-items: center; border: 1px solid #d9d2ff; border-radius: 50%; box-shadow: 0 0 0 34px rgba(124, 92, 252, .04), 0 0 0 68px rgba(47, 107, 255, .025); }
+    .orbit-core { width: 128px; height: 128px; display: grid; place-items: center; align-content: center; border-radius: 50%; background: linear-gradient(135deg, var(--green), var(--blue)); color: #fff; text-align: center; }
+    .orbit-core strong { max-width: 96px; font-size: 20px; line-height: 1.15; }
+    .orbit-core small { margin-top: 5px; font-size: 9px; }
+    .orbit-node { position: absolute; min-width: 62px; padding: 9px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--green); font-size: 10px; font-weight: 700; text-align: center; }
+    .orbit-node:nth-of-type(1) { left: -5px; top: 50px; }
+    .orbit-node:nth-of-type(2) { right: -8px; top: 66px; }
+    .orbit-node:nth-of-type(3) { left: 30px; bottom: 23px; }
+    .orbit-node:nth-of-type(4) { right: 18px; bottom: 20px; }
+
+    .section { padding: 42px 0; }
+    .section + .section { border-top: 1px solid var(--line); }
+    .section-head { margin-bottom: 24px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+    .section-index { color: var(--green); font-size: 11px; font-weight: 750; letter-spacing: .12em; }
+    h2 { margin: 7px 0 0; font-size: clamp(28px, 3.5vw, 42px); letter-spacing: -.035em; }
+    .section-head p { max-width: 520px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+    [id] { scroll-margin-top: 88px; }
+    .platform-map-section { padding-top: 28px; }
+    .platform-map {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 190px minmax(0, 1fr);
+      grid-template-areas:
+        "teaching core capabilities"
+        "training core context";
+      gap: 18px 78px;
+      align-items: stretch;
+      border: 1px solid #dbe6ff;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(124, 92, 252, .09), transparent 24%),
+        linear-gradient(135deg, #f7faff 0%, #fff 48%, #faf8ff 100%);
+    }
+    .map-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .map-lines path { fill: none; stroke-width: 2; stroke-linecap: round; opacity: .42; }
+    .map-core {
+      grid-area: core;
+      position: relative;
+      z-index: 2;
+      width: 172px;
+      min-height: 172px;
+      margin: auto;
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 7px solid rgba(255, 255, 255, .92);
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), var(--blue));
+      box-shadow: 0 16px 40px rgba(47, 107, 255, .2), 0 0 0 1px rgba(47, 107, 255, .12);
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .map-core small { font-size: 8px; font-weight: 800; letter-spacing: .14em; opacity: .72; }
+    .map-core strong { margin-top: 10px; font-size: 18px; line-height: 1.25; }
+    .map-core span { margin-top: 8px; font-size: 9px; opacity: .8; }
+    .map-core:hover { transform: translateY(-3px); box-shadow: 0 20px 46px rgba(47, 107, 255, .26), 0 0 0 1px rgba(47, 107, 255, .16); }
+    .map-branch {
+      --branch: var(--green);
+      --branch-soft: var(--green-soft);
+      position: relative;
+      z-index: 1;
+      min-width: 0;
+      min-height: 220px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--branch);
+      border-radius: 17px;
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 8px 24px rgba(23, 32, 51, .045);
+    }
+    .map-teaching { grid-area: teaching; }
+    .map-training { grid-area: training; --branch: var(--teal); --branch-soft: var(--teal-soft); }
+    .map-capabilities { grid-area: capabilities; --branch: var(--blue); --branch-soft: var(--blue-soft); }
+    .map-context { grid-area: context; --branch: var(--coral); --branch-soft: var(--coral-soft); }
+    .map-branch-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .map-branch-title b { width: 31px; height: 31px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 9px; background: var(--branch-soft); color: var(--branch); font-size: 10px; }
+    .map-branch-title strong { font-size: 15px; }
+    .map-branch > p { margin: 10px 0 14px; color: var(--muted); font-size: 10px; line-height: 1.6; }
+    .map-nodes { margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 7px; list-style: none; }
+    .map-nodes li { display: contents; }
+    .map-nodes a {
+      flex: 1 1 118px;
+      min-width: 0;
+      padding: 9px 10px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      background: var(--branch-soft);
+      color: var(--ink);
+      font-size: 9px;
+      font-weight: 680;
+      line-height: 1.35;
+      text-align: center;
+      text-decoration: none;
+      transition: border-color .18s ease, color .18s ease, transform .18s ease;
+    }
+    .map-branch-title:hover, .map-nodes a:hover { color: var(--branch); }
+    .map-nodes a:hover { border-color: var(--branch); transform: translateY(-1px); }
+    .map-core:focus-visible, .map-branch-title:focus-visible, .map-nodes a:focus-visible, .map-transition:focus-visible { outline: 3px solid rgba(47, 107, 255, .28); outline-offset: 3px; }
+    .map-transition { width: fit-content; margin: 18px auto 0; display: flex; align-items: center; gap: 9px; color: var(--green); font-size: 11px; font-weight: 750; text-decoration: none; }
+    .map-transition span { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: var(--green-soft); transition: transform .18s ease; }
+    .map-transition:hover span { transform: translateY(2px); }
+
+    .position-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .position-card { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+    .position-card span { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 11px; background: var(--green-soft); color: var(--green); font-size: 12px; font-weight: 800; }
+    .position-card h3 { margin: 18px 0 8px; font-size: 18px; }
+    .position-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+    .architecture {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+    }
+    .arch-global { padding: 16px; display: flex; justify-content: center; gap: 22px; border-radius: 13px; background: var(--ink); color: #fff; font-size: 12px; font-weight: 700; }
+    .arch-global span { display: flex; align-items: center; gap: 7px; }
+    .arch-global span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #73d2a7; }
+    .arch-connector { width: 1px; height: 26px; margin: 0 auto; background: #b7c5bc; }
+    .arch-main { display: grid; grid-template-columns: 1.15fr .72fr .72fr; gap: 16px; }
+    .arch-workspace { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: #fafbf9; }
+    .arch-workspace > strong { font-size: 14px; }
+    .arch-workspace > p { margin: 5px 0 16px; color: var(--muted); font-size: 10px; }
+    .stage-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .stage { padding: 14px; border-radius: 11px; background: var(--green-soft); }
+    .stage b { display: block; color: var(--green); font-size: 20px; }
+    .stage strong { display: block; margin-top: 5px; font-size: 11px; }
+    .stage small { display: block; margin-top: 3px; color: var(--muted); font-size: 8px; line-height: 1.4; }
+    .training-block { height: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .training-block div { padding: 14px; display: flex; align-items: center; justify-content: center; border-radius: 11px; background: var(--coral-soft); color: var(--coral); font-size: 10px; font-weight: 700; text-align: center; }
+    .arch-foundation { padding: 16px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; border: 1px solid #cddfd4; border-radius: 14px; background: var(--surface-soft); }
+    .arch-foundation div { padding: 10px; border-radius: 9px; background: #fff; color: var(--green-dark); font-size: 10px; font-weight: 700; text-align: center; }
+
+    .loop { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); align-items: center; }
+    .loop-step { min-height: 92px; padding: 13px 8px; display: grid; place-items: center; align-content: center; border: 1px solid var(--line); border-radius: 12px; background: #fff; text-align: center; }
+    .loop-step b { width: 25px; height: 25px; display: grid; place-items: center; border-radius: 7px; background: var(--green-soft); color: var(--green); font-size: 9px; }
+    .loop-step strong { margin-top: 7px; font-size: 10px; line-height: 1.35; }
+    .loop-arrow { color: #98a69d; font-size: 18px; text-align: center; }
+
+    .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .role-card { overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
+    .role-head { padding: 22px 24px; display: flex; align-items: center; gap: 12px; background: var(--surface-soft); }
+    .role-head span { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: var(--green); color: #fff; font-size: 12px; font-weight: 800; }
+    .role-head h3 { margin: 0; font-size: 20px; }
+    .role-head p { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+    .role-functions { padding: 10px 22px 22px; }
+    .role-function { padding: 15px 0; display: grid; grid-template-columns: 30px 78px 1fr; gap: 10px; border-bottom: 1px solid var(--line); }
+    .role-function:last-child { border-bottom: 0; }
+    .role-function > b { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; background: var(--green-soft); color: var(--green); }
+    .role-function > strong { padding-top: 6px; font-size: 12px; }
+    .role-function p { margin: 3px 0 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; }
+    .feature-card { min-height: 240px; padding: 23px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 17px; background: #fff; }
+    .feature-card .tag { align-self: flex-start; padding: 5px 8px; border-radius: 6px; background: var(--green-soft); color: var(--green); font-size: 9px; font-weight: 750; }
+    .feature-card:nth-child(3n+2) .tag { background: var(--blue-soft); color: var(--blue); }
+    .feature-card:nth-child(3n) .tag { background: var(--amber-soft); color: var(--amber); }
+    .feature-card h3 { margin: 15px 0 8px; font-size: 17px; }
+    .feature-card > p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+    .feature-card dl { margin: auto 0 0; padding-top: 16px; }
+    .feature-card dl div { padding: 7px 0; display: grid; grid-template-columns: 56px 1fr; gap: 8px; border-top: 1px solid var(--line); font-size: 9px; }
+    .feature-card dt { color: var(--muted); }
+    .feature-card dd { margin: 0; font-weight: 650; }
+
+    .task-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .task-chain { padding: 18px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+    .task-chain-head { display: flex; align-items: center; gap: 9px; }
+    .task-chain-head span { width: 31px; height: 31px; display: grid; place-items: center; border-radius: 9px; background: var(--ink); color: #fff; font-size: 9px; }
+    .task-chain h3 { margin: 0; font-size: 14px; }
+    .task-chain ol { margin: 16px 0 0; padding: 0; list-style: none; counter-reset: task; }
+    .task-chain li { position: relative; padding: 10px 0 10px 27px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.45; counter-increment: task; }
+    .task-chain li::before { content: counter(task); position: absolute; left: 0; top: 9px; width: 19px; height: 19px; display: grid; place-items: center; border-radius: 6px; background: var(--green-soft); color: var(--green); font-size: 8px; font-weight: 800; }
+
+    .matrix-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+    table { width: 100%; border-collapse: collapse; min-width: 780px; }
+    th, td { padding: 15px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: #f1f5f2; color: var(--green-dark); font-size: 10px; letter-spacing: .04em; }
+    td { color: var(--muted); font-size: 10px; line-height: 1.6; }
+    td strong { color: var(--ink); }
+    tr:last-child td { border-bottom: 0; }
+
+    .value-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .value-card { padding: 22px; border-radius: 16px; background: var(--ink); color: #fff; }
+    .value-card:nth-child(2) { background: var(--green); }
+    .value-card:nth-child(3) { background: var(--blue); }
+    .value-card:nth-child(4) { background: var(--coral); }
+    .value-card span { color: rgba(255,255,255,.65); font-size: 9px; letter-spacing: .1em; }
+    .value-card h3 { margin: 12px 0 8px; font-size: 17px; }
+    .value-card p { margin: 0; color: rgba(255,255,255,.72); font-size: 10px; line-height: 1.65; }
+
+    .boundary { padding: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+    .boundary h3 { margin: 0 0 12px; font-size: 15px; }
+    .boundary ul { margin: 0; padding-left: 18px; }
+    .boundary li { margin: 8px 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .boundary .included h3 { color: var(--green); }
+    .boundary .excluded h3 { color: var(--coral); }
+
+    footer { margin-top: 50px; padding: 34px 0; border-top: 1px solid var(--line); background: #fff; }
+    footer .shell { display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 10px; }
+    footer strong { color: var(--ink); }
+
+    @media (max-width: 900px) {
+      .hero-panel { grid-template-columns: 1fr; }
+      .hero-orbit { display: none; }
+      .platform-map { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "core core" "teaching capabilities" "training context"; gap: 16px; }
+      .map-lines { display: none; }
+      .map-core { width: min(100%, 340px); min-height: auto; border-width: 5px; border-radius: 22px; }
+      .arch-main, .role-grid { grid-template-columns: 1fr; }
+      .position-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+      .task-map, .value-grid { grid-template-columns: repeat(2, 1fr); }
+      .loop { grid-template-columns: repeat(5, minmax(100px, 1fr)); gap: 8px; overflow-x: auto; }
+      .loop-arrow { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .shell { width: min(100% - 24px, 1220px); }
+      .doc-meta { display: none; }
+      .hero { padding-top: 32px; }
+      .hero-panel { padding: 26px 20px; border-radius: 20px; }
+      h1 { font-size: 38px; }
+      .hero-copy > p { font-size: 13px; }
+      .section { padding: 32px 0; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .platform-map { padding: 14px; grid-template-columns: 1fr; grid-template-areas: "core" "teaching" "training" "capabilities" "context"; }
+      .map-core { width: 100%; padding: 20px; }
+      .map-core strong { font-size: 17px; }
+      .map-branch { min-height: auto; padding: 17px; }
+      .map-nodes a { flex-basis: 130px; }
+      .position-grid, .feature-grid, .task-map, .value-grid, .boundary { grid-template-columns: 1fr; }
+      .architecture { padding: 15px; }
+      .arch-global { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .stage-row { grid-template-columns: repeat(2, 1fr); }
+      .arch-foundation { grid-template-columns: repeat(2, 1fr); }
+      .loop { display: flex; overflow-x: auto; padding-bottom: 8px; }
+      .loop-step { min-width: 120px; }
+      .role-function { grid-template-columns: 30px 1fr; }
+      .role-function > div { grid-column: 2; }
+      footer .shell { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .map-core, .map-nodes a, .map-transition span { transition: none; }
+    }
+
+    @media print {
+      :root { --bg: #fff; }
+      .topbar { position: static; }
+      .hero { padding-top: 32px; break-after: page; page-break-after: always; }
+      .platform-map-section { break-before: page; page-break-before: always; }
+      .platform-map { padding: 18px; gap: 12px; }
+      .map-core { min-height: 130px; padding: 16px; }
+      .map-branch { min-height: 190px; padding: 14px; }
+      .map-branch > p { margin: 7px 0 10px; }
+      .map-nodes a { padding: 6px 8px; }
+      .hero-panel, .platform-map, .position-card, .architecture, .role-card, .feature-card, .task-chain, .matrix-wrap, .boundary { break-inside: avoid; }
+      .map-lines { display: none; }
+      .section { break-before: auto; }
+    }
+
+    /* 明亮教学配色：纯白画布，教、学、测、评使用清晰独立的功能色 */
+    .topbar { border-color: var(--line); }
+    .brand-mark { background: linear-gradient(135deg, var(--green), var(--blue)); }
+    .position-card:nth-child(2) span { background: var(--teal-soft); color: var(--teal); }
+    .position-card:nth-child(3) span { background: var(--blue-soft); color: var(--blue); }
+    .arch-global { background: linear-gradient(90deg, var(--green), var(--blue)); }
+    .arch-global span::before { background: #fff; }
+    .arch-workspace { background: #f8faff; }
+    .stage:nth-child(1) { background: var(--green-soft); }
+    .stage:nth-child(1) b { color: var(--green); }
+    .stage:nth-child(2) { background: var(--teal-soft); }
+    .stage:nth-child(2) b { color: var(--teal); }
+    .stage:nth-child(3) { background: var(--blue-soft); }
+    .stage:nth-child(3) b { color: var(--blue); }
+    .stage:nth-child(4) { background: var(--coral-soft); }
+    .stage:nth-child(4) b { color: var(--coral); }
+    .training-block div:nth-child(1) { background: var(--amber-soft); color: var(--amber); }
+    .training-block div:nth-child(2) { background: var(--coral-soft); color: var(--coral); }
+    .arch-foundation { border-color: #dbe6ff; background: #f5f8ff; }
+    .arch-foundation div:nth-child(1) { color: var(--green); }
+    .arch-foundation div:nth-child(2) { color: var(--teal); }
+    .arch-foundation div:nth-child(3) { color: var(--blue); }
+    .arch-foundation div:nth-child(4) { color: var(--coral); }
+    .loop-step:nth-child(4n+3) b { background: var(--teal-soft); color: var(--teal); }
+    .loop-step:nth-child(4n+5) b { background: var(--blue-soft); color: var(--blue); }
+    .loop-step:nth-child(4n+7) b { background: var(--coral-soft); color: var(--coral); }
+    .role-card:nth-child(2) .role-head span { background: var(--teal); }
+    .role-head { background: #f7f9ff; }
+    .role-card:nth-child(2) .role-head { background: var(--teal-soft); }
+    .role-function:nth-child(3)>b { background: var(--teal-soft); color: var(--teal); }
+    .role-function:nth-child(4)>b { background: var(--blue-soft); color: var(--blue); }
+    .role-function:nth-child(5)>b { background: var(--coral-soft); color: var(--coral); }
+    .feature-card:nth-child(4n+2) .tag { background: var(--teal-soft); color: var(--teal); }
+    .feature-card:nth-child(4n+3) .tag { background: var(--blue-soft); color: var(--blue); }
+    .feature-card:nth-child(4n) .tag { background: var(--amber-soft); color: var(--amber); }
+    .task-chain:nth-child(1) .task-chain-head span { background: var(--green); }
+    .task-chain:nth-child(2) .task-chain-head span { background: var(--teal); }
+    .task-chain:nth-child(3) .task-chain-head span { background: var(--blue); }
+    .task-chain:nth-child(4) .task-chain-head span { background: var(--coral); }
+    th { background: #f3f7ff; color: var(--green-dark); }
+    .value-card:nth-child(1) { background: var(--green); }
+    .value-card:nth-child(2) { background: var(--teal); }
+    .value-card:nth-child(3) { background: var(--blue); }
+    .value-card:nth-child(4) { background: var(--coral); }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell">
+      <div class="brand">
+        <span class="brand-mark">Q</span>
+        <span class="brand-copy"><strong>启境</strong><small>AI LEARNING OS</small></span>
+      </div>
+      <span class="doc-meta">平台结构、定位与核心功能说明 · 2026-07-15</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-panel">
+        <div class="hero-copy">
+          <span class="eyebrow">AI 通识教育与培训一体化平台</span>
+          <h1>让知识、助教、测评与成长形成一个连续闭环。</h1>
+          <p>“启境”以课程知识为底座，将教师教学、教师个人成长、学生学习、学校教学运行、多元测评、诊断反馈、教师 AI 研究和可信 AI 治理连接在同一套系统中。平台不以堆叠 AI 工具为目标，而是帮助教师、学生和教学管理者完成真实任务，并让每一次操作产生可追踪、可复用、可评价的数据。</p>
+          <div class="positioning">
+            <small>一句话定位</small>
+            <strong>面向师生教学、教师成长与学校教学运行的“教、学、测、评、研、练、管”一体化 Learning OS。</strong>
+          </div>
+        </div>
+        <div class="hero-orbit" aria-label="平台五项核心能力">
+          <div class="orbit-core"><strong>AI 学习操作系统</strong><small>Knowledge to Action</small></div>
+          <span class="orbit-node">教</span>
+          <span class="orbit-node">学</span>
+          <span class="orbit-node">测评</span>
+          <span class="orbit-node">实训</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section platform-map-section" id="platform-map" aria-labelledby="platform-map-title">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">00 · PLATFORM MAP</span><h2 id="platform-map-title">全局功能地图</h2></div>
+          <p>从平台全局先看功能如何分布，再进入后续章节了解角色、能力、任务与数据之间的关系。</p>
+        </div>
+
+        <nav class="platform-map" aria-label="启境平台全局功能导航">
+          <svg class="map-lines" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M500 260 C455 260 448 132 388 132" stroke="#2f6bff" />
+            <path d="M500 260 C455 260 448 388 388 388" stroke="#0f9f8f" />
+            <path d="M500 260 C545 260 552 132 612 132" stroke="#7c5cfc" />
+            <path d="M500 260 C545 260 552 388 612 388" stroke="#f26f5b" />
+          </svg>
+
+          <a class="map-core" href="#positioning">
+            <small>GLOBAL MAP</small>
+            <strong>启境 AI<br />Learning OS</strong>
+            <span>教 · 学 · 测 · 评 · 研 · 练</span>
+          </a>
+
+          <article class="map-branch map-teaching">
+            <a class="map-branch-title" href="#architecture"><b>01</b><strong>课程教学空间</strong></a>
+            <p>教师负责组织与决策，学生负责学习与反馈，共享连续的教学数据。</p>
+            <ul class="map-nodes">
+              <li><a href="#roles">教师视角</a></li>
+              <li><a href="#roles">学生视角</a></li>
+              <li><a href="#roles">教 · 组织导学</a></li>
+              <li><a href="#roles">学 · 个性学习</a></li>
+              <li><a href="#core-loop">测 · 命题作答</a></li>
+              <li><a href="#core-loop">评 · 诊断行动</a></li>
+            </ul>
+          </article>
+
+          <article class="map-branch map-training">
+            <a class="map-branch-title" href="#training"><b>02</b><strong>独立自由实训</strong></a>
+            <p>不依赖课程发布，以任务链提升 AI 能力并持续沉淀个人作品。</p>
+            <ul class="map-nodes">
+              <li><a href="#training">培训任务地图</a></li>
+              <li><a href="#training">十三类共享 AI 工具</a></li>
+              <li><a href="#roles">教师 AI 研究</a></li>
+              <li><a href="#training">个人作品沉淀</a></li>
+              <li><a href="#value">教师能力报告</a></li>
+            </ul>
+          </article>
+
+          <article class="map-branch map-capabilities">
+            <a class="map-branch-title" href="#capabilities"><b>03</b><strong>核心能力链</strong></a>
+            <p>从课程知识出发，连接助教、命题、评价、画像与补学。</p>
+            <ul class="map-nodes">
+              <li><a href="#capabilities">课程知识库</a></li>
+              <li><a href="#capabilities">知识图谱</a></li>
+              <li><a href="#capabilities">AI 助教</a></li>
+              <li><a href="#capabilities">命题与题库</a></li>
+              <li><a href="#capabilities">实训与组卷</a></li>
+              <li><a href="#capabilities">AI 批改</a></li>
+              <li><a href="#capabilities">画像与补学</a></li>
+            </ul>
+          </article>
+
+          <article class="map-branch map-context">
+            <a class="map-branch-title" href="#architecture"><b>04</b><strong>平台上下文与数据</strong></a>
+            <p>统一课程环境、角色边界与学习证据，为各类功能提供共享基础。</p>
+            <ul class="map-nodes">
+              <li><a href="#architecture">当前课程与班级</a></li>
+              <li><a href="#permissions">角色视角与权限</a></li>
+              <li><a href="#architecture">学习与任务数据</a></li>
+              <li><a href="#boundary">模拟 AI 与演示重置</a></li>
+            </ul>
+          </article>
+        </nav>
+
+        <a class="map-transition" href="#positioning">从全局总览进入详细说明 <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <section class="section" id="positioning">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">01 · PRODUCT POSITIONING</span><h2>平台定位</h2></div>
+          <p>平台同时服务课程教学、教师个人成长、教师研究和 AI 能力培训，但始终以“完成任务、沉淀证据、形成改进”为共同逻辑。</p>
+        </div>
+        <div class="position-grid">
+          <article class="position-card"><span>教</span><h3>教师的智能教学工作台</h3><p>帮助教师组织课堂、建设课程知识底座、搭建 AI 助教、设计测评，并通过数据发现真实教学问题。</p></article>
+          <article class="position-card"><span>学</span><h3>学生的个性化学习空间</h3><p>围绕知识图谱、学习记录、作品迭代和 AI 助教，为每位学生提供不同的学习路径和下一步任务。</p></article>
+          <article class="position-card"><span>长</span><h3>教师的 AI 成长空间</h3><p>在教师身份下完成摸底、培训计划、课程学习、自主路径、实训与复测，形成可解释的五维能力档案。</p></article>
+          <article class="position-card"><span>研</span><h3>教师的 AI 研究工作台</h3><p>围绕教学问题组合深度研究、文献证据、数据分析、Dify 与 Vibe Coding，形成可追溯、可复核的研究成果。</p></article>
+          <article class="position-card"><span>管</span><h3>学校教学运行管理空间</h3><p>以课程、班级和匿名学习证据发现问题，完成预警交办、教师干预、学生补学与状态回流。</p></article>
+          <article class="position-card"><span>信</span><h3>跨流程可信 AI 治理</h3><p>统一来源、权限、匿名、版本、置信度、证据充分度、人工复核和模拟审计记录。</p></article>
+          <article class="position-card"><span>练</span><h3>AI 能力的任务化培训平台</h3><p>把知识库、智能体、数字人、命题、组卷和批改转化为有前置、有产出、有评价的实训任务。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="architecture">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">02 · INFORMATION ARCHITECTURE</span><h2>平台整体结构</h2></div>
+          <p>教师身份提供“教学工作 / 我的成长”双模式，学生完成个人教、学、测、评闭环，教学管理者拥有独立的五任务面。三类角色使用集中权限规则，管理者只访问聚合与匿名教学数据。</p>
+        </div>
+        <div class="architecture">
+          <div class="arch-global"><span>课程 / 班级 / 个人成长独立上下文</span><span>教师 / 学生 / 教学管理者</span><span>统一证据与任务回流</span><span>一键重置演示</span></div>
+          <div class="arch-connector"></div>
+          <div class="arch-main">
+            <section class="arch-workspace">
+              <strong>课程教学空间</strong><p>不同角色都拥有教、学、测、评，但功能目标和权限不同。</p>
+              <div class="stage-row">
+                <div class="stage"><b>教</b><strong>组织与导学</strong><small>课堂、知识底座、AI 助教</small></div>
+                <div class="stage"><b>学</b><strong>学习与观察</strong><small>个性路径、学情、学生画像</small></div>
+                <div class="stage"><b>测</b><strong>命题与作答</strong><small>出题、组卷、批改、测评</small></div>
+                <div class="stage"><b>评</b><strong>诊断与行动</strong><small>报告、建议、补学回流</small></div>
+              </div>
+            </section>
+            <section class="arch-workspace">
+              <strong>教师个人成长</strong><p>教师身份不变，使用独立的课程、路径、实训与能力数据。</p>
+              <div class="training-block"><div>AI 摸底</div><div>培训计划</div><div>自主学习</div><div>成长复测</div></div>
+            </section>
+            <section class="arch-workspace">
+              <strong>教师 AI 研究</strong><p>仅教师可见，围绕研究项目组织证据、工具与成果。</p>
+              <div class="training-block"><div>研究项目</div><div>科研智能体</div><div>成果归档</div><div>伦理复核</div></div>
+            </section>
+            <section class="arch-workspace">
+              <strong>独立自由实训</strong><p>不依赖课程发布，不影响课程成绩。</p>
+              <div class="training-block"><div>培训任务地图</div><div>十三类 AI 工具</div><div>个人作品沉淀</div><div>教师能力报告</div></div>
+            </section>
+          </div>
+          <div class="arch-connector"></div>
+          <div class="arch-foundation"><div>课程知识库</div><div>课程知识图谱</div><div>统一模拟 AI 服务</div><div>学习与测评数据</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="core-loop">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">03 · CORE LOOP</span><h2>培训能力闭环</h2></div>
+          <p>每个模块都不是孤立入口，上游产物会直接成为下游能力的输入，最终回到学生补学和教师改进。</p>
+        </div>
+        <div class="loop" aria-label="平台培训能力闭环">
+          <div class="loop-step"><b>01</b><strong>课程知识库</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>02</b><strong>知识图谱</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>03</b><strong>AI 助教</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>04</b><strong>智能出题</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>05</b><strong>课程题库</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>06</b><strong>实训方案</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>07</b><strong>智能组卷</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>08</b><strong>AI 批改</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>09</b><strong>学生画像</strong></div><div class="loop-arrow">→</div>
+          <div class="loop-step"><b>10</b><strong>补学任务</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roles">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">04 · ROLE WORKSPACES</span><h2>三角色功能结构</h2></div>
+          <p>教师负责组织、配置和复核；学生负责理解、实践和反馈；教学管理者负责聚合观察、匿名下钻和预警交办。三类角色共享教学状态，但不共享越权入口。</p>
+        </div>
+        <div class="role-grid">
+          <article class="role-card">
+            <header class="role-head"><span>师</span><div><h3>教师视角</h3><p>教学工作与个人成长双模式、测评诊断与 AI 研究</p></div></header>
+            <div class="role-functions">
+              <div class="role-function"><b>教</b><strong>智能教学</strong><div><p>编排课堂流程，管理课程知识底座与知识图谱，搭建和发布课程 AI 助教。</p></div></div>
+              <div class="role-function"><b>学</b><strong>学情观察</strong><div><p>观察学习进度、助教高频问题、知识盲区和多源学生画像，生成针对性练习。</p></div></div>
+              <div class="role-function"><b>测</b><strong>测评管理</strong><div><p>完成智能出题、题库管理、实训设计、智能组卷、AI 批改和人工评分复核。</p></div></div>
+              <div class="role-function"><b>评</b><strong>教学诊断</strong><div><p>查看班级、个人、AI 助教运营和教师 AI 能力报告，并生成后续行动。</p></div></div>
+              <div class="role-function"><b>长</b><strong>我的成长</strong><div><p>完成 AI 摸底、培训计划、课程与自主路径学习、实训回流和结业复测。</p></div></div>
+              <div class="role-function"><b>研</b><strong>AI 研究</strong><div><p>管理研究项目，组合共享 AI 工具完成文献证据、数据分析、干预原型、成果与伦理复核。</p></div></div>
+            </div>
+          </article>
+          <article class="role-card">
+            <header class="role-head"><span>管</span><div><h3>教学管理者视角</h3><p>运行总览、课程班级、学习质量、测评运行与 AI 应用</p></div></header>
+            <div class="role-functions">
+              <div class="role-function"><b>总</b><strong>运行总览</strong><div><p>查看两门课程、四个班级和四类确定性预警的优先待办。</p></div></div>
+              <div class="role-function"><b>课</b><strong>课程班级</strong><div><p>按全校、院系、课程和班级观察教学运行状态。</p></div></div>
+              <div class="role-function"><b>质</b><strong>学习质量</strong><div><p>观察参与、完成、目标掌握、难度匹配和干预效果。</p></div></div>
+              <div class="role-function"><b>测</b><strong>测评运行</strong><div><p>跟踪考试进度、匿名异常、复核积压与补学回流。</p></div></div>
+              <div class="role-function"><b>AI</b><strong>可信应用</strong><div><p>跟踪知识命中、低置信度回答、人工接管与 AI 评分复核。</p></div></div>
+            </div>
+          </article>
+          <article class="role-card">
+            <header class="role-head"><span>生</span><div><h3>学生视角</h3><p>课程导学、个性化学习、真实测评与成长反馈</p></div></header>
+            <div class="role-functions">
+              <div class="role-function"><b>教</b><strong>课程导学</strong><div><p>查看本课目标、课堂路线、学习资源、知识图谱和课前 AI 助教。</p></div></div>
+              <div class="role-function"><b>学</b><strong>个性化学习</strong><div><p>切换随堂学与课后学，使用 AI 助教，完成分层练习和作品迭代。</p></div></div>
+              <div class="role-function"><b>测</b><strong>我的测评</strong><div><p>完成随堂测、单元测、正式考试和实训任务，获得即时反馈与评分证据。</p></div></div>
+              <div class="role-function"><b>评</b><strong>成长报告</strong><div><p>查看成绩、知识掌握、能力变化、作品轨迹和个性化补学建议。</p></div></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="capabilities">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">05 · CORE CAPABILITIES</span><h2>各功能的核心作用</h2></div>
+          <p>以下能力共同构成课程培训的知识、交互、测评和反馈底座。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="tag">知识底座</span><h3>课程知识库</h3><p>把课程大纲、讲义、案例和评分量规转换为可检索、可引用的统一知识源。</p><dl><div><dt>核心输入</dt><dd>课程资料与评价标准</dd></div><div><dt>核心产出</dt><dd>可追溯知识片段与质量报告</dd></div><div><dt>主要价值</dt><dd>减少 AI 回答、出题和评分的无依据生成</dd></div></dl></article>
+          <article class="feature-card"><span class="tag">知识结构</span><h3>课程知识图谱</h3><p>把知识点、前置关系、难度、题目和学生掌握状态连接成可操作的学习地图。</p><dl><div><dt>教师使用</dt><dd>调整关系、查看覆盖与班级掌握</dd></div><div><dt>学生使用</dt><dd>定位当前节点和下一步路径</dd></div><div><dt>主要价值</dt><dd>让课程结构和学情变化可视化</dd></div></dl></article>
+          <article class="feature-card"><span class="tag">课程陪伴</span><h3>AI 助教</h3><p>融合知识库、智能体规则和数字人形态，提供课前、课中、课后的课程答疑。</p><dl><div><dt>核心原则</dt><dd>有引用、懂边界、可人工接管</dd></div><div><dt>学生能力</dt><dd>解释、举例、错题讲解、生成练习</dd></div><div><dt>教师能力</dt><dd>配置、测试、发布与运营分析</dd></div></dl></article>
+          <article class="feature-card"><span class="tag">测评生产</span><h3>智能出题</h3><p>根据知识点、题型、难度和认知层级生成带答案、解析、来源与评分量规的题目。</p><dl><div><dt>支持题型</dt><dd>客观题、简答、案例与创作实操题</dd></div><div><dt>审核方式</dt><dd>编辑、重生成、删除、批量入库</dd></div><div><dt>主要价值</dt><dd>提升命题效率并保留教师审核权</dd></div></dl></article>
+          <article class="feature-card"><span class="tag">测评资产</span><h3>课程题库</h3><p>沉淀 AI 生成、教师创建和历史题目，并记录知识点、效果、版本和使用状态。</p><dl><div><dt>筛选维度</dt><dd>题型、知识点、难度、来源</dd></div><div><dt>质量数据</dt><dd>正确率、使用次数、相似题提示</dd></div><div><dt>主要价值</dt><dd>为组卷提供可复用的可靠资产</dd></div></dl></article>
+          <article class="feature-card"><span class="tag">实践教学</span><h3>实训方案与实训题</h3><p>从技能目标生成实训环境、步骤、检查点、提交物和过程评分量规。</p><dl><div><dt>示范任务</dt><dd>文生图视觉控制综合实训</dd></div><div><dt>提交内容</dt><dd>提示词、三版作品、迭代说明</dd></div><div><dt>主要价值</dt><dd>让开放实践也具备清晰评价标准</dd></div></dl></article>
+          <article class="feature-card"><span class="tag">测评组织</span><h3>智能组卷</h3><p>先定义考试蓝图，再按照题型、知识覆盖、难度和评分主体自动匹配题目。</p><dl><div><dt>评分结构</dt><dd>机器 30 + AI 50 + 人工 20</dd></div><div><dt>质量检查</dt><dd>总分、覆盖、难度、相似题、量规</dd></div><div><dt>主要价值</dt><dd>让试卷结构与课程目标保持一致</dd></div></dl></article>
+          <article class="feature-card"><span class="tag">评价执行</span><h3>AI 批改与人工复核</h3><p>机器处理确定性题目，AI 提供主观评价证据，教师保留最终分数和评语。</p><dl><div><dt>查看方式</dt><dd>按学生、题目、知识点和异常项</dd></div><div><dt>证据内容</dt><dd>评分维度、作品版本、置信度</dd></div><div><dt>主要价值</dt><dd>兼顾批改效率、透明度和教师判断</dd></div></dl></article>
+          <article class="feature-card"><span class="tag">诊断行动</span><h3>学生画像与补学</h3><p>综合测评、练习、作品、助教互动、学习时长和教师评价形成动态成长轨迹。</p><dl><div><dt>报告对象</dt><dd>班级、个人和知识点</dd></div><div><dt>建议层级</dt><dd>立即补强、继续巩固、拓展挑战</dd></div><div><dt>主要价值</dt><dd>让报告直接生成下一项学习任务</dd></div></dl></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="training">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">06 · TRAINING SYSTEM</span><h2>培训任务体系</h2></div>
+          <p>自由实训从“工具广场”升级为四条能力链。每项任务具有难度、标准时长、前置条件、输入与产出。</p>
+        </div>
+        <div class="task-map">
+          <article class="task-chain"><div class="task-chain-head"><span>01</span><h3>知识底座链</h3></div><ol><li>创建课程知识库</li><li>检索与优化知识库</li><li>生成课程知识图谱</li></ol></article>
+          <article class="task-chain"><div class="task-chain-head"><span>02</span><h3>AI 助教链</h3></div><ol><li>配置课程智能体</li><li>配置数字人形态</li><li>测试并发布 AI 助教</li></ol></article>
+          <article class="task-chain"><div class="task-chain-head"><span>03</span><h3>命题组卷链</h3></div><ol><li>智能生成课程题目</li><li>设计实训方案与实训题</li><li>按照测评蓝图智能组卷</li></ol></article>
+          <article class="task-chain"><div class="task-chain-head"><span>04</span><h3>批改分析链</h3></div><ol><li>AI 批改与教师复核</li><li>综合数据生成学情分析</li></ol></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="permissions">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">07 · PERMISSION MATRIX</span><h2>角色与权限边界</h2></div>
+          <p>角色切换改变的是任务目标、可见数据和操作权限，而不是简单替换头像或页面标题。权限判断集中维护，并同时约束入口渲染与状态调用。</p>
+        </div>
+        <div class="matrix-wrap">
+          <table>
+            <thead><tr><th>能力</th><th>教师角色</th><th>学生角色</th><th>教学管理者</th><th>设计原则</th></tr></thead>
+            <tbody>
+              <tr><td><strong>知识库</strong></td><td>管理资料、解析、检索测试、质量优化</td><td>不可进入管理页面，只能查看回答引用</td><td>仅查看匿名命中率与低置信度指标</td><td>保护课程知识资产和配置权限</td></tr>
+              <tr><td><strong>知识图谱</strong></td><td>调整节点、关系、难度和题目覆盖</td><td>查看自己的掌握状态与学习路径</td><td>仅查看聚合目标掌握</td><td>共享课程结构，区分教学与学习视角</td></tr>
+              <tr><td><strong>AI 助教</strong></td><td>搭建、配置、测试、发布和运营</td><td>对话、追问、生成练习和查看引用</td><td>查看匿名命中、低置信度与人工接管</td><td>教师定义行为，学生获得陪伴</td></tr>
+              <tr><td><strong>命题组卷</strong></td><td>出题、审核、题库管理、组卷和发布</td><td>只查看并完成已发布测评</td><td>只看进度、异常与复核积压</td><td>学生不得接触答案和组卷规则</td></tr>
+              <tr><td><strong>评分报告</strong></td><td>修改 AI 分、人工评分、查看班级诊断</td><td>查看自己的成绩、证据和建议</td><td>查看聚合与匿名明细，不可改分</td><td>教师保留最终评价权，学生获得透明反馈</td></tr>
+              <tr><td><strong>教师成长</strong></td><td>使用教师学员课程、摸底、培训路径、实训与五维报告</td><td>无入口，不可查看教师成长数据</td><td>无入口，不可查看答案、笔记或计划</td><td>教学班级与个人课程上下文隔离</td></tr>
+              <tr><td><strong>AI 研究</strong></td><td>管理课题、证据、共享工具、成果和伦理复核</td><td>无入口，不可查看教师研究数据</td><td>无入口，不可查看研究草稿与配置</td><td>研究结论可追溯，学生数据必须匿名</td></tr>
+              <tr><td><strong>自由实训</strong></td><td>完成培训任务并形成教师能力报告</td><td>自由使用工具并沉淀个人作品</td><td>无入口，只接收匿名教学应用汇总</td><td>实训结果不影响课程成绩</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="value">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">08 · PRODUCT VALUE</span><h2>核心产品价值</h2></div>
+          <p>平台的先进性不来自更多按钮，而来自知识、任务、证据和行动之间的连续关系。</p>
+        </div>
+        <div class="value-grid">
+          <article class="value-card"><span>01 · CONNECTED</span><h3>能力真正串联</h3><p>知识库同时服务助教、出题和评分，测评结果又反向更新图谱与补学任务。</p></article>
+          <article class="value-card"><span>02 · EVIDENCE</span><h3>AI 结果有依据</h3><p>回答、题目和评分都展示来源、知识点、量规与置信度，方便教师复核。</p></article>
+          <article class="value-card"><span>03 · PERSONAL</span><h3>学习真正个性化</h3><p>系统根据薄弱节点、错误记录、作品迭代和助教互动推荐不同的下一步。</p></article>
+          <article class="value-card"><span>04 · ACTIONABLE</span><h3>报告可以行动</h3><p>诊断不是终点，可直接生成材料、练习、补学路径或教师下一项培训任务。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="boundary">
+      <div class="shell">
+        <div class="section-head">
+          <div><span class="section-index">09 · DEMO BOUNDARY</span><h2>首版 Demo 边界</h2></div>
+          <p>当前版本用于验证产品结构、交互闭环和视觉表达，所有 AI 结果采用确定性模拟数据。</p>
+        </div>
+        <div class="boundary">
+          <div class="included"><h3>当前重点体现</h3><ul><li>教师、学生、教学管理者三角色及集中权限边界</li><li>视觉设计主课程与 AI 创作伦理副课程的独立运行闭环</li><li>教师真实代表题摸底、七类能力证据、实训与研究回流</li><li>管理预警跨角色闭环、统一证据抽屉、低置信度复核与模拟审计</li></ul></div>
+          <div class="excluded"><h3>当前暂不实现</h3><ul><li>课程、视频、题目、量规的内容生产与真实文件上传</li><li>真实大模型、向量数据库、数字人和文件解析服务</li><li>真实学术数据库、科研管理系统、Dify、MCP 或编码代理接入</li><li>登录、组织权限、数据库、生产数据和考试防作弊</li></ul></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell"><span><strong>启境 AI Learning OS</strong> · 平台结构与功能说明</span><span>Demo 产品基线版本 1.7 · 2026-07-15</span></div>
+  </footer>
+</body>
+</html>

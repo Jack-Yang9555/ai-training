@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>高职 AI 通识课程教师备授课平台建设项目报价单</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #64748b;
+      --line: #dbe4f0;
+      --blue: #245eea;
+      --blue-soft: #eef4ff;
+      --cyan: #0f8f82;
+      --cyan-soft: #eafaf7;
+      --violet: #7457e8;
+      --violet-soft: #f2efff;
+      --orange: #e86d54;
+      --orange-soft: #fff1ed;
+      --amber: #d88b10;
+      --amber-soft: #fff7e7;
+    }
+    * { box-sizing: border-box; }
+    html { background: #e9eef5; color: var(--ink); font-family: "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; }
+    body { margin: 0; }
+    .page {
+      position: relative;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 10mm auto;
+      padding: 16mm 17mm 18mm;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(20, 35, 65, .10);
+      overflow: hidden;
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 5mm;
+      background: linear-gradient(90deg, var(--blue), var(--cyan), var(--violet));
+    }
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 4mm;
+      margin-bottom: 7mm;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 9pt;
+    }
+    .brand { color: var(--blue); font-weight: 700; letter-spacing: .6px; }
+    .page-no {
+      position: absolute;
+      right: 17mm;
+      bottom: 8mm;
+      color: #8090a8;
+      font-size: 8.5pt;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: 27pt; line-height: 1.28; letter-spacing: -.6px; margin-bottom: 5mm; }
+    h2 { font-size: 18pt; line-height: 1.35; margin-bottom: 5mm; color: #173b84; }
+    h3 { font-size: 12.5pt; margin: 6mm 0 3mm; }
+    p, li { font-size: 10pt; line-height: 1.72; }
+    ul, ol { margin: 2mm 0 4mm; padding-left: 6mm; }
+    li { margin-bottom: 1.2mm; }
+    .eyebrow {
+      color: var(--blue);
+      font-size: 10pt;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 5mm;
+    }
+    .lead { color: #40516c; font-size: 11.5pt; line-height: 1.8; }
+    .cover {
+      padding: 22mm 20mm 18mm;
+      display: flex;
+      flex-direction: column;
+    }
+    .cover::after {
+      content: "";
+      position: absolute;
+      width: 110mm;
+      height: 110mm;
+      right: -48mm;
+      top: 24mm;
+      border: 24mm solid var(--blue-soft);
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .cover-main { position: relative; z-index: 1; margin-top: 13mm; }
+    .cover .subtitle { color: var(--muted); font-size: 13pt; margin-bottom: 9mm; }
+    .total-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8mm;
+      align-items: center;
+      margin: 6mm 0 8mm;
+      padding: 6mm 8mm;
+      border: 1px solid #cddcff;
+      border-radius: 5mm;
+      background: linear-gradient(135deg, #f8fbff, var(--blue-soft));
+    }
+    .total-card span { color: var(--muted); font-size: 10pt; }
+    .total-card strong { display: block; color: var(--blue); font-size: 25pt; line-height: 1.2; }
+    .total-card .cn { color: var(--ink); font-size: 11pt; font-weight: 700; }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2mm 9mm;
+      padding: 5mm 7mm;
+      border: 1px solid var(--line);
+      border-radius: 4mm;
+    }
+    .meta-item { min-height: 8mm; border-bottom: 1px solid #edf1f7; padding: .5mm 0 1.5mm; }
+    .meta-item span { display: block; color: var(--muted); font-size: 8.5pt; margin-bottom: 1mm; }
+    .meta-item strong { font-size: 10.5pt; }
+    .cover-note {
+      margin-top: 7mm;
+      padding-top: 4mm;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 8.3pt;
+      line-height: 1.5;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4mm;
+      margin: 5mm 0 7mm;
+    }
+    .metric {
+      min-height: 28mm;
+      padding: 5mm;
+      border-radius: 4mm;
+      border: 1px solid var(--line);
+    }
+    .metric.blue { background: var(--blue-soft); border-color: #d7e3ff; }
+    .metric.cyan { background: var(--cyan-soft); border-color: #cdeee8; }
+    .metric.violet { background: var(--violet-soft); border-color: #ddd6ff; }
+    .metric.orange { background: var(--orange-soft); border-color: #f9d9d0; }
+    .metric strong { display: block; font-size: 19pt; line-height: 1.2; margin-bottom: 2mm; }
+    .metric span { color: #53627a; font-size: 9.5pt; line-height: 1.55; }
+    .callout {
+      margin: 5mm 0;
+      padding: 4mm 5mm;
+      border-left: 3px solid var(--blue);
+      background: #f7f9fc;
+      color: #35445e;
+      font-size: 9.5pt;
+      line-height: 1.7;
+    }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; margin: 3mm 0 5mm; }
+    th {
+      padding: 2.8mm 2.2mm;
+      color: #fff;
+      background: #294f99;
+      border: 1px solid #294f99;
+      font-size: 8.5pt;
+      line-height: 1.35;
+      text-align: left;
+    }
+    td {
+      padding: 2.7mm 2.2mm;
+      border: 1px solid var(--line);
+      font-size: 8.5pt;
+      line-height: 1.52;
+      vertical-align: top;
+      word-break: break-word;
+    }
+    tbody tr:nth-child(even) td { background: #f8fafc; }
+    .money, .number { text-align: right; white-space: nowrap; }
+    .center { text-align: center; }
+    .total-row td { color: #123a8a; background: var(--blue-soft) !important; font-weight: 700; }
+    .tag {
+      display: inline-block;
+      padding: .8mm 2mm;
+      border-radius: 99px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-size: 8pt;
+      font-weight: 700;
+    }
+    .section-strip {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      margin: 6mm 0 3mm;
+      color: #173b84;
+      font-size: 11.5pt;
+      font-weight: 700;
+    }
+    .section-strip::before {
+      content: "";
+      width: 3mm;
+      height: 3mm;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+    .architecture {
+      display: grid;
+      grid-template-columns: 1fr 11mm 1fr;
+      align-items: stretch;
+      margin: 5mm 0 7mm;
+    }
+    .arch-box {
+      padding: 5mm;
+      border: 1px solid var(--line);
+      border-radius: 4mm;
+      background: #fff;
+    }
+    .arch-box.local { border-top: 4px solid var(--cyan); }
+    .arch-box.cloud { border-top: 4px solid var(--violet); }
+    .arch-box h3 { margin-top: 0; }
+    .arrow { display: grid; place-items: center; color: var(--blue); font-size: 18pt; font-weight: 700; }
+    .timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2mm; margin: 5mm 0 7mm; }
+    .phase { padding: 4mm 3mm; border-radius: 3mm; background: #f3f6fa; border-top: 4px solid var(--blue); }
+    .phase:nth-child(2) { border-top-color: var(--cyan); }
+    .phase:nth-child(3) { border-top-color: var(--violet); }
+    .phase:nth-child(4) { border-top-color: var(--orange); }
+    .phase:nth-child(5) { border-top-color: var(--amber); }
+    .phase strong { display: block; font-size: 9pt; margin-bottom: 2mm; }
+    .phase span { color: var(--muted); font-size: 8pt; line-height: 1.45; }
+    .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm 6mm; }
+    .check {
+      padding: 3mm 4mm 3mm 9mm;
+      position: relative;
+      border-bottom: 1px solid #e8edf4;
+      font-size: 9pt;
+      line-height: 1.55;
+    }
+    .check::before {
+      content: "✓";
+      position: absolute;
+      left: 2mm;
+      top: 3mm;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12mm;
+      margin-top: 10mm;
+    }
+    .signature {
+      min-height: 60mm;
+      padding: 7mm;
+      border: 1px solid var(--line);
+      border-radius: 4mm;
+    }
+    .signature h3 { margin-top: 0; color: #173b84; }
+    .line { display: flex; gap: 3mm; margin: 5mm 0; color: var(--muted); font-size: 9pt; }
+    .line span:last-child { flex: 1; border-bottom: 1px solid #aeb9c8; }
+    .legal {
+      margin-top: 8mm;
+      padding: 5mm;
+      border: 1px solid #f0d7a4;
+      border-radius: 3mm;
+      background: var(--amber-soft);
+      font-size: 8.7pt;
+      line-height: 1.65;
+      color: #5b4a27;
+    }
+    .small { color: var(--muted); font-size: 8.5pt; line-height: 1.55; }
+    .compact { padding-top: 13mm; padding-bottom: 15mm; }
+    .compact .page-header { margin-bottom: 5mm; }
+    .compact h2 { margin-bottom: 3.5mm; }
+    .compact h3 { margin: 4mm 0 2mm; }
+    .compact p, .compact li { font-size: 9.2pt; line-height: 1.5; }
+    .compact ul, .compact ol { margin: 1.5mm 0 3mm; }
+    .compact li { margin-bottom: .8mm; }
+    .compact .summary-grid { gap: 3mm; margin: 3mm 0 4mm; }
+    .compact .metric { min-height: 23mm; padding: 4mm; }
+    .compact .metric strong { font-size: 17pt; }
+    .compact .metric span { font-size: 8.7pt; line-height: 1.4; }
+    .compact .callout { margin: 3mm 0; padding: 3mm 4mm; font-size: 8.7pt; line-height: 1.5; }
+    .compact table { margin: 2mm 0 3mm; }
+    .compact th { padding: 2.2mm 1.8mm; font-size: 8pt; }
+    .compact td { padding: 2.1mm 1.8mm; font-size: 8pt; line-height: 1.4; }
+    .compact .check { padding-top: 2mm; padding-bottom: 2mm; font-size: 8.5pt; }
+    .compact .check::before { top: 2mm; }
+    .compact .timeline { margin: 3mm 0 4mm; }
+    .compact .phase { padding: 3mm 2.5mm; }
+    .compact .legal { margin-top: 5mm; padding: 4mm; }
+    .compact .signature-grid { margin-top: 7mm; }
+    .compact .signature { min-height: 50mm; padding: 5mm; }
+    .compact .signature .line { margin: 3.5mm 0; }
+    @page { size: A4; margin: 0; }
+    @media print {
+      html, body { background: #fff; }
+      .page { margin: 0; box-shadow: none; page-break-after: always; }
+      .page:last-child { page-break-after: auto; }
+    }
+    @media (max-width: 900px) {
+      html { background: #fff; }
+      .page { width: 100%; min-height: auto; margin: 0; padding: 24px 20px 56px; box-shadow: none; }
+      .summary-grid, .meta-grid, .signature-grid, .checklist { grid-template-columns: 1fr; }
+      .architecture { grid-template-columns: 1fr; gap: 12px; }
+      .arrow { transform: rotate(90deg); }
+      .timeline { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-main">
+      <div class="eyebrow">FORMAL COMMERCIAL QUOTATION</div>
+      <h1>高职 AI 通识课程<br>教师备授课平台建设项目</h1>
+      <p class="subtitle">软件平台、混合部署、模型资源、实施培训及三年运维一体化报价</p>
+      <div class="total-card">
+        <div>
+          <span>含税报价总额</span>
+          <strong>¥ 2,000,000.00</strong>
+        </div>
+        <div class="cn">人民币贰佰万元整</div>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-item"><span>报价编号</span><strong>QJ-AILOS-20260731-01</strong></div>
+        <div class="meta-item"><span>报价日期</span><strong>2026 年 7 月 31 日</strong></div>
+        <div class="meta-item"><span>采购单位</span><strong>以正式合同及盖章信息为准</strong></div>
+        <div class="meta-item"><span>报价单位</span><strong>以正式合同及盖章信息为准</strong></div>
+        <div class="meta-item"><span>建设周期</span><strong>合同生效后 20 周</strong></div>
+        <div class="meta-item"><span>报价有效期</span><strong>30 个自然日</strong></div>
+        <div class="meta-item"><span>服务期限</span><strong>终验后 3 年，7×8 服务</strong></div>
+        <div class="meta-item"><span>适用规模</span><strong>100 名教师，峰值 80 人调用 AI</strong></div>
+      </div>
+    </div>
+    <div class="cover-note">
+      本报价为固定总价控制方案，已包含软件开发、硬件扩容、模型资源、实施、培训、税费和三年运维。税率及发票类型按合同签署时供应商纳税资质执行，含税总价不因税率变化而增加。
+    </div>
+    <div class="page-no">01 / 10</div>
+  </section>
+
+  <section class="page compact">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>项目报价摘要</span></div>
+    <h2>一、报价摘要与建设边界</h2>
+    <p class="lead">本项目面向 100 名高职教师，建设一套支持 48 课时 AI 通识课程备课、授课、测评、评价、知识库、AI 助教和实训研究的生产级平台。系统采用“校内业务与数据 + 云端模型弹性调用”的混合部署架构。</p>
+    <div class="summary-grid">
+      <div class="metric blue"><strong>100</strong><span>教师正式账号；本报价不包含学生直接调用模型的账号规模</span></div>
+      <div class="metric cyan"><strong>80</strong><span>峰值同时调用 AI 的教师人数；应用网关按 100 路在途请求能力设计</span></div>
+      <div class="metric violet"><strong>48 课时</strong><span>每门课程 16 个模块、24 次课，覆盖备课、授课、测评和复盘</span></div>
+      <div class="metric orange"><strong>3 年</strong><span>生成内容留存、模型资源池、软件维护和 7×8 技术服务</span></div>
+    </div>
+    <div class="callout"><strong>总体结论：</strong>在甲方已有机房、基础服务器、GPU、存储、防火墙、公网出口和固定 IP 的条件下，200 万元可支撑本项目建设。新增硬件重点用于业务集群、对象存储和独立备份，不重复采购大规模 GPU。</div>
+    <h3>1. 建设依据</h3>
+    <ul>
+      <li>《高职人工智能通识与职业应用》48 课时课程大纲。</li>
+      <li>100 名教师、100 个总账号、峰值 80 人同时调用 AI。</li>
+      <li>允许通过公网调用经甲方批准的云端模型，生成内容保存 3 年。</li>
+      <li>项目预算包含软件、硬件、模型费、实施、培训、税费和三年运维。</li>
+      <li>服务方式为 7×8，不提供 7×24 驻场或全天候值守。</li>
+    </ul>
+    <h3>2. 明确边界</h3>
+    <ul>
+      <li>当前高保真 Demo 作为功能和交互基线，正式交付需完成后端、数据库、权限、文件存储、模型网关、日志审计、备份和运维体系建设。</li>
+      <li>本报价按教师账号计算；学生如需直接登录并调用 AI，应另行扩容和报价。</li>
+      <li>不包含旗舰大模型全量私有化部署、模型训练、专属 GPU 集群和第三方等保测评机构费用。</li>
+    </ul>
+    <div class="page-no">02 / 10</div>
+  </section>
+
+  <section class="page">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>商务报价明细</span></div>
+    <h2>二、含税报价总表</h2>
+    <table>
+      <colgroup><col style="width:9%"><col style="width:25%"><col style="width:42%"><col style="width:11%"><col style="width:13%"></colgroup>
+      <thead><tr><th>序号</th><th>报价项</th><th>主要内容</th><th class="money">金额（万元）</th><th>占比</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><strong>平台软件产品化</strong></td><td>生产级前后端、教师工作台、课程备授课、知识库、AI 助教、测评评价、实训研究、管理运营和可信 AI 治理</td><td class="money">80.00</td><td>40.0%</td></tr>
+        <tr><td>2</td><td><strong>系统集成、安全与数据治理</strong></td><td>统一认证接口、模型网关、权限、审计、敏感信息治理、监控告警、备份集成和课程资源初始化</td><td class="money">25.00</td><td>12.5%</td></tr>
+        <tr><td>3</td><td><strong>硬件与备份扩容</strong></td><td>双应用/API 节点、对象存储节点、独立备份节点、10GbE 连接与必要配件，三年原厂或供应商质保</td><td class="money">25.00</td><td>12.5%</td></tr>
+        <tr><td>4</td><td><strong>三年模型与多模态资源池</strong></td><td>文本模型、图片、短视频、向量化、文档解析及企业并发资源；通过统一网关计量、路由和限额</td><td class="money">25.00</td><td>12.5%</td></tr>
+        <tr><td>5</td><td><strong>上线实施与教师培训</strong></td><td>部署、初始化、试点、管理员培训、教师应用培训、课程资源导入指导和上线保障</td><td class="money">15.00</td><td>7.5%</td></tr>
+        <tr><td>6</td><td><strong>三年 7×8 运维服务</strong></td><td>故障响应、巡检、备份核验、小版本升级、模型适配、使用报告和年度健康检查</td><td class="money">20.00</td><td>10.0%</td></tr>
+        <tr><td>7</td><td><strong>项目风险与价格波动预留</strong></td><td>用于模型价格、接口变化、必要适配和经双方确认的小范围需求调整，按变更单受控使用</td><td class="money">10.00</td><td>5.0%</td></tr>
+        <tr class="total-row"><td colspan="3">含税总价：人民币贰佰万元整</td><td class="money">200.00</td><td>100%</td></tr>
+      </tbody>
+    </table>
+    <div class="section-strip">报价说明</div>
+    <ol>
+      <li>上述金额均为含税价，包含完成约定建设内容所需的软件、设备、运输、安装、调试、实施、培训和三年服务。</li>
+      <li>硬件品牌和具体型号在合同技术附件中确定，但性能不得低于本报价单列出的最低配置。</li>
+      <li>模型资源采用预算池管理，按实际模型、输入输出 Tokens、多媒体次数和厂商结算规则扣减；平台提供按教师、课程、功能和模型的成本统计。</li>
+      <li>风险预留资金仅用于双方书面确认的项目内变化；未发生部分在结算或续期时按合同约定处理。</li>
+    </ol>
+    <div class="legal">本报价不以低价模型长期在售为前提。若模型厂商调整产品或价格，乙方应优先通过同等级替代模型、缓存、批处理和模型路由维持约定容量及核心体验；涉及明显超出资源池的新增使用量，由双方另行确认。</div>
+    <div class="page-no">03 / 10</div>
+  </section>
+
+  <section class="page compact">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>软件建设内容</span></div>
+    <h2>三、平台软件产品化明细</h2>
+    <table>
+      <colgroup><col style="width:9%"><col style="width:25%"><col style="width:51%"><col style="width:15%"></colgroup>
+      <thead><tr><th>序号</th><th>模块</th><th>交付范围</th><th class="money">金额（万元）</th></tr></thead>
+      <tbody>
+        <tr><td>1.1</td><td>基础平台与账号权限</td><td>100 名教师账号、角色权限、工作台、课程上下文、任务中心、消息与个人资料；预留标准统一身份接口</td><td class="money">12.00</td></tr>
+        <tr><td>1.2</td><td>AI 课程备课与教学实施</td><td>48 课时课程模板、16 模块/24 次课编排、情境配置、教案与活动、课件资源、任务发布、版本和引用管理</td><td class="money">22.00</td></tr>
+        <tr><td>1.3</td><td>知识库与 AI 助教</td><td>资料导入、解析、切分、索引、检索测试、课程引用、知识边界、低置信度转人工、助教配置和运营数据</td><td class="money">15.00</td></tr>
+        <tr><td>1.4</td><td>命题、测评、批改与报告</td><td>七类题型、题库、组卷、量规、AI 辅助批改、教师复核、原分与终分、课程报告及资源回流</td><td class="money">12.00</td></tr>
+        <tr><td>1.5</td><td>AI 工具、实训与智能体</td><td>提示词、多模态、RAG、低代码智能体、工具连接、运行轨迹、评测集、安全测试和成果归档入口</td><td class="money">11.00</td></tr>
+        <tr><td>1.6</td><td>管理运营与可信 AI 治理</td><td>账号与课程运营、用量成本、预警、证据、模型版本、权限范围、审计记录、人工确认和导出</td><td class="money">8.00</td></tr>
+        <tr class="total-row"><td colspan="3">平台软件产品化小计</td><td class="money">80.00</td></tr>
+      </tbody>
+    </table>
+    <h3>主要软件交付物</h3>
+    <div class="checklist">
+      <div class="check">生产环境 Web 应用和服务端 API</div>
+      <div class="check">关系数据库、对象存储与向量索引结构</div>
+      <div class="check">教师端、管理端和课程配置能力</div>
+      <div class="check">模型网关、队列、限流和成本台账</div>
+      <div class="check">部署文档、接口文档和数据字典</div>
+      <div class="check">管理员、教师及运维操作手册</div>
+      <div class="check">测试报告、压力测试报告和安全检查报告</div>
+      <div class="check">可恢复的安装包、配置和数据库脚本</div>
+    </div>
+    <div class="callout"><strong>数据归属：</strong>甲方课程资料、教师输入、生成内容、评分结果、运行日志和导出档案归甲方所有。乙方不得将业务数据用于训练公共模型，云端调用应执行最小必要传输、脱敏和供应商数据保护设置。</div>
+    <div class="page-no">04 / 10</div>
+  </section>
+
+  <section class="page">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>硬件与混合部署</span></div>
+    <h2>四、硬件扩容清单与部署架构</h2>
+    <table>
+      <colgroup><col style="width:7%"><col style="width:21%"><col style="width:46%"><col style="width:8%"><col style="width:9%"><col style="width:9%"></colgroup>
+      <thead><tr><th>序号</th><th>设备</th><th>最低配置要求</th><th>数量</th><th class="money">单价</th><th class="money">小计</th></tr></thead>
+      <tbody>
+        <tr><td>3.1</td><td>应用/API 计算节点</td><td>机架式；≥24 物理核心；≥128GB ECC；2×1.92TB 企业级 SSD RAID1；双 10GbE；冗余电源；三年质保</td><td class="center">2 台</td><td class="money">5.50</td><td class="money">11.00</td></tr>
+        <tr><td>3.2</td><td>对象存储节点</td><td>≥8 盘位；原始容量≥48TB；RAID6/纠删码；可用容量≥10TB；SSD 缓存；10GbE；快照和校验</td><td class="center">1 套</td><td class="money">7.50</td><td class="money">7.50</td></tr>
+        <tr><td>3.3</td><td>独立备份节点</td><td>原始容量≥32TB；可用容量≥20TB；支持增量、全量、保留策略和恢复校验；与生产存储逻辑隔离</td><td class="center">1 套</td><td class="money">5.00</td><td class="money">5.00</td></tr>
+        <tr><td>3.4</td><td>配件与安装材料</td><td>10GbE 光模块/网卡、线缆、磁盘备件、导轨、电源及安装调试材料</td><td class="center">1 批</td><td class="money">1.50</td><td class="money">1.50</td></tr>
+        <tr class="total-row"><td colspan="5">硬件与备份扩容小计（万元）</td><td class="money">25.00</td></tr>
+      </tbody>
+    </table>
+    <div class="architecture">
+      <div class="arch-box local">
+        <h3>校内部署</h3>
+        <ul>
+          <li>账号、权限与课程业务</li>
+          <li>数据库、对象存储、向量索引</li>
+          <li>模型网关、用量计费和敏感信息治理</li>
+          <li>日志审计、监控、备份和恢复</li>
+          <li>现有 GPU 可用于 Embedding、小模型和降级服务</li>
+        </ul>
+      </div>
+      <div class="arrow">⇄</div>
+      <div class="arch-box cloud">
+        <h3>经批准的云端服务</h3>
+        <ul>
+          <li>通用文本生成和复杂推理</li>
+          <li>视觉理解、图片和短视频生成</li>
+          <li>高峰并发和弹性容量</li>
+          <li>向量化、文档解析等可替换能力</li>
+          <li>只传输完成任务所需的最小数据</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small">硬件采购前由双方完成现有资产盘点。若甲方现有设备达到上述性能，可将对应硬件款经书面变更用于存储扩容、备份、安全或模型资源，但项目含税总价不增加。除非盘点和压测证明必要，本项目不新增大型 GPU 训练/推理集群。</p>
+    <div class="page-no">05 / 10</div>
+  </section>
+
+  <section class="page compact">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>模型容量与并发</span></div>
+    <h2>五、三年模型资源与容量指标</h2>
+    <table>
+      <colgroup><col style="width:18%"><col style="width:18%"><col style="width:20%"><col style="width:20%"><col style="width:24%"></colgroup>
+      <thead><tr><th>场景</th><th>每人每年调用</th><th>三年总调用</th><th>三年总 Tokens</th><th>使用定位</th></tr></thead>
+      <tbody>
+        <tr><td>保守</td><td>800 次</td><td>24 万次</td><td>约 13.20 亿</td><td>少量备课与问答</td></tr>
+        <tr><td><strong>标准基准</strong></td><td><strong>1,500 次</strong></td><td><strong>45 万次</strong></td><td><strong>约 47.25 亿</strong></td><td>完整覆盖 24 次课备授课</td></tr>
+        <tr><td>高强度</td><td>3,000 次</td><td>90 万次</td><td>约 171 亿</td><td>长上下文与高频智能体</td></tr>
+      </tbody>
+    </table>
+    <div class="summary-grid">
+      <div class="metric blue"><strong>≥65 亿</strong><span>标准采购容量目标：在 47.25 亿基准上预留约 30% 的系统提示、重试、工具链和增长空间</span></div>
+      <div class="metric cyan"><strong>≥100 路</strong><span>应用侧在途请求能力；满足 80 名教师峰值并发并留有管理与后台任务余量</span></div>
+      <div class="metric violet"><strong>150–200 万 TPM</strong><span>文本服务建议可用配额；复杂智能体采用队列，避免扇出放大上游并发</span></div>
+      <div class="metric orange"><strong>10 万图 / 8,000 视频</strong><span>三年多媒体资源控制目标；短视频按厂商一次生成任务计量</span></div>
+    </div>
+    <h3>资源池分配建议</h3>
+    <table>
+      <colgroup><col style="width:31%"><col style="width:49%"><col style="width:20%"></colgroup>
+      <thead><tr><th>资源项</th><th>用途</th><th class="money">预算（万元）</th></tr></thead>
+      <tbody>
+        <tr><td>文本模型资源池</td><td>普通问答、课程生成、复杂推理、命题、批改和报告；高低模型自动路由</td><td class="money">15.00</td></tr>
+        <tr><td>图片、视频与语音资源</td><td>课程插图、图文材料、短视频及必要语音能力</td><td class="money">5.00</td></tr>
+        <tr><td>企业并发与服务保障</td><td>企业配额、接口保障、监控和必要的厂商支持</td><td class="money">3.00</td></tr>
+        <tr><td>资源价格与流量预留</td><td>模型升级、重试、临时峰值及厂商价格变化</td><td class="money">2.00</td></tr>
+        <tr class="total-row"><td colspan="2">三年模型与多模态资源池小计</td><td class="money">25.00</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>计量规则：</strong>平台应按教师、课程、功能、模型、输入 Tokens、输出 Tokens、图片/视频次数记录用量，并设置个人、课程、月度和项目总额四级预算告警。批量报告和非实时生成优先进入异步队列。</div>
+    <div class="page-no">06 / 10</div>
+  </section>
+
+  <section class="page compact">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>实施与交付</span></div>
+    <h2>六、实施周期与交付成果</h2>
+    <p>项目计划周期为合同生效且甲方提供必要环境、账号和资料后的 20 周。可根据校历安排确定试点课程和正式上线日期。</p>
+    <div class="timeline">
+      <div class="phase"><strong>第 1–2 周</strong><span>调研、资产盘点、需求确认、原型冻结</span></div>
+      <div class="phase"><strong>第 3–6 周</strong><span>架构、账号权限、数据底座和硬件到货</span></div>
+      <div class="phase"><strong>第 7–14 周</strong><span>核心功能产品化、模型网关和课程能力</span></div>
+      <div class="phase"><strong>第 15–17 周</strong><span>集成、资源导入、安全和压力测试</span></div>
+      <div class="phase"><strong>第 18–20 周</strong><span>试点、培训、问题整改和项目验收</span></div>
+    </div>
+    <table>
+      <colgroup><col style="width:9%"><col style="width:26%"><col style="width:65%"></colgroup>
+      <thead><tr><th>序号</th><th>成果类别</th><th>交付内容</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>生产系统</td><td>部署完成的教师平台、管理端、服务端、数据库、对象存储、向量索引、模型网关和任务队列</td></tr>
+        <tr><td>2</td><td>课程模板</td><td>基于 48 课时大纲形成的 16 模块、24 次课课程结构、资源分类、任务模板、量规和评测框架</td></tr>
+        <tr><td>3</td><td>接口与数据</td><td>接口清单、数据字典、模型接入配置、统一身份预留接口、备份和恢复配置</td></tr>
+        <tr><td>4</td><td>硬件环境</td><td>设备到货、上架、网络配置、存储划分、备份策略和资产清单</td></tr>
+        <tr><td>5</td><td>质量文件</td><td>功能测试、兼容性测试、80 人并发测试、安全检查、备份恢复测试和遗留问题清单</td></tr>
+        <tr><td>6</td><td>培训与文档</td><td>管理员培训、教师培训、运维交接、操作手册、部署手册、应急预案和培训记录</td></tr>
+      </tbody>
+    </table>
+    <h3>培训安排</h3>
+    <ul>
+      <li>平台管理员与运维培训：不少于 2 场，每场不少于 3 小时。</li>
+      <li>教师备课与授课应用培训：不少于 4 场，每场不少于 3 小时。</li>
+      <li>课程负责人/骨干教师工作坊：不少于 2 场，每场不少于 3 小时。</li>
+      <li>提供培训材料、操作录像或可重复使用的图文教程。</li>
+    </ul>
+    <div class="page-no">07 / 10</div>
+  </section>
+
+  <section class="page">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>验收标准</span></div>
+    <h2>七、项目验收标准</h2>
+    <table>
+      <colgroup><col style="width:10%"><col style="width:23%"><col style="width:49%"><col style="width:18%"></colgroup>
+      <thead><tr><th>序号</th><th>验收项</th><th>主要标准</th><th>验收方式</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>账号与权限</td><td>支持 100 名教师账号；教师、管理员权限隔离；关键操作记录审计</td><td>功能测试</td></tr>
+        <tr><td>2</td><td>课程备授课</td><td>支持 16 模块、24 次课的资源、教案、任务、题库、量规和版本管理</td><td>场景验收</td></tr>
+        <tr><td>3</td><td>AI 能力</td><td>完成文本、知识库、助教、命题、批改、报告及多模态的真实接口调用和结果保存</td><td>接口与场景测试</td></tr>
+        <tr><td>4</td><td>并发能力</td><td>模拟 80 名教师同时使用 AI；平台无崩溃、无数据串扰；请求可流式返回或进入可见队列</td><td>压力测试报告</td></tr>
+        <tr><td>5</td><td>配额治理</td><td>支持模型路由、限流、超时、重试、预算告警和按账号/课程统计</td><td>故障注入测试</td></tr>
+        <tr><td>6</td><td>内容留存</td><td>课程资料和生成内容保存 3 年；支持查询、下载、归档和按权限删除</td><td>数据测试</td></tr>
+        <tr><td>7</td><td>安全与审计</td><td>密钥不下发浏览器；敏感操作留痕；传输加密；最小权限；关键 AI 结果保留模型、版本和人工复核</td><td>安全检查</td></tr>
+        <tr><td>8</td><td>备份恢复</td><td>每日增量、每周全量、独立备份；抽样完成数据库及对象文件恢复</td><td>恢复演练</td></tr>
+        <tr><td>9</td><td>浏览器适配</td><td>主流桌面浏览器可用；1440px 和 390px 无关键遮挡或横向溢出</td><td>浏览器验收</td></tr>
+        <tr><td>10</td><td>文档培训</td><td>约定文档完整，培训场次完成，管理员能够独立完成账号、课程、模型和配额配置</td><td>资料与实操</td></tr>
+      </tbody>
+    </table>
+    <div class="section-strip">性能口径</div>
+    <ul>
+      <li>普通业务页面在校内网络正常条件下，95% 请求响应时间不高于 3 秒。</li>
+      <li>AI 文本任务以流式首字或任务进入队列作为响应；外部模型完整生成时间不作为单纯软件性能缺陷，但应可监控、超时和重试。</li>
+      <li>图片、视频、批量报告和长任务采用异步处理，用户可查看状态、结果和失败原因。</li>
+      <li>上游厂商实际并发额度不低于合同技术附件，若限流则平台应自动排队并避免请求丢失。</li>
+    </ul>
+    <div class="callout"><strong>终验条件：</strong>全部关键功能、80 人并发、数据隔离、备份恢复和培训交接通过；一般问题形成双方确认的整改计划且不影响正式使用。</div>
+    <div class="page-no">08 / 10</div>
+  </section>
+
+  <section class="page">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>服务与商务条款</span></div>
+    <h2>八、服务等级、付款与商务条款</h2>
+    <h3>1. 三年 7×8 服务</h3>
+    <table>
+      <colgroup><col style="width:14%"><col style="width:22%"><col style="width:22%"><col style="width:42%"></colgroup>
+      <thead><tr><th>级别</th><th>典型影响</th><th>首次响应</th><th>处理目标</th></tr></thead>
+      <tbody>
+        <tr><td>P1 紧急</td><td>系统整体不可用、重大数据风险</td><td>30 分钟内</td><td>4 小时内提供恢复或绕行方案，持续跟踪至恢复</td></tr>
+        <tr><td>P2 高</td><td>核心功能受阻、较大范围用户受影响</td><td>2 小时内</td><td>1 个服务日内提供修复或可用替代方案</td></tr>
+        <tr><td>P3 一般</td><td>局部功能异常，有替代操作</td><td>4 小时内</td><td>3 个服务日内处理或进入最近维护版本</td></tr>
+        <tr><td>P4 咨询</td><td>配置、使用咨询和优化建议</td><td>1 个服务日内</td><td>双方确认的计划内答复或安排</td></tr>
+      </tbody>
+    </table>
+    <p class="small">7×8 指每日 8 小时、每周 7 天，具体服务时段在合同中确定；法定节假日安排以双方服务日历为准。计划维护应提前通知。</p>
+    <h3>2. 建议付款节点</h3>
+    <table>
+      <colgroup><col style="width:16%"><col style="width:18%"><col style="width:46%"><col style="width:20%"></colgroup>
+      <thead><tr><th>节点</th><th>比例</th><th>付款条件</th><th class="money">金额（万元）</th></tr></thead>
+      <tbody>
+        <tr><td>首付款</td><td>40%</td><td>合同生效，项目启动并提交实施计划</td><td class="money">80.00</td></tr>
+        <tr><td>阶段款</td><td>30%</td><td>硬件到货验收，核心系统完成并进入联调</td><td class="money">60.00</td></tr>
+        <tr><td>初验款</td><td>20%</td><td>试点上线、培训完成并通过初步验收</td><td class="money">40.00</td></tr>
+        <tr><td>终验款</td><td>10%</td><td>整改完成、资料移交并通过最终验收</td><td class="money">20.00</td></tr>
+      </tbody>
+    </table>
+    <h3>3. 不包含项目</h3>
+    <ul>
+      <li>学生账号及学生直接调用 AI 产生的扩容；第三方教务、财务等非标准接口的深度改造。</li>
+      <li>大模型训练、微调、旗舰模型全量私有化部署及新增大型 GPU 集群。</li>
+      <li>第三方等保测评、密码测评、渗透测试机构、商用 CA 或短信等外部服务费用。</li>
+      <li>超出资源池的模型、多媒体、搜索、数字人、第三方软件订阅和版权素材费用。</li>
+      <li>替甲方编写全部校本讲义、录制完整课程视频或承担课程内容的学术与版权终审。</li>
+    </ul>
+    <div class="page-no">09 / 10</div>
+  </section>
+
+  <section class="page compact">
+    <div class="page-header"><span class="brand">启境 AI Learning OS</span><span>确认与签署</span></div>
+    <h2>九、报价确认</h2>
+    <p class="lead">本报价单与后续签署的合同、技术规格书、实施计划和验收方案共同构成项目商务与技术依据。如文件之间存在差异，以双方盖章确认的合同及其附件为准。</p>
+    <div class="legal">
+      <strong>有效性说明：</strong>本报价自报价日期起 30 个自然日内有效。采购单位名称、报价单位名称、统一社会信用代码、开票信息、收款账户、具体税率、设备品牌型号、服务时段及模型厂商企业配额，应在签约前补充到合同附件并由双方盖章确认。
+    </div>
+    <div class="signature-grid">
+      <div class="signature">
+        <h3>采购单位确认</h3>
+        <div class="line"><span>单位名称</span><span></span></div>
+        <div class="line"><span>授权代表</span><span></span></div>
+        <div class="line"><span>联系电话</span><span></span></div>
+        <div class="line"><span>日期</span><span></span></div>
+        <div class="line"><span>盖章</span><span></span></div>
+      </div>
+      <div class="signature">
+        <h3>报价单位确认</h3>
+        <div class="line"><span>单位名称</span><span></span></div>
+        <div class="line"><span>授权代表</span><span></span></div>
+        <div class="line"><span>联系电话</span><span></span></div>
+        <div class="line"><span>日期</span><span></span></div>
+        <div class="line"><span>盖章</span><span></span></div>
+      </div>
+    </div>
+    <h3 style="margin-top:12mm">附件清单</h3>
+    <ol>
+      <li>平台功能清单及产品化范围。</li>
+      <li>硬件最低技术规格和现有资产盘点表。</li>
+      <li>模型资源计量、并发指标与费用管理规则。</li>
+      <li>项目实施计划、培训计划和验收测试用例。</li>
+      <li>三年运维服务方案及故障响应流程。</li>
+    </ol>
+    <div class="callout"><strong>建议签约前最后确认：</strong>现有 CPU、内存、GPU 型号与显存、存储容量和备份结构；学生是否完全不直接调用平台 AI；采购单位及报价单位的法定名称、发票类型和盖章信息。</div>
+    <div class="page-no">10 / 10</div>
+  </section>
+</body>
+</html>
