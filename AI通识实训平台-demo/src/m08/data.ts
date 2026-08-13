@@ -1,0 +1,57 @@
+import type { M08Progress } from './domain'
+
+export function createInitialM08Progress(): M08Progress {
+  return {
+    version: 1,
+    route: 'overview',
+    input: {
+      pageType: '课堂互动',
+      teachingUse: '用于概念讲解后的即时判断与反馈',
+      courseTitle: '生成式视觉设计',
+      lessonTitle: '从自然语言描述到高质量视觉作品',
+      audience: '高职一年级学生',
+      studentFoundation: '能够使用基础图像工具，但提示词结构和迭代意识较弱',
+      learningObjective: '能识别完整提示词的核心要素，并依据即时反馈修正一处表达',
+      verifiedMaterial: '完整提示词应明确任务、背景、输入、约束、输出格式和质量标准。生成结果需要回到课程材料核验，不直接采用无依据内容。',
+      sourceReferences: [],
+      sourceConfirmed: true,
+      rightsConfirmed: true,
+      privacyConfirmed: true,
+      noExternalResourceConfirmed: true,
+      noSecretConfirmed: true,
+    },
+    versions: [],
+    iterationRecords: [],
+    iterationDrafts: ['增加学习路径提示，让第一次使用的学生清楚先看知识卡再完成测验。', '优化答题反馈，错误时提示学生回到对应知识卡复查依据。'],
+    browserTest: {
+      downloaded: false,
+      offlineOpened: false,
+      desktopChecked: false,
+      mobileChecked: false,
+      singleFileChecked: false,
+      fiveQuestionsChecked: false,
+      instantFeedbackChecked: false,
+      interactionChecked: false,
+      notes: '',
+    },
+    peerTest: {
+      reviewerId: '',
+      artifactId: '',
+      studentOperation: '',
+      issueFound: '',
+      correctionBefore: '',
+      correctionAfter: '',
+      correctionBasis: '',
+      submitted: false,
+    },
+    teacherConfirmation: {
+      answersExplanationsConfirmed: false,
+      materialAlignmentConfirmed: false,
+      responsiveConfirmed: false,
+      offlineSafetyConfirmed: false,
+      finalResponsibilityConfirmed: false,
+    },
+    assessments: [],
+    updatedAt: new Date().toISOString(),
+  }
+}

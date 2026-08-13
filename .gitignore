@@ -8,8 +8,10 @@
 .playwright-cli/
 .playwright-mcp/
 **/output/playwright/
+**/.artifacts/
 tmp/
 **/tmp/
+.trash/
 
 # Runtime logs
 *.log
@@ -29,4 +31,3 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 Desktop.ini
-

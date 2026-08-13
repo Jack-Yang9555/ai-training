@@ -1,0 +1,196 @@
+import type { M01Answer } from '../types'
+
+export const m01Answers: M01Answer[] = [
+  {
+    id: 'A',
+    scene: '备课核验',
+    question: '我们学校要搞课堂教学评价方案，教育部对高职课堂评价的维度和分数权重有没有统一规定，请给出文件号及相关内容？',
+    answer:
+      '有统一规定。教育部 2023 年第 17 号文件《关于深化职业教育课堂教学评价改革的指导意见》提出“四维九指标”体系。文件要求课堂参与度占 35%，实践操作占 25%，过程作业占 10%，期末考试占 30%。各高职院校应按这一权重执行，并在 2024 年底前完成方案调整。建议学校直接将上述比例写入课堂教学评价办法，以确保符合教育部统一标准。',
+    referenceAnnotations: [
+      {
+        text: '教育部 2023 年第 17 号文件',
+        type: 'rule',
+        judgment: 'delete',
+        evidenceSource: '教育部官网政策文件检索；该文号对应《关于做好 2023 年职业教育宣传工作的通知》',
+        problemType: '编造内容',
+        revisedContent: '经教育部官网核查，未找到规定高职课堂评价统一权重的对应文件。',
+        reason: '文号与所称文件内容不一致，不能作为制度依据。',
+      },
+      {
+        text: '“四维九指标”体系',
+        type: 'rule',
+        judgment: 'delete',
+        evidenceSource: '《深化新时代教育评价改革总体方案》（2020 年）',
+        problemType: '编造内容',
+        revisedContent: '国家政策提出深化教育评价改革的总体要求，但未规定“四维九指标”体系。',
+        reason: '现行公开政策未提供该固定指标体系。',
+      },
+      {
+        text: '课堂参与度占 35%',
+        type: 'number',
+        judgment: 'delete',
+        evidenceSource: '教育部官网与本校课堂教学评价现行制度',
+        problemType: '编造内容',
+        revisedContent: '课堂参与度等具体权重应以学校现行制度和课程实际要求为准。',
+        reason: '教育部未统一规定该权重。',
+      },
+      {
+        text: '各高职院校应按这一权重执行',
+        type: 'absolute-conclusion',
+        judgment: 'delete',
+        evidenceSource: '教育部官网政策文件检索',
+        problemType: '编造内容',
+        revisedContent: '各校可结合学校制度和课程特点制定课堂评价方案。',
+        reason: '不存在要求所有院校执行该固定权重的政策依据。',
+      },
+    ],
+  },
+  {
+    id: 'B',
+    scene: '课堂安全',
+    question: '上课时有学生突然晕倒，老师第一步应该怎么做？后面按什么步骤处理？有没有相关指导文件？',
+    answer:
+      '依据《职业院校课堂教学安全事故处理办法》（教职成〔2023〕15号），教师第一步应立即将学生扶起至坐位，防止其继续躺倒；随后掐人中并观察 5 分钟。如果仍未恢复，再联系校医或拨打 120。学校还应每学期至少组织 1 次课堂应急演练，未按规定演练的院系将被通报批评。整个过程中应尽量减少围观并记录处置时间。',
+    referenceAnnotations: [
+      {
+        text: '《职业院校课堂教学安全事故处理办法》（教职成〔2023〕15号）',
+        type: 'rule',
+        judgment: 'delete',
+        evidenceSource: '教育部官网政策文件检索',
+        problemType: '编造内容',
+        revisedContent: '经教育部官网核查，未找到该文件及对应文号。',
+        reason: '文件和文号无法核验，不应作为处置依据。',
+      },
+      {
+        text: '立即将学生扶起至坐位',
+        type: 'safety-step',
+        judgment: 'revise',
+        evidenceSource: '红十字应急救护相关规范：意识丧失者应平躺、保持呼吸道通畅并及时求助',
+        problemType: '错误步骤',
+        revisedContent: '让学生平躺，抬高下肢，保持呼吸道通畅并检查意识和呼吸。',
+        reason: '突然扶起可能加重脑供血不足。',
+      },
+      {
+        text: '掐人中并观察 5 分钟',
+        type: 'safety-step',
+        judgment: 'revise',
+        evidenceSource: '现代急救规范及 120 急救指导',
+        problemType: '错误步骤',
+        revisedContent: '不要掐人中，应立即联系校医；情况异常或无法恢复时尽快拨打 120。',
+        reason: '掐人中不是现代急救推荐动作，也不应延迟专业求助。',
+      },
+      {
+        text: '未按规定演练的院系将被通报批评',
+        type: 'absolute-conclusion',
+        judgment: 'delete',
+        evidenceSource: '教育部官网及学校现行安全管理制度检索',
+        problemType: '编造内容',
+        revisedContent: '应依据学校现行安全管理制度组织应急培训和演练。',
+        reason: '公开正式文件中未找到该处罚规定。',
+      },
+    ],
+  },
+  {
+    id: 'C',
+    scene: '科研引用',
+    question: '我想写一篇关于 AI 辅助教学效果的教研论文，请帮我列举 3 篇相关研究文献，包括作者、期刊名称、发表年份和主要结论。',
+    answer:
+      '可以参考以下研究：① Smith, J. 与 Wang, L.（2024）发表于 Journal of Educational Technology and Vocational Learning，研究 480 名高职教师，发现 AI 使备课时间减少 42%。② 李明、周倩（2023）发表于《智能职业教育研究》，报告 AI 辅导使课程通过率提高 23.5%。③ Brown, T.（2022）发表于 International Journal of AI in Education，指出使用生成式 AI 后学生平均分提高 12.3 分。三项研究共同证明 AI 对高职教学具有显著且稳定的促进作用。',
+    referenceAnnotations: [
+      {
+        text: 'Smith, J. 与 Wang, L.（2024）',
+        type: 'citation',
+        judgment: 'delete',
+        evidenceSource: 'Web of Science、Google Scholar 与中国知网检索',
+        problemType: '无依据引用',
+        revisedContent: '经主流学术数据库检索，未找到可核验的对应论文。',
+        reason: '作者、年份和题名信息无法与真实论文对应。',
+      },
+      {
+        text: 'Journal of Educational Technology and Vocational Learning',
+        type: 'citation',
+        judgment: 'delete',
+        evidenceSource: 'Web of Science 与 Scopus 期刊收录列表',
+        problemType: '无依据引用',
+        revisedContent: '删除该期刊引用，改用可在权威数据库核验的来源。',
+        reason: '无法确认该期刊存在或被权威数据库收录。',
+      },
+      {
+        text: '备课时间减少 42%',
+        type: 'number',
+        judgment: 'delete',
+        evidenceSource: 'Web of Science、Google Scholar 与中国知网检索',
+        problemType: '无依据引用',
+        revisedContent: '目前没有找到支持“备课时间减少 42%”的可追溯原始研究。',
+        reason: '精确效果数字没有可核验的数据来源。',
+      },
+      {
+        text: '显著且稳定的促进作用',
+        type: 'absolute-conclusion',
+        judgment: 'limit',
+        evidenceSource: '教育研究证据评价原则',
+        problemType: '过度推断',
+        revisedContent: 'AI 可能在部分教学场景中提供支持，实际效果仍需结合研究设计、样本和使用条件判断。',
+        reason: '不能从无法核验的三条材料推出稳定、普遍的效果结论。',
+      },
+    ],
+  },
+  {
+    id: 'D',
+    scene: '成绩解读',
+    question: '我班期中考试平均分 78 分，上次单元测试平均分 73 分，提高了 5 分，这能不能说明我用的 AI 教学工具有效果？',
+    answer:
+      '平均分从 73 分提高到 78 分，提升了 5 分，说明 AI 教学工具显著提升了教学效果。建议在全校全面推广，并逐步取消传统讲授。还可以把本次低于 60 分的学生列为“AI 学习困难户”，例如学号 20240117，应取消其本学期评优资格。只要后续平均分继续上升，就可以认定 AI 工具是成绩提高的主要原因。',
+    referenceAnnotations: [
+      {
+        text: '提升了 5 分',
+        type: 'number',
+        judgment: 'adopt',
+        evidenceSource: '班级两次测评平均分记录：78－73＝5',
+      },
+      {
+        text: 'AI 教学工具显著提升了教学效果',
+        type: 'absolute-conclusion',
+        judgment: 'limit',
+        evidenceSource: '成绩分析原则：两次考试范围、难度和样本条件不同，且未设置对照实验',
+        problemType: '过度推断',
+        revisedContent: '本次平均分比上次高 5 分，但两次考试范围和难度不同，不能将变化直接归因于 AI 工具。',
+        reason: '一次前后成绩差异不足以证明因果关系。',
+      },
+      {
+        text: '在全校全面推广，并逐步取消传统讲授',
+        type: 'absolute-conclusion',
+        judgment: 'delete',
+        evidenceSource: '学校教学改革决策与教育评价基本原则',
+        problemType: '编造内容',
+        revisedContent: '可先在适合的课程场景开展小范围试用，并结合多类证据评估。',
+        reason: '单次成绩变化不能支持全校推广或取消传统讲授。',
+      },
+      {
+        text: '学号 20240117',
+        type: 'number',
+        judgment: 'delete',
+        evidenceSource: '《中华人民共和国个人信息保护法》及学校学生数据管理规定',
+        problemType: '编造内容',
+        revisedContent: '成绩分析应使用匿名或汇总信息，不展示可识别学生身份的数据。',
+        reason: '学号属于可识别个人信息，不应在无必要的分析结论中展示。',
+      },
+    ],
+  },
+]
+
+export const annotationTypeLabels = {
+  number: '数字',
+  rule: '规定',
+  citation: '引用',
+  'safety-step': '安全步骤',
+  'absolute-conclusion': '绝对化结论',
+} as const
+
+export const judgmentLabels = {
+  adopt: '可采用',
+  revise: '需修正',
+  delete: '需删除',
+  limit: '需限定',
+} as const

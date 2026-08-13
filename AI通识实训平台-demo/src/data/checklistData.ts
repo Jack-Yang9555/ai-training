@@ -1,0 +1,60 @@
+import type { ChecklistItem } from '../types'
+
+export const presetChecklist: ChecklistItem[] = [
+  {
+    id: 'preset-1',
+    checkItem: '政策文件编号与标题',
+    keyPoint: '回到发布部门官网核对文件全称、文号与正文',
+    typicalHallucination: '文件名称像真的，但文号对应另一份文件',
+    response: '保留检索路径；无法确认的文件不采用',
+    preset: true,
+  },
+  {
+    id: 'preset-2',
+    checkItem: '统一标准与具体权重',
+    keyPoint: '区分国家要求、学校制度与教师个人方案',
+    typicalHallucination: '编造全国统一的维度、指标和分数权重',
+    response: '查学校现行制度并说明适用范围',
+    preset: true,
+  },
+  {
+    id: 'preset-3',
+    checkItem: '安全处置顺序',
+    keyPoint: '依据权威急救规范核对首要动作和求助时机',
+    typicalHallucination: '把民间做法写成标准急救步骤',
+    response: '删除错误动作，替换为规范流程',
+    preset: true,
+  },
+  {
+    id: 'preset-4',
+    checkItem: '论文作者与题名',
+    keyPoint: '使用学术数据库逐项检索作者、题名和 DOI',
+    typicalHallucination: '作者和题名组合自然但无法检索',
+    response: '无检索记录时标记为无法确认并删除引用',
+    preset: true,
+  },
+  {
+    id: 'preset-5',
+    checkItem: '期刊与卷期页',
+    keyPoint: '核对期刊官网、收录列表、卷期与页码',
+    typicalHallucination: '虚构专业感很强的期刊名称和卷期页',
+    response: '回到期刊原站或权威索引交叉核验',
+    preset: true,
+  },
+  {
+    id: 'preset-6',
+    checkItem: '精确效果数字',
+    keyPoint: '追溯样本、研究方法和原始统计表',
+    typicalHallucination: '给出精确百分比却没有原始来源',
+    response: '去掉无来源数字，改为有边界的描述',
+    preset: true,
+  },
+  {
+    id: 'preset-7',
+    checkItem: '相关关系与因果结论',
+    keyPoint: '核对是否有对照、可比样本及其他影响因素',
+    typicalHallucination: '从一次成绩变化直接归因于单一工具',
+    response: '缩小结论并补充限制条件',
+    preset: true,
+  },
+]
