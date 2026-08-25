@@ -52,6 +52,8 @@ describe("产品定位全面覆盖", () => {
   it("集中权限策略阻止管理者进入编辑、个人成长和学生作答能力", () => {
     expect(canAccess("manager", "manager-workspace")).toBe(true);
     expect(canAccess("manager", "anonymous-student-evidence")).toBe(true);
+    expect(canAccess("manager", "aggregate-teacher-development")).toBe(true);
+    expect(canAccess("manager", "configure-teacher-development-goals")).toBe(true);
     expect(canAccess("manager", "teacher-growth")).toBe(false);
     expect(canAccess("manager", "teacher-research")).toBe(false);
     expect(canAccess("manager", "edit-lesson")).toBe(false);
@@ -84,6 +86,17 @@ describe("产品定位全面覆盖", () => {
       screen.queryByRole("button", { name: /AI 研究/ }),
     ).not.toBeInTheDocument();
     expect(screen.queryByText("摸底答案")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("tab", { name: "教师发展" }));
+    expect(screen.getByRole("heading", { name: "学校分层培养", level: 2 })).toBeInTheDocument();
+    expect(screen.getByText("个人成长数据不可见")).toBeInTheDocument();
+    expect(screen.getByText("L1—L4 与待通关分布")).toBeInTheDocument();
+    await user.selectOptions(screen.getByLabelText("学校培养目标等级"), "L4");
+    await user.selectOptions(screen.getByLabelText("学校培养重点维度"), "研究创新");
+    await user.click(screen.getByRole("button", { name: /生成群组方案/ }));
+    expect(screen.getByText(/TD-SCH-L4-RES/)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "发布学校培养目标" }));
+    expect(screen.getByRole("button", { name: "当前方案已发布" })).toBeDisabled();
+    expect(screen.getAllByText(/TD-SCH-L4-RES/).length).toBeGreaterThanOrEqual(2);
   });
 
   it("管理预警可跨管理者、教师和学生完成状态回流", async () => {

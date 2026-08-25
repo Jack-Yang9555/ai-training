@@ -4,13 +4,18 @@ import type { ElectiveTaskId, TaskProgressSummary, TaskRuntimeState, TrainingSna
 interface BuildTrainingSnapshotInput {
   taskProgress: Partial<Record<TrainingTaskId, TaskProgressSummary>>
   selectedElectiveIds: ElectiveTaskId[]
+  /** 旧调用未传时维持兼容；新版 App 应传 currentMemberElectiveConfirmed(progress)。 */
+  currentMemberElectiveConfirmed?: boolean
 }
 
-export function buildTrainingSnapshot({ taskProgress, selectedElectiveIds }: BuildTrainingSnapshotInput): TrainingSnapshot {
+export function buildTrainingSnapshot({ taskProgress, selectedElectiveIds, currentMemberElectiveConfirmed }: BuildTrainingSnapshotInput): TrainingSnapshot {
+  const effectiveElectiveIds = [...new Set(selectedElectiveIds)].slice(0, 2)
+  const memberConfirmationRequired = currentMemberElectiveConfirmed === false
   const taskStates = {} as Record<TrainingTaskId, TaskRuntimeState>
   ;(Object.keys(trainingTasks) as TrainingTaskId[]).forEach((taskId) => {
     const task = trainingTasks[taskId]
-    const notSelected = task.kind === 'elective' && !selectedElectiveIds.includes(task.id as ElectiveTaskId)
+    const notSelected = task.kind === 'elective' && !effectiveElectiveIds.includes(task.id as ElectiveTaskId)
+    const selectedButUnconfirmed = task.kind === 'elective' && !notSelected && memberConfirmationRequired
 
     let status: TaskRuntimeState['status'] = 'framework'
     let progressPercent = 0
@@ -20,12 +25,14 @@ export function buildTrainingSnapshot({ taskProgress, selectedElectiveIds }: Bui
     if (pendingPrerequisites.length > 0) blockingReasons.push(`前置任务待完成：${pendingPrerequisites.join('、')}`)
     if (task.contentStatus === 'implemented') {
       progressPercent = progress?.progressPercent ?? 0
-      if (notSelected) blockingReasons.push('该任务尚未加入第二天或第三天的选修清单')
-      if (notSelected || pendingPrerequisites.length > 0) status = 'blocked'
+      if (notSelected) blockingReasons.push('该任务尚未加入本组第一项或第二项选修')
+      if (selectedButUnconfirmed) blockingReasons.push('当前成员尚未确认本组两项选修及执行顺序')
+      if (notSelected || selectedButUnconfirmed || pendingPrerequisites.length > 0) status = 'blocked'
       else if (progress?.passed) status = 'completed'
       else status = progressPercent > 0 ? 'in-progress' : 'ready'
     } else {
-      if (notSelected) blockingReasons.push('该任务尚未加入第二天或第三天的选修清单')
+      if (notSelected) blockingReasons.push('该任务尚未加入本组第一项或第二项选修')
+      if (selectedButUnconfirmed) blockingReasons.push('当前成员尚未确认本组两项选修及执行顺序')
       blockingReasons.push(task.contentStatus === 'story-ready' ? '用户故事已具备，交互工作台待实现' : '一级框架已建立，详细用户故事与交互待实现')
       status = 'framework'
     }
@@ -40,12 +47,12 @@ export function buildTrainingSnapshot({ taskProgress, selectedElectiveIds }: Bui
     }
   })
 
-  const requiredIds = [...requiredTaskIds, ...selectedElectiveIds]
+  const requiredIds = [...requiredTaskIds, ...effectiveElectiveIds]
   const completedRequired = requiredIds.filter((id) => taskStates[id].status === 'completed').length
   const passedMilestones = milestoneTaskIds.filter((id) => taskStates[id].status === 'completed').length
   const selectionRule = taskGroups.find((group) => group.kind === 'selection')?.selectionRule
   const minimumElectives = (selectionRule?.buckets.length ?? 0) * (selectionRule?.minimumPerBucket ?? 0)
-  const requiredTotal = requiredTaskIds.length + Math.max(minimumElectives, selectedElectiveIds.length)
+  const requiredTotal = requiredTaskIds.length + Math.max(minimumElectives, effectiveElectiveIds.length)
   const fractionalCompleted = requiredIds.reduce((total, id) => {
     const state = taskStates[id]
     if (state.status === 'completed') return total + 1

@@ -11,6 +11,8 @@ export type ProductCapability =
   | "student-answer"
   | "personal-student-report"
   | "aggregate-teaching-data"
+  | "aggregate-teacher-development"
+  | "configure-teacher-development-goals"
   | "anonymous-student-evidence";
 
 const roleCapabilities: Record<UserRole, ReadonlySet<ProductCapability>> = {
@@ -30,6 +32,8 @@ const roleCapabilities: Record<UserRole, ReadonlySet<ProductCapability>> = {
   manager: new Set([
     "manager-workspace",
     "aggregate-teaching-data",
+    "aggregate-teacher-development",
+    "configure-teacher-development-goals",
     "anonymous-student-evidence",
   ]),
 };
@@ -53,4 +57,3 @@ export function requireAccess(
     throw new Error(`Permission denied: ${role} cannot access ${capability}`);
   }
 }
-

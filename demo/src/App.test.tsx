@@ -29,7 +29,7 @@ const enterTeacherLearning = async (
   await user.click(screen.getByRole("button", { name: "查看班级态势" }));
 };
 
-describe("启境培训能力主线", () => {
+describe("AI通识培训平台能力主线", () => {
   it("教师二级入口按任务流排列，知识图谱收进课程资源", async () => {
     const user = userEvent.setup();
     renderApp();
@@ -444,12 +444,21 @@ describe("启境培训能力主线", () => {
     ]) {
       await user.click(screen.getByRole("checkbox", { name: item }));
     }
+    for (const gateAnswer of [
+      "核对正式来源、版本和适用范围，并保留修正记录",
+      "先脱敏并确认数据用途、素材授权和引用归属",
+      "复核评分依据，保留 AI 原值、最终值和责任人确认",
+    ]) {
+      await user.click(screen.getByRole("button", { name: new RegExp(gateAnswer) }));
+    }
     await user.click(screen.getByRole("checkbox", { name: /教师人工确认/ }));
     await user.click(screen.getByRole("button", { name: "提交摸底测评并生成报告" }));
     expect(screen.getByText("L2 AI实践者 · 已形成详细能力证据与提升目标")).toBeInTheDocument();
     expect(screen.getByText("知识库与智能体")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /查看个性化培训计划/ }));
-    expect(screen.getByText("李老师 · AI 能力提升计划")).toBeInTheDocument();
+    expect(screen.getByText("周岚老师 · AI 能力提升计划")).toBeInTheDocument();
+    expect(screen.getByText("学校分层培养目标 TD-SCH-L3-TEA")).toBeInTheDocument();
+    expect(screen.getByText(/建议模块：课堂应用设计、学情诊断与干预/)).toBeInTheDocument();
     expect(screen.getByLabelText("每周学习时间")).toHaveValue("4");
   });
 
@@ -457,8 +466,8 @@ describe("启境培训能力主线", () => {
     const user = userEvent.setup();
     renderApp();
     await user.click(screen.getAllByRole("button", { name: /我的成长/ })[0]);
-    await user.click(screen.getByRole("button", { name: /课程学习/ }));
-    expect(screen.getByText("李老师 · 教师学员")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "课程学习与自主路径" }));
+    expect(screen.getByText("周岚老师 · 教师学员")).toBeInTheDocument();
     expect(screen.queryByText("林一诺 · 学生学员")).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "学生" }));
     expect(screen.queryByRole("button", { name: /我的成长/ })).not.toBeInTheDocument();
@@ -472,11 +481,13 @@ describe("启境培训能力主线", () => {
     await user.click(screen.getByRole("tab", { name: /科研智能体/ }));
     expect(screen.getByText("科研智能体设计流程")).toBeInTheDocument();
     expect(screen.getByText("来源引用")).toBeInTheDocument();
+    await user.click(screen.getByRole("checkbox", { name: /匿名课堂观察记录/ }));
+    await user.click(screen.getByRole("button", { name: "深度研究助手" }));
     await user.click(screen.getByRole("button", { name: "模拟测试" }));
     expect(screen.getByText("模拟运行通过")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "保存新版本" }));
     await user.click(screen.getByRole("button", { name: "关联研究成果" }));
-    expect(screen.getByText("阶段成果：课堂互动证据分析备忘录 v1.0")).toBeInTheDocument();
+    expect(screen.getByText("阶段成果：课堂互动证据分析备忘录 v2.0")).toBeInTheDocument();
   });
 
   it("教学班级上下文与教师个人成长上下文互不覆盖", async () => {
@@ -485,7 +496,7 @@ describe("启境培训能力主线", () => {
     await user.click(screen.getByRole("button", { name: "进入课堂" }));
     expect(screen.getByRole("button", { name: /人工智能 2401 班生成式视觉设计/ })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /我的成长/ }));
-    expect(screen.getByText("李老师 · 教师个人成长空间")).toBeInTheDocument();
+    expect(screen.getByText("周岚老师 · 教师个人成长空间")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /教学工作/ }));
     expect(screen.getByRole("button", { name: /人工智能 2401 班生成式视觉设计/ })).toBeInTheDocument();
   });

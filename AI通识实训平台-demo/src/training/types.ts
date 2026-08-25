@@ -11,6 +11,18 @@ export type MilestoneTaskId = 'G01' | 'G02' | 'G03'
 export type TrainingTaskId = MandatoryTaskId | ElectiveTaskId | MilestoneTaskId
 export type ElectiveAssignments = Record<string, ElectiveTaskId[]>
 
+export interface GroupElectiveSelection {
+  groupId: string
+  firstTaskId?: ElectiveTaskId
+  secondTaskId?: ElectiveTaskId
+  selectedByParticipantId?: string
+  selectedAt?: string
+  confirmedAt?: string
+  memberConfirmedAt: Record<string, string>
+}
+
+export type ElectiveSelectionsByGroup = Record<string, GroupElectiveSelection>
+
 export interface TrainingParticipant {
   participantId: string
   name: string
@@ -126,9 +138,11 @@ export type PortalRoute =
   | { page: 'task'; taskId: TrainingTaskId }
 
 export interface TrainingPortalProgress {
-  version: 3
+  version: 4
   route: PortalRoute
+  /** 当前参与者所在组的兼容投影；权威状态为 electiveSelectionsByGroup。 */
   electiveAssignments: ElectiveAssignments
+  electiveSelectionsByGroup: ElectiveSelectionsByGroup
   participantDirectory: ParticipantDirectory
   updatedAt: string
 }

@@ -107,4 +107,57 @@ describe('成果中心统一归档', () => {
     expect(archives[0].artifacts.map((item) => item.name)).toEqual(['教学设计与命题成果目录', 'AI 教学内容核验清单', '个人贡献记录'])
     expect(new Set(archives[0].artifacts.map((item) => item.artifactId)).size).toBe(3)
   })
+
+  it('M09 通过后任务归档恰好两项，个人成果中心仍只占一个知识库槽位', () => {
+    const snapshot = buildTrainingSnapshot({ taskProgress: { M09: { progressPercent: 100, passed: true, score: 10 } }, selectedElectiveIds: [] })
+    const portfolio = buildTrainingPortfolio({
+      snapshot,
+      electiveAssignments: { 'day-2': [], 'day-3': [] },
+      submissions: {
+        M09: {
+          taskId: 'M09',
+          submittedAt: '2026-08-24T00:00:00.000Z',
+          artifacts: [
+            { artifactId: 'M09:kb', name: '课程知识库 v1.0 及来源清单' },
+            { artifactId: 'M09:report', name: '课程知识库 9 项问答测试报告和修正记录' },
+          ],
+        },
+      },
+    })
+    const archives = portfolio.taskArchives.filter((item) => item.taskId === 'M09')
+    expect(archives).toHaveLength(1)
+    expect(archives[0].artifacts).toHaveLength(2)
+    expect(portfolio.personalDeliverables.filter((item) => item.source === 'M09')).toHaveLength(1)
+    expect(portfolio.personalDeliverables.find((item) => item.id === 'knowledge-base')?.status).toBe('archived')
+  })
+
+
+  it('E01 通过后只归档两类规定成果，并只占当天一个个人选修槽位', () => {
+    const snapshot = buildTrainingSnapshot({
+      taskProgress: { E01: { progressPercent: 100, passed: true, score: 10 } },
+      selectedElectiveIds: ['E01'],
+    })
+    const portfolio = buildTrainingPortfolio({
+      snapshot,
+      electiveAssignments: { 'day-2': ['E01'], 'day-3': [] },
+      submissions: {
+        E01: {
+          taskId: 'E01',
+          submittedAt: '2026-08-24T00:00:00.000Z',
+          artifacts: [
+            { artifactId: 'E01:rubric', name: '评分量规' },
+            { artifactId: 'E01:grading-feedback', name: '5 份批改结果与个性化反馈' },
+          ],
+        },
+      },
+    })
+    const archive = portfolio.taskArchives.find((item) => item.taskId === 'E01')
+    expect(archive?.status).toBe('archived')
+    expect(archive?.artifacts.map((item) => item.name)).toEqual(['评分量规', '5 份批改结果与个性化反馈'])
+    expect(new Set(archive?.artifacts.map((item) => item.artifactId)).size).toBe(2)
+    const electiveSlots = portfolio.personalDeliverables.filter((item) => item.source === 'elective-day-2')
+    expect(electiveSlots).toHaveLength(1)
+    expect(electiveSlots[0].sourceTaskIds).toEqual(['E01'])
+    expect(electiveSlots[0].status).toBe('archived')
+  })
 })

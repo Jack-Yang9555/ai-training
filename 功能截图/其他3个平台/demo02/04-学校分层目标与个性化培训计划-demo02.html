@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>可信 AI 能力认证中心｜认证路径</title>
+<style>
+:root{
+  --bg:#f5f7fc;--card:#fff;--line:#e8edf5;--text:#23324a;--muted:#7985a0;
+  --primary:#6468ea;--primary2:#847ef0;--soft:#f3f5ff;--green:#eef9f5;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f8faff 0,#f5f7fc 100%);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--text)}
+.topbar{height:68px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#596af0,#735df0);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.brand .t{font-weight:800;line-height:1.1}.brand .t small{display:block;font-size:10px;color:#98a2b4;letter-spacing:.6px}
+.topnav{display:flex;gap:10px}.pill{padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#5f6d86;font-size:14px}
+.page{width:1260px;margin:0 auto;padding:0 0 30px}
+.hero{background:#f1faf7;border:1px solid #daece5;border-top:none;border-radius:0 0 22px 22px;padding:18px 24px 20px}
+.hero-row{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.crumb{color:#1d9b79;font-size:14px;font-weight:700;margin-bottom:8px}
+.hero h1{margin:0 0 10px;font-size:38px}.hero p{margin:0;color:#65748e;font-size:16px}
+.hero-side{text-align:right;padding-top:10px}.hero-side .lv{font-size:22px;color:#3648c6;font-weight:800;margin-bottom:8px}.hero-side .m{font-size:14px;color:#67758f}
+.stepper{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;padding:24px 2px 12px}
+.step{position:relative;text-align:center;min-height:96px}.step:not(:last-child)::after{content:"";position:absolute;top:20px;right:-10px;width:20px;height:2px;background:#e0e5f0}
+.c{width:30px;height:30px;border-radius:50%;margin:0 auto 8px;border:1.5px solid #d0d8e5;background:#fff;color:#8c97ad;font-weight:800;display:flex;align-items:center;justify-content:center}
+.step.done .c{background:#ecfbf5;border-color:#31b58d;color:#17a07a}.step.current .c{background:#f5f4ff;border-color:#756df0;color:#615bea}
+.n{font-size:13px;font-weight:700;color:#61708a;line-height:1.3}.s{font-size:12px;color:#8c97ad;margin-top:4px}.step.done .n{color:#129977}
+.toolbar-shell{background:#fff;border:1px solid var(--line);border-radius:22px;padding:6px;box-shadow:0 10px 24px rgba(79,96,155,.04)}
+.toolbar{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.tab{min-height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;color:#5f6d86;font-size:14px;font-weight:700;cursor:pointer;line-height:1.3}
+.tab.active{background:linear-gradient(135deg,#6269eb,#7b78f2);color:#fff;box-shadow:0 8px 18px rgba(99,104,235,.22)}
+.school-plan{margin-top:18px;background:#f7fbff;border:1px solid #dfe9f5;border-radius:20px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;box-shadow:0 8px 22px rgba(78,96,151,.04)}
+.school-left{display:flex;gap:14px;align-items:flex-start}
+.icon{width:28px;height:28px;border-radius:10px;background:#eef2ff;color:#4f5ddb;display:flex;align-items:center;justify-content:center}
+.school-plan h3{margin:0 0 8px;font-size:18px}
+.school-plan p{margin:0;color:#667690;font-size:14px}
+.school-link{color:#3956ff;font-size:14px;font-weight:800;cursor:pointer}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 8px 18px rgba(83,99,151,.03)}
+.card .k{font-size:13px;color:#7d8aa4;margin-bottom:10px}
+.card .v{font-size:18px;font-weight:800}
+.card .v.p{color:#4f5ad7}
+.sel{display:flex;justify-content:space-between;align-items:center}.sel i{font-style:normal;color:#666beb;font-size:16px;font-weight:800}
+.section-head{display:flex;align-items:center;gap:14px;margin:18px 0 12px}
+.section-head h3{margin:0;font-size:17px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{padding:7px 12px;background:#eef1fa;color:#4d6086;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer}
+.chip.active{background:#dce6ff;color:#3550da}
+.list{display:grid;gap:12px}
+.plan-item{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 14px rgba(82,97,146,.03)}
+.plan-main{display:flex;justify-content:space-between;gap:16px;padding:18px 16px;cursor:pointer}
+.plan-left{display:flex;gap:14px;align-items:flex-start}
+.no{width:32px;height:32px;border-radius:11px;background:#eef1ff;color:#5967e5;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 32px}
+.plan-left h4{margin:0 0 8px;font-size:17px}
+.plan-left p{margin:0;color:#63718c;font-size:14px;line-height:1.65}
+.plan-meta{text-align:right;color:#6f7b94;min-width:230px}
+.plan-meta .small{margin-bottom:10px}
+.actions{display:flex;justify-content:flex-end;gap:16px;color:#75839d;font-size:18px}
+.plan-detail{display:none;padding:0 18px 18px 62px;color:#6d7a93;line-height:1.75;font-size:14px}
+.tip{display:inline-block;padding:4px 10px;border-radius:999px;background:#f3f5ff;color:#5d67e2;font-size:12px;font-weight:700;margin-right:8px}
+.footer{margin-top:14px;text-align:right;color:#8d98ac;font-size:12px}
+@media(max-width:1320px){.page{width:96%}}
+</style>
+
+<style id="platform-differentiation-v1">
+html{scroll-behavior:smooth}
+body{min-width:320px}
+#platform-shell,#platform-shell *,.platform-statusbar,.platform-statusbar *,.platform-story-panel,.platform-story-panel *{box-sizing:border-box}
+.platform-canvas>.top,.platform-canvas>.topbar{display:none!important}
+.platform-nav{display:flex;gap:6px;align-items:center}
+.platform-nav a{text-decoration:none;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease}
+.platform-nav a:hover{transform:translateY(-2px)}
+.platform-story-toggle{font:inherit;cursor:pointer}
+.platform-story-panel{position:fixed;z-index:1000;right:24px;top:88px;width:360px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.platform-story-panel[hidden]{display:none}
+.platform-story-panel h2{margin:0 0 8px;font-size:22px}
+.platform-story-panel p{margin:0 0 18px;line-height:1.7}
+.platform-story-panel ol{margin:0;padding-left:20px;line-height:1.9}
+.platform-story-panel button{position:absolute;right:16px;top:14px;border:0;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.platform-stage{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.platform-canvas{position:relative;z-index:1}
+.platform-canvas img{max-width:100%}
+.platform-canvas :is(button,a,input,select,textarea){font-family:inherit}
+@media(max-width:900px){
+  .platform-story-panel{left:16px;right:16px;top:76px;width:auto}
+  .platform-nav{overflow-x:auto;padding-bottom:4px}
+  .platform-canvas :is(.container,.page){width:auto!important;margin-left:14px!important;margin-right:14px!important}
+  .platform-canvas :is(.grid,.metrics,.score-grid,.grid2,.check-grid,.layout,.report-layout,.chart-area){grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="cert-theme">
+body[data-platform="cert"]{margin:0;background:#07121c;color:#d8ebf2;font-family:"Segoe UI","Microsoft YaHei",sans-serif}
+body[data-platform="cert"]:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(72,182,207,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(72,182,207,.06) 1px,transparent 1px);background-size:28px 28px}
+body[data-platform="cert"] #platform-shell{position:fixed;z-index:40;left:0;top:0;bottom:0;width:268px;background:#091b28;border-right:1px solid #1d495a;padding:24px 18px;display:flex;flex-direction:column}
+.cert-brand{color:#eefcff;text-decoration:none;border-bottom:1px solid #1d495a;padding:0 6px 20px}.cert-brand-mark{display:inline-grid;place-items:center;width:38px;height:38px;background:#00d9e8;color:#06141d;font-weight:900;margin-bottom:14px}.cert-brand strong{display:block;font-size:20px}.cert-brand small{display:block;margin-top:5px;color:#65b7c5;font:700 10px Consolas,monospace;letter-spacing:.12em}
+body[data-platform="cert"] .platform-nav{display:flex;flex-direction:column;align-items:stretch;gap:3px;margin:18px 0;overflow:auto}
+body[data-platform="cert"] .platform-nav a{color:#8caab5;padding:8px 10px;border-left:2px solid transparent;font:600 13px Consolas,"Microsoft YaHei",sans-serif}
+body[data-platform="cert"] .platform-nav a.active{color:#04141d;background:#00d9e8;border-color:#b8ff63}
+.cert-rule{margin-top:auto;background:#0d2635;border:1px solid #1d495a;padding:13px}.cert-rule .platform-stage{color:#b8ff63}.cert-rule p{font-size:12px;line-height:1.55;color:#9bb5bf;margin:7px 0 12px}.cert-rule strong{font:800 12px Consolas,monospace;color:#eefcff}
+.cert-rule .platform-story-toggle{width:100%;border:1px solid #00d9e8;background:transparent;color:#00d9e8;padding:9px}
+.platform-statusbar{position:fixed;z-index:35;left:268px;right:0;top:0;height:54px;background:rgba(7,18,28,.94);border-bottom:1px solid #1d495a;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font:700 12px Consolas,monospace;color:#8aaab7;letter-spacing:.04em}.platform-statusbar strong{color:#b8ff63}.status-live{display:flex;align-items:center;gap:8px}.status-live:before{content:"";width:7px;height:7px;background:#b8ff63;box-shadow:0 0 10px #b8ff63;border-radius:50%}
+body[data-platform="cert"] .platform-story-panel{background:#0d2635;border:1px solid #00d9e8;color:#d8ebf2;border-radius:0}
+body[data-platform="cert"] .platform-canvas{margin-left:268px;padding:70px 20px 48px;min-height:100vh}
+body[data-platform="cert"] .platform-canvas :is(.container,.page){width:auto!important;max-width:1240px!important;margin:0 auto 28px!important}
+body[data-platform="cert"] .platform-canvas :is(.card,.panel,.box,.question,.item,.metric-card,.task-card,.resource-card,.art-card,.prepare-card,.score-card,.chart-card,.info-card,.school-plan,.selected-item,.readiness-card,.soft-panel,.notice,.summary-card,.sum-card,.gate){background:#0d202e!important;border:1px solid #1e4a5c!important;border-radius:2px!important;box-shadow:none!important;color:#d8ebf2!important}
+body[data-platform="cert"] .platform-canvas :is(h1,h2,h3,strong,.title,.title-lg,.title-sm,.panel-title,.item-title,.task-title,.metric-value){color:#f2fbff!important}
+body[data-platform="cert"] .platform-canvas :is(p,small,.desc,.sub,.meta,.muted,.item-desc,.task-desc,.metric-sub){color:#91aab5!important}
+body[data-platform="cert"] .platform-canvas :is(.hero,.score){background:linear-gradient(105deg,#0d2b3a,#0b5360)!important;border:1px solid #00a8bb!important;color:#effcff!important;border-radius:2px!important}
+body[data-platform="cert"] .platform-canvas :is(.step.now,.tab.active,.main-tab.active,.sub-tab.active,.switch-item.active,.primary-btn,.btn.primary,.save-btn){background:#00d9e8!important;color:#05141d!important;border-color:#00d9e8!important;border-radius:2px!important}
+body[data-platform="cert"] .platform-canvas :is(.step.ok,.done,.finished){background:#153a39!important;color:#b8ff63!important}
+body[data-platform="cert"] .platform-canvas :is(.fill,.bar .fill,.progress-bar){background:#00d9e8!important}
+body[data-platform="cert"] .platform-canvas :is(input,select,textarea){background:#071722!important;color:#eafaff!important;border-color:#28566a!important}
+body[data-platform="cert"] .platform-canvas :is(table,.table){background:#0a1b27!important;color:#d8ebf2!important}body[data-platform="cert"] .platform-canvas :is(th,td){border-color:#214657!important}
+body[data-platform="cert"] .platform-canvas :is(.badge,.pill,.tag,.chip,.soft-tag){border-radius:2px!important}
+@media(max-width:900px){body[data-platform="cert"] #platform-shell{position:relative;width:auto;height:auto}.cert-brand{padding-bottom:12px}body[data-platform="cert"] .platform-nav{display:grid;grid-template-columns:repeat(3,1fr);max-height:180px}.cert-rule{margin-top:0}.platform-statusbar{position:relative;left:0;height:auto;padding:10px 16px;gap:12px;flex-wrap:wrap}body[data-platform="cert"] .platform-canvas{margin-left:0;padding:18px 0 40px}}
+</style>
+</head>
+<body data-platform="cert">
+<aside id="platform-shell"><a class="cert-brand" href="01-教师成长全流程与能力模型_demo02.html"><span class="cert-brand-mark">CERT</span><strong>可信 AI 能力认证中心</strong><small>TRUSTED AI CERTIFICATION</small></a><nav class="platform-nav" aria-label="可信认证功能导航"><a href="01-教师成长全流程与能力模型_demo02.html"><span>01</span> 控制总览</a><a href="02-摸底测评-demo02.html"><span>02</span> 摸底采集</a><a href="03-能力报告与5个计分维度-demo02.html"><span>03</span> 评分结果</a><a href="04-学校分层目标与个性化培训计划-demo02.html" class="active" aria-current="page"><span>04</span> 认证路径</a><a href="05-课程学习与自主学习分轨-demo02.html"><span>05</span> 学习记录</a><a href="06-AI实训任务与作品-demo02.html"><span>06</span> 实训取证</a><a href="07-教学应用发布-demo02.html"><span>07</span> 应用核验</a><a href="08-研究成果治理与共享-demo02.html"><span>08</span> 研究审计</a><a href="09-成长报告与复测-demo02.html"><span>09</span> 复测队列</a><a href="10-管理端匿名教师发展聚合-demo02.html"><span>10</span> 组织看板</a><a href="11-L1-L4四级能力等级分层培养目标-demo02.html"><span>11</span> 等级策略</a><a href="12-事实核验、数据版权和人工责任-demo02.html"><span>12</span> 门槛规则</a></nav><div class="cert-rule"><span class="platform-stage">CURRENT MODULE</span><p>认证路径<br>规则驱动、证据可追溯、通关门槛一票阻断的能力认证平台</p><strong>RULESET / 2026.08</strong><button class="platform-story-toggle" type="button" aria-expanded="false">查看认证逻辑</button></div></aside><div class="platform-statusbar"><span class="status-live"><strong>ENGINE ONLINE</strong> · 证据规则引擎运行中</span><span>周期 GROWTH-2026-A · AUDIT TRACE ENABLED</span></div><aside class="platform-story-panel" hidden aria-label="平台定位说明"><button type="button" aria-label="关闭平台定位">×</button><span class="platform-stage">核心功能定位</span><h2>可信 AI 能力认证中心</h2><p>面向学校质量管理与正式认证，用统一规则汇集测评、任务、作品和应用证据；三项可信门槛独立判定，所有等级都可回溯。</p><ol><li>结构化证据台账</li><li>三项门槛判定</li><li>L1—L4正式认证</li></ol></aside>
+<div class="platform-canvas">
+<div class="topbar">
+  <div class="brand"><div class="logo">AI</div><div class="t">可信 AI 能力认证中心<small>GENERAL AI TRAINING</small></div></div>
+  <div class="topnav">
+    <div class="pill">🎓 教师</div><div class="pill">👤 学生</div><div class="pill">🏫 教学管理</div><div class="pill">⟳ 重置演示</div>
+    <div class="pill" style="width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f2eeff;color:#745ff0;font-weight:800">周</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="hero">
+    <div class="hero-row">
+      <div>
+        <div class="crumb">周老师 · 教师个人成长空间</div>
+        <h1>我的AI成长</h1>
+        <p>十阶段连续闭环，以五维能力、四类证据和三项可信门槛共同支撑 L1—L4。</p>
+      </div>
+      <div class="hero-side">
+        <div class="lv">正式 L1 ・ 能力测算 L2</div>
+        <div class="m">目标 L3 ・ 课程 0 项 ・ 实训 0 项</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stepper">
+    <div class="step done"><div class="c">✓</div><div class="n">摸底测评</div><div class="s">已完成</div></div>
+    <div class="step done"><div class="c">✓</div><div class="n">能力报告</div><div class="s">已完成</div></div>
+    <div class="step current"><div class="c">3</div><div class="n">认证路径</div><div class="s">可开始</div></div>
+    <div class="step"><div class="c">4</div><div class="n">课程学习</div><div class="s">待解锁</div></div>
+    <div class="step"><div class="c">5</div><div class="n">自主学习</div><div class="s">待解锁</div></div>
+    <div class="step"><div class="c">6</div><div class="n">AI 实训</div><div class="s">待解锁</div></div>
+    <div class="step"><div class="c">7</div><div class="n">教学应用</div><div class="s">待解锁</div></div>
+    <div class="step"><div class="c">8</div><div class="n">研究成果</div><div class="s">待解锁</div></div>
+    <div class="step"><div class="c">9</div><div class="n">认证报告</div><div class="s">待解锁</div></div>
+    <div class="step"><div class="c">10</div><div class="n">结业复测</div><div class="s">待解锁</div></div>
+  </div>
+
+  <div class="toolbar-shell"><div class="toolbar">
+    <div class="tab">认证总览</div>
+    <div class="tab">摸底与报告</div>
+    <div class="tab active">认证路径</div>
+    <div class="tab">课程学习与自主路径</div>
+    <div class="tab">实训记录与作品</div>
+    <div class="tab">教学应用</div>
+    <div class="tab">研究成果</div>
+    <div class="tab">认证报告与复测</div>
+  </div></div>
+
+  <div class="school-plan">
+    <div class="school-left">
+      <div class="icon">🏫</div>
+      <div>
+        <h3>学校分层培养目标 TD-SCH-L3-TEA</h3>
+        <p>全校・教学融合提升 ・ 目标 L3 ・ 建议模块：课堂应用设计、学情诊断与干预 ・ 截止 2026-12-18</p>
+      </div>
+    </div>
+    <div class="school-link tiny-btn">匿名聚合目标</div>
+  </div>
+
+  <div class="summary">
+    <div class="card"><div class="k">方案状态</div><div class="v">待教师确认</div></div>
+    <div class="card"><div class="k">目标等级</div><div class="sel"><div class="v p">L3 创新</div><i>⌄</i></div></div>
+    <div class="card"><div class="k">每周投入</div><div class="sel"><div class="v p">4 小时</div><i>⌄</i></div></div>
+    <div class="card"><div class="k">预计周期</div><div class="v">6 周</div></div>
+  </div>
+
+  <div class="section-head">
+    <h3>生成依据</h3>
+    <div class="chips">
+      <div class="chip active">摸底差距</div>
+      <div class="chip">门槛状态</div>
+      <div class="chip">已导入课程</div>
+      <div class="chip">学校目标</div>
+    </div>
+  </div>
+
+  <div class="list">
+    <div class="plan-item open">
+      <div class="plan-main">
+        <div class="plan-left">
+          <div class="no">1</div>
+          <div>
+            <h4>生成式 AI 基础与安全边界</h4>
+            <p>巩固基础概念，并统一事实核验和数据安全规范。</p>
+          </div>
+        </div>
+        <div class="plan-meta">
+          <div class="small">必修 ・ 90 分钟 ・ AI 基础认知</div>
+          <div class="actions"><span>↑</span><span>↓</span></div>
+        </div>
+      </div>
+      <div class="plan-detail"><span class="tip">优先原因</span>用于统一全校教师的 AI 应用安全边界，确保后续的课程学习与实训建立在一致的规范基础之上。</div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-main">
+        <div class="plan-left">
+          <div class="no">2</div>
+          <div>
+            <h4>提示词工程与多模态表达</h4>
+            <p>补齐多轮约束、质量评价与多模态任务拆解。</p>
+          </div>
+        </div>
+        <div class="plan-meta">
+          <div class="small">必修 ・ 120 分钟 ・ 提示词与多模态</div>
+          <div class="actions"><span>↑</span><span>↓</span></div>
+        </div>
+      </div>
+      <div class="plan-detail"><span class="tip">优先原因</span>本模块是提升课堂设计质量与资源生成效率的关键，同时也是进入更高层次创新应用的重要前置能力。</div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-main">
+        <div class="plan-left">
+          <div class="no">3</div>
+          <div>
+            <h4>知识库与智能体编排</h4>
+            <p>从检索到工作流编排，建立可复用的教学助理能力。</p>
+          </div>
+        </div>
+        <div class="plan-meta">
+          <div class="small">必修 ・ 180 分钟 ・ 知识库与智能体</div>
+          <div class="actions"><span>↑</span><span>↓</span></div>
+        </div>
+      </div>
+      <div class="plan-detail"><span class="tip">优先原因</span>当前能力差距主要集中在知识调用与流程编排，这一项决定个性化培训能否真正形成可复用工具链。</div>
+    </div>
+
+    <div class="plan-item">
+      <div class="plan-main">
+        <div class="plan-left">
+          <div class="no">4</div>
+          <div>
+            <h4>AI 支持下的学情诊断与干预</h4>
+            <p>结合学校目标，训练课堂数据分析、学情识别与干预设计。</p>
+          </div>
+        </div>
+        <div class="plan-meta">
+          <div class="small">选修 ・ 150 分钟 ・ 教学融合</div>
+          <div class="actions"><span>↑</span><span>↓</span></div>
+        </div>
+      </div>
+      <div class="plan-detail"><span class="tip">优先原因</span>该模块与学校“教学融合提升”目标高度契合，适合作为本轮分层培养中的个性化加强项。</div>
+    </div>
+  </div>
+
+  <div class="footer">单文件网页 Demo ｜ 文件名：04-学校分层目标与个性化认证路径-demo02.html</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    tab.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    chip.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+  });
+});
+document.querySelectorAll('.plan-item').forEach(item=>{
+  const header = item.querySelector('.plan-main');
+  const detail = item.querySelector('.plan-detail');
+  if(header && detail){
+    header.addEventListener('click', ()=>{
+      item.classList.toggle('open');
+      detail.style.display = item.classList.contains('open') ? 'block' : 'none';
+    });
+  }
+});
+document.querySelectorAll('.tiny-btn,.mini-btn,.cta').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    alert('这是单文件 Demo 演示交互，后续可继续扩展为真实跳转、弹窗或提交逻辑。');
+  });
+});
+</script>
+
+</div>
+
+<script id="platform-differentiation-behavior">
+(() => {
+  const toggle = document.querySelector('.platform-story-toggle');
+  const panel = document.querySelector('.platform-story-panel');
+  const close = panel?.querySelector('button');
+  const setOpen = (open) => {
+    if (!toggle || !panel) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+})();
+</script>
+</body>
+</html>

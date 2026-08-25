@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 教师成长学院｜研修书架</title>
+<style>
+:root{
+  --bg:#f6f8fc;--card:#fff;--line:#e7ebf4;--text:#24324b;--muted:#78859f;
+  --primary:#6368ea;--primary2:#847ef0;--mint:#eef8f5;--mint-border:#d7ebe4;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--text)}
+.topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#5a69f0,#7158ef);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.brand .text{font-weight:800;line-height:1.1}
+.brand .text small{display:block;font-size:10px;color:#96a0b3;letter-spacing:.6px}
+.topnav{display:flex;gap:10px}
+.pill{padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#5e6d86;font-size:14px}
+.page{width:1256px;margin:12px auto 30px}
+.toolbar{background:#fff;border:1px solid var(--line);border-radius:22px;padding:6px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.main-tab{min-height:66px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;color:#5f6d86;font-size:14px;font-weight:700;cursor:pointer;line-height:1.3}
+.main-tab.active{background:linear-gradient(135deg,#6268eb,#7d79f2);color:#fff;box-shadow:0 8px 18px rgba(99,104,235,.22)}
+.hero{margin-top:18px;background:#eff9f6;border:1px solid var(--mint-border);border-radius:20px;padding:24px 24px;display:flex;justify-content:space-between;align-items:center}
+.crumb{font-size:14px;font-weight:700;color:#139b78;margin-bottom:10px}
+.hero h1{margin:0 0 10px;font-size:44px;line-height:1.15}
+.hero p{margin:0;color:#6a7892;font-size:15px}
+.counter{min-width:172px;height:66px;border:1px solid #bde3d9;background:#f6fffc;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:10px}
+.counter .num{font-size:36px;color:#16a284;font-weight:800}
+.counter .label{color:#62728e;font-size:14px}
+.subtabs-wrap{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:8px}
+.subtabs{display:flex;gap:8px}
+.sub-tab{padding:10px 18px;border-radius:12px;background:#fff;color:#5c6b85;font-size:14px;font-weight:700;cursor:pointer}
+.sub-tab.active{background:#f1f3ff;color:#4e5ddb;box-shadow:0 4px 12px rgba(82,96,178,.08)}
+.tipbox{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.tiphead{display:flex;gap:12px;align-items:flex-start}
+.tipicon{width:22px;height:22px;border-radius:8px;background:#f2efff;color:#685ef0;display:flex;align-items:center;justify-content:center;font-weight:800;flex:0 0 22px;margin-top:2px}
+.tiptitle{font-size:16px;font-weight:800;margin-bottom:6px}
+.tipdesc{color:#687792;font-size:14px;line-height:1.65}
+.resource-card{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 16px;width:624px}
+.resource-inner{display:flex;gap:12px;align-items:flex-start}
+.resource-card input{margin-top:4px}
+.resource-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.resource-meta{color:#6c7a95;font-size:13px}
+.summary-card{margin-top:38px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+.summary-card h3{margin:0 0 8px;font-size:16px}
+.summary-status{margin:0;color:#77849e;font-size:14px}
+.save-btn{padding:12px 22px;border:none;border-radius:14px;background:linear-gradient(135deg,#7ea2ff,#6687f0);color:#fff;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 10px 18px rgba(103,134,240,.18)}
+.empty-state{margin-top:18px;min-height:250px;border:1.5px dashed #d7dfef;border-radius:20px;background:#fbfcff;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.empty-icon{width:52px;height:52px;border-radius:16px;background:#f0ecff;color:#725ef1;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:16px}
+.empty-title{font-size:17px;font-weight:800;color:#566a8d;margin-bottom:10px}
+.empty-desc{font-size:14px;color:#7a86a0}
+.task-list{margin-top:18px;display:none}
+.selected-item{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+.selected-item-left{display:flex;gap:12px;align-items:flex-start}
+.selected-badge{width:30px;height:30px;border-radius:10px;background:#eef1ff;color:#5a68e5;display:flex;align-items:center;justify-content:center;font-weight:800}
+.selected-title{font-size:16px;font-weight:800;margin-bottom:6px}
+.selected-meta{font-size:13px;color:#6c7a95}
+.ghost-btn{padding:9px 14px;border:1px solid #d7dff0;border-radius:12px;background:#fff;color:#4d5edb;font-weight:700;cursor:pointer}
+.footer{margin-top:14px;text-align:right;color:#8d98ac;font-size:12px}
+@media(max-width:1320px){.page{width:96%}}
+</style>
+
+<style id="platform-differentiation-v1">
+html{scroll-behavior:smooth}
+body{min-width:320px}
+#platform-shell,#platform-shell *,.platform-statusbar,.platform-statusbar *,.platform-story-panel,.platform-story-panel *{box-sizing:border-box}
+.platform-canvas>.top,.platform-canvas>.topbar{display:none!important}
+.platform-nav{display:flex;gap:6px;align-items:center}
+.platform-nav a{text-decoration:none;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease}
+.platform-nav a:hover{transform:translateY(-2px)}
+.platform-story-toggle{font:inherit;cursor:pointer}
+.platform-story-panel{position:fixed;z-index:1000;right:24px;top:88px;width:360px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.platform-story-panel[hidden]{display:none}
+.platform-story-panel h2{margin:0 0 8px;font-size:22px}
+.platform-story-panel p{margin:0 0 18px;line-height:1.7}
+.platform-story-panel ol{margin:0;padding-left:20px;line-height:1.9}
+.platform-story-panel button{position:absolute;right:16px;top:14px;border:0;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.platform-stage{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.platform-canvas{position:relative;z-index:1}
+.platform-canvas img{max-width:100%}
+.platform-canvas :is(button,a,input,select,textarea){font-family:inherit}
+@media(max-width:900px){
+  .platform-story-panel{left:16px;right:16px;top:76px;width:auto}
+  .platform-nav{overflow-x:auto;padding-bottom:4px}
+  .platform-canvas :is(.container,.page){width:auto!important;margin-left:14px!important;margin-right:14px!important}
+  .platform-canvas :is(.grid,.metrics,.score-grid,.grid2,.check-grid,.layout,.report-layout,.chart-area){grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="academy-theme">
+body[data-platform="academy"]{margin:0;background:#f2ede3;color:#243b38;font-family:"Microsoft YaHei","PingFang SC",sans-serif}
+body[data-platform="academy"]:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.32;background-image:radial-gradient(#c9bda9 .6px,transparent .6px);background-size:9px 9px}
+body[data-platform="academy"] #platform-shell{position:relative;z-index:20;background:#183f3b;color:#fff;border-bottom:6px solid #d97855}
+.academy-head{max-width:1320px;margin:auto;padding:20px 28px 16px;display:flex;align-items:center;gap:24px}
+.academy-brand{display:flex;align-items:center;gap:14px;color:#fff;text-decoration:none;min-width:330px}
+.academy-seal{width:50px;height:50px;border-radius:50%;border:1px solid #f3d9a7;display:grid;place-items:center;color:#f3d9a7;font:800 15px Georgia,serif;letter-spacing:.08em}
+.academy-brand strong{display:block;font:700 24px "STSong","SimSun",serif;letter-spacing:.06em}.academy-brand small{display:block;margin-top:4px;color:#c9ddd8;font-size:10px;letter-spacing:.15em}
+.academy-motto{flex:1;border-left:1px solid #52716d;padding-left:22px}.academy-motto span{color:#f3c082;font-size:12px;font-weight:800}.academy-motto p{margin:5px 0 0;color:#dce9e5;font-size:13px}
+.academy-head .platform-story-toggle{border:1px solid #d9b87a;background:transparent;color:#fff;padding:10px 15px;border-radius:2px}
+body[data-platform="academy"] .platform-nav{max-width:1320px;margin:auto;padding:0 28px 14px}
+body[data-platform="academy"] .platform-nav a{color:#cfe0dc;padding:8px 10px;border-bottom:2px solid transparent;font-size:13px}
+body[data-platform="academy"] .platform-nav a.active{color:#fff2d8;border-color:#f1b46f;background:#28524d}
+.academy-ribbon{background:#f8f2e8;border-bottom:1px solid #d6c9b6;display:flex;justify-content:center;gap:48px;padding:11px 20px;color:#755849;font-size:13px}.academy-ribbon strong{color:#204943}
+body[data-platform="academy"] .platform-story-panel{background:#fffaf0;border:1px solid #bfae96;border-radius:4px;color:#243b38}
+body[data-platform="academy"] .platform-canvas{padding:4px 0 44px}
+body[data-platform="academy"] .platform-canvas :is(.container,.page){max-width:1250px}
+body[data-platform="academy"] .platform-canvas :is(.card,.panel,.box,.question,.item,.metric-card,.task-card,.resource-card,.art-card,.prepare-card,.score-card,.chart-card,.info-card,.school-plan,.selected-item,.readiness-card,.soft-panel,.notice,.summary-card,.sum-card,.gate){border-radius:5px!important;border-color:#d8cdbd!important;box-shadow:none!important}
+body[data-platform="academy"] .platform-canvas :is(h1,h2,h3,.title,.title-lg,.panel-title){font-family:"STSong","SimSun","Microsoft YaHei",serif;letter-spacing:.025em;color:#193f3b!important}
+body[data-platform="academy"] .platform-canvas :is(.hero,.score){background:linear-gradient(105deg,#fff9ef,#e9f0e9)!important;color:#193f3b!important;border-left:8px solid #d97855!important}
+body[data-platform="academy"] .platform-canvas :is(.step.now,.tab.active,.main-tab.active,.sub-tab.active,.switch-item.active,.primary-btn,.btn.primary,.save-btn){background:#b6533e!important;color:#fff!important;border-color:#b6533e!important}
+body[data-platform="academy"] .platform-canvas :is(.step.ok,.done,.finished){background:#dcebe4!important;color:#1d675b!important}
+body[data-platform="academy"] .platform-canvas :is(.fill,.bar .fill,.progress-bar){background:#d97855!important}
+body[data-platform="academy"] .platform-canvas :is(.badge,.pill,.tag,.chip,.soft-tag){border-radius:2px!important}
+@media(max-width:900px){.academy-head{align-items:flex-start;flex-wrap:wrap}.academy-brand{min-width:0}.academy-motto{order:3;width:100%;border-left:0;padding-left:0}.academy-ribbon{justify-content:flex-start;overflow-x:auto}.academy-head .platform-story-toggle{margin-left:auto}}
+</style>
+</head>
+<body data-platform="academy">
+<header id="platform-shell"><div class="academy-head"><a class="academy-brand" href="01-教师成长全流程与能力模型_demo01.html"><span class="academy-seal">AI</span><span><strong>AI 教师成长学院</strong><small>FACULTY GROWTH ACADEMY</small></span></a><div class="academy-motto"><span>2026 秋季教师成长共同体</span><p>以导师陪伴和同伴研修驱动的教师持续成长平台</p></div><button class="platform-story-toggle" type="button" aria-expanded="false">查看学院方案</button></div><nav class="platform-nav" aria-label="教师成长学院功能导航"><a href="01-教师成长全流程与能力模型_demo01.html"><span>01</span> 成长首页</a><a href="02-摸底测评-demo01.html"><span>02</span> 能力访谈</a><a href="03-能力报告与5个计分维度-demo01.html"><span>03</span> 成长画像</a><a href="04-学校分层目标与个性化培训计划-demo01.html"><span>04</span> 导师计划</a><a href="05-课程学习与自主学习分轨-demo01.html" class="active" aria-current="page"><span>05</span> 研修书架</a><a href="06-AI实训任务与作品-demo01.html"><span>06</span> 实践作坊</a><a href="07-教学应用发布-demo01.html"><span>07</span> 课堂行动</a><a href="08-研究成果治理与共享-demo01.html"><span>08</span> 教研札记</a><a href="09-成长报告与复测-demo01.html"><span>09</span> 成长档案</a><a href="10-管理端匿名教师发展聚合-demo01.html"><span>10</span> 学院视图</a><a href="11-L1-L4四级能力等级分层培养目标-demo01.html"><span>11</span> 分层培养</a><a href="12-事实核验、数据版权和人工责任-demo01.html"><span>12</span> 可信素养</a></nav><div class="academy-ribbon"><span><strong>当前研修：</strong>研修书架</span><span><strong>导师：</strong>陈教授</span><span><strong>同伴组：</strong>生成式教学第 3 组</span></div></header><aside class="platform-story-panel" hidden aria-label="平台定位说明"><button type="button" aria-label="关闭平台定位">×</button><span class="platform-stage">核心功能定位</span><h2>AI 教师成长学院</h2><p>面向希望长期成长的教师，把一次培训改造成“诊断—导师计划—同伴研修—课堂实践—成长复盘”的学期制旅程。</p><ol><li>个体成长诊断</li><li>导师制研修</li><li>课堂实践复盘</li></ol></aside>
+<div class="platform-canvas">
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">AI</div>
+    <div class="text">AI 教师成长学院<small>GENERAL AI TRAINING</small></div>
+  </div>
+  <div class="topnav">
+    <div class="pill">🎓 教师</div><div class="pill">👤 学生</div><div class="pill">🏫 教学管理</div><div class="pill">⟳ 重置演示</div>
+    <div class="pill" style="width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f2eeff;color:#745ff0;font-weight:800">周</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="toolbar">
+    <div class="main-tab">成长总览</div>
+    <div class="main-tab">摸底与报告</div>
+    <div class="main-tab">导师计划</div>
+    <div class="main-tab active">课程学习与自主路径</div>
+    <div class="main-tab">实训记录与作品</div>
+    <div class="main-tab">教学应用</div>
+    <div class="main-tab">研究成果</div>
+    <div class="main-tab">成长档案与复测</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="crumb">周老师 · 教师学员</div>
+      <h1>教师课程学习工作区</h1>
+      <p>课程进度与自主任务分开记录，避免同一资源重复满足两项复测资格。</p>
+    </div>
+    <div class="counter">
+      <div class="num" id="taskCount">0/1</div>
+      <div class="label">自主任务已完成</div>
+    </div>
+  </div>
+
+  <div class="subtabs-wrap">
+    <div class="subtabs">
+      <div class="sub-tab">课程学习</div>
+      <div class="sub-tab active">自主研修路径</div>
+    </div>
+  </div>
+
+  <div class="tipbox">
+    <div class="tiphead">
+      <div class="tipicon">✦</div>
+      <div>
+        <div class="tiptitle">从已导入资源中创建额外的自主任务</div>
+        <div class="tipdesc">先选择并保存路径，再完成至少 1 项；已纳入必修计划的 5 项资源不在此重复计数。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="resource-card">
+    <label class="resource-inner">
+      <input type="checkbox" id="resourceCheck" />
+      <div>
+        <div class="resource-title">教育科研中的 AI 使用与披露规范</div>
+        <div class="resource-meta">文档 ・ 研究创新</div>
+      </div>
+    </label>
+  </div>
+
+  <div class="summary-card">
+    <div>
+      <h3 id="summaryCount">0项自主学习内容</h3>
+      <p class="summary-status" id="summaryStatus">尚未保存</p>
+    </div>
+    <button class="save-btn" id="saveBtn">🗂 保存我的路径</button>
+  </div>
+
+  <div class="task-list" id="taskList"></div>
+
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">⇄</div>
+    <div class="empty-title">选择至少 1 项自主资源</div>
+    <div class="empty-desc">自主学习必须形成独立任务进度，不能直接复用必修课程完成记录。</div>
+  </div>
+
+  <div class="footer">单文件网页 Demo ｜ 文件名：05-课程学习与自主学习分轨-demo01.html</div>
+</div>
+
+<script>
+function setupPage(root=document){
+  const checkbox = root.querySelector('#resourceCheck');
+  const taskCount = root.querySelector('#taskCount');
+  const summaryCount = root.querySelector('#summaryCount');
+  const summaryStatus = root.querySelector('#summaryStatus');
+  const emptyState = root.querySelector('#emptyState');
+  const taskList = root.querySelector('#taskList');
+  const saveBtn = root.querySelector('#saveBtn');
+
+  function renderSelection(){
+    const checked = checkbox && checkbox.checked ? 1 : 0;
+    if(taskCount) taskCount.textContent = checked + "/1";
+    if(summaryCount) summaryCount.textContent = checked + "项自主学习内容";
+    if(summaryStatus) summaryStatus.textContent = checked ? "未保存" : "尚未保存";
+
+    if(checked){
+      if(emptyState) emptyState.style.display = "none";
+      if(taskList){
+        taskList.style.display = "block";
+        taskList.innerHTML = `
+          <div class="selected-item">
+            <div class="selected-item-left">
+              <div class="selected-badge">1</div>
+              <div>
+                <div class="selected-title">教育科研中的 AI 使用与披露规范</div>
+                <div class="selected-meta">文档 ・ 研究创新 ・ 自主学习任务</div>
+              </div>
+            </div>
+            <div class="selected-actions">
+              <button class="ghost-btn" type="button" onclick="document.getElementById('resourceCheck').checked=false;setupPage();">移除</button>
+            </div>
+          </div>
+        `;
+      }
+    }else{
+      if(emptyState) emptyState.style.display = "flex";
+      if(taskList){
+        taskList.style.display = "none";
+        taskList.innerHTML = "";
+      }
+    }
+  }
+
+  renderSelection();
+
+  if(checkbox){
+    checkbox.addEventListener('change', renderSelection);
+  }
+
+  root.querySelectorAll('.main-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      root.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  root.querySelectorAll('.sub-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      root.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  if(saveBtn){
+    saveBtn.addEventListener('click', ()=>{
+      const checked = checkbox && checkbox.checked ? 1 : 0;
+      if(!checked){
+        alert('请先至少选择 1 项自主资源，再保存我的路径。');
+        return;
+      }
+      if(summaryStatus) summaryStatus.textContent = "已保存";
+      alert('演示版：自主研修路径已保存。');
+    });
+  }
+}
+window.addEventListener('DOMContentLoaded', ()=>setupPage());
+</script>
+
+</div>
+
+<script id="platform-differentiation-behavior">
+(() => {
+  const toggle = document.querySelector('.platform-story-toggle');
+  const panel = document.querySelector('.platform-story-panel');
+  const close = panel?.querySelector('button');
+  const setOpen = (open) => {
+    if (!toggle || !panel) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+})();
+</script>
+</body>
+</html>

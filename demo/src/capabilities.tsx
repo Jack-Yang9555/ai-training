@@ -1776,9 +1776,10 @@ function AiGradingView({ onToast }: { onToast: Toast }) {
             <button
               className="primary-button"
               type="button"
-              onClick={() =>
-                onToast("评分修订已保存，学生画像与报告已同步更新")
-              }
+              onClick={() => {
+                dispatch({ type: "CONFIRM_GRADED_ASSIGNMENTS" });
+                onToast("评分修订已保存，学生画像与报告已同步更新");
+              }}
             >
               <Check size={15} /> 确认批改结果
             </button>
@@ -2093,6 +2094,9 @@ export function TrainingTaskMap({ onToast }: { onToast: Toast }) {
 export function TeacherAbilityView({ onToast }: { onToast: Toast }) {
   const { state } = useDemoState();
   const report = state.teacherReport;
+  const levelDisplay = report.gatePassed === false && report.calculatedLevel
+    ? `待通关 · 能力测算 ${report.calculatedLevel}`
+    : report.level;
   return (
     <section className="ability-report-section">
       <WorkspaceHeader
@@ -2100,11 +2104,11 @@ export function TeacherAbilityView({ onToast }: { onToast: Toast }) {
         tone="report"
         eyebrow={
           <>
-            <GraduationCap size={14} /> 周岚老师 · {report.level}
+            <GraduationCap size={14} /> 周岚老师 · {levelDisplay}
           </>
         }
         title="教师 AI 能力"
-        description="能力来自真实任务产物，不以浏览工具次数计分。"
+        description="能力来自测评、任务、作品和应用证据；三项门槛不计分但决定正式定级。"
         summary={
           <div className="level-orb">
             <strong>{report.completed}</strong>

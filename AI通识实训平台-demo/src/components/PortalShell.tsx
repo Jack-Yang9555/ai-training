@@ -19,7 +19,7 @@ export function PortalShell({ route, onNavigate, onReset, currentParticipant, pa
       <header className="topbar portal-topbar">
         <button className="brand" type="button" onClick={() => onNavigate({ page: 'dashboard' })} aria-label="返回实训总览">
           <span className="brand-mark" aria-hidden="true"><BookOpenCheck size={21} /></span>
-          <span className="brand-copy"><strong>启境</strong><small>AI 通识实训平台 · 全程 Demo</small></span>
+          <span className="brand-copy"><strong>AI 通识实训平台</strong><small>GENERAL AI TRAINING · 全程 Demo</small></span>
         </button>
         <nav className="portal-nav" aria-label="实训一级导航">
           <button className={route.page === 'dashboard' ? 'active' : ''} type="button" onClick={() => onNavigate({ page: 'dashboard' })}><LayoutDashboard size={16} />实训总览</button>

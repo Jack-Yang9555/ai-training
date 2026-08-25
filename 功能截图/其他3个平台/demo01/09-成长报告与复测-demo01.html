@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 教师成长学院｜成长档案</title>
+
+<style>
+:root{
+  --bg:#f6f8fc; --card:#ffffff; --line:#e7ebf4; --text:#22324b; --muted:#77849d;
+  --primary:#6469ea; --primary2:#7d79f2; --green:#0f9e8b; --green-bg:#eef9f5; --green-line:#bfe9dc;
+  --orange:#eb7d28; --orange-line:#f0d1b3;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif}
+.topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#5b6af0,#745df0);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.brand-title{font-weight:800;line-height:1.1}
+.brand-title small{display:block;font-size:10px;color:#98a3b6;letter-spacing:.6px}
+.topnav{display:flex;gap:10px}
+.pill{padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#5e6e88;font-size:14px}
+.page{width:1256px;margin:18px auto 30px}
+.role-switch{display:flex;gap:4px;padding:4px;background:#fff;border:1px solid #dfe4ef;border-radius:16px;width:max-content}
+.role-item{padding:12px 18px;border-radius:12px;font-weight:700;color:#5d6d87}
+.role-item.active{background:#f1f3ff;color:#5d60e7}
+.hero{margin-top:18px;padding:24px;border-radius:20px;background:#eef9f5;border:1px solid #d7ece5;display:flex;justify-content:space-between;gap:16px}
+.hero .crumb{font-size:14px;color:#169977;font-weight:700;margin-bottom:10px}
+.hero h1{margin:0 0 10px;font-size:44px;line-height:1.1}
+.hero p{margin:0;color:#687792;font-size:15px}
+.hero-right{text-align:right;padding-top:6px}
+.hero-right .lv{font-size:22px;color:#3648c5;font-weight:800;margin-bottom:8px}
+.hero-right .meta{font-size:14px;color:#67758f}
+.stepper{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;padding:24px 2px 12px}
+.step{text-align:center;min-height:96px;position:relative}
+.step:not(:last-child)::after{content:"";position:absolute;top:20px;right:-10px;width:20px;height:2px;background:#dfe5f0}
+.circle{width:30px;height:30px;border-radius:50%;margin:0 auto 8px;border:1.5px solid #d0d8e5;background:#fff;color:#8b97ac;display:flex;align-items:center;justify-content:center;font-weight:800}
+.step.done .circle{background:#ebfbf4;border-color:#31b68f;color:#159f7a}
+.step.current .circle{background:#f5f4ff;border-color:#736df0;color:#615ce9}
+.step .name{font-size:13px;font-weight:700;color:#63718a;line-height:1.28}
+.step .status-text{font-size:12px;color:#8d98ad;margin-top:4px}
+.step.done .name{color:#139977}
+.tabs{background:#fff;border:1px solid var(--line);border-radius:22px;padding:6px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.tab{min-height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;color:#5f6d86;font-size:14px;font-weight:700;line-height:1.3}
+.tab.active{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;box-shadow:0 8px 18px rgba(99,104,235,.22)}
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.score-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.score-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px}
+.score-title{font-size:16px;font-weight:800}
+.score-meta{font-size:14px;color:#42537a}
+.track{height:10px;background:#e5eaf5;border-radius:999px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#5f67e7,#7d79f2);border-radius:999px}
+.prepare-card{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px}
+.prepare-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:18px}
+.prepare-badge{font-size:13px;color:#5568ea;font-weight:800;margin-bottom:8px}
+.prepare-title{font-size:22px;font-weight:800;margin-bottom:8px}
+.prepare-desc{font-size:14px;color:#6c7a94;line-height:1.7}
+.percent-big{font-size:48px;font-weight:900;color:#4854d2;line-height:1}
+.progress-shell{margin-top:16px;height:10px;background:#edf1f7;border-radius:999px;overflow:hidden}
+.progress-bar{height:100%;width:30%;background:linear-gradient(90deg,#5e67e7,#7c79f1);border-radius:999px}
+.prepare-subline{margin-top:10px;display:flex;justify-content:space-between;gap:10px;align-items:center;color:#6d7b95;font-size:14px;flex-wrap:wrap}
+.summary-mini{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.summary-pill{padding:8px 12px;border-radius:999px;background:#f4f6fb;color:#5f6d86;font-size:13px;font-weight:700}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.check-item{border-radius:16px;border:1px solid var(--line);padding:16px 16px 14px;cursor:pointer;transition:.18s ease;background:#fff}
+.check-item:hover{transform:translateY(-1px);box-shadow:0 10px 18px rgba(90,102,146,.06)}
+.check-item.done{background:var(--green-bg);border-color:var(--green-line)}
+.item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.item-left{display:flex;gap:10px;align-items:flex-start}
+.state-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex:0 0 24px}
+.check-item.done .state-icon{background:#e4faf3;color:var(--green);border:1px solid #9fe1cc}
+.check-item.pending .state-icon{background:#fff7f1;color:var(--orange);border:1px solid #f2cbad}
+.item-title{font-size:16px;font-weight:800;line-height:1.4}
+.check-item.done .item-title{color:#087f71}
+.check-item.pending .item-title{color:#de6a11}
+.item-desc{margin-top:6px;color:#6d7b95;font-size:14px;line-height:1.6;padding-left:34px}
+.toggle-btn{border:none;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:800;cursor:pointer}
+.check-item.done .toggle-btn{background:#dff7ef;color:#0a8f7e}
+.check-item.pending .toggle-btn{background:#fff1e8;color:#df6f1a}
+.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:16px;margin-top:18px}
+.side-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px}
+.side-title{margin:0 0 14px;font-size:18px}
+.side-line{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed #edf1f7;color:#55637d;line-height:1.65}
+.side-line:last-child{border-bottom:none}
+.dot{width:18px;height:18px;border-radius:50%;background:#eef2ff;color:#6170ea;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 18px;margin-top:2px}
+.footer{margin-top:14px;text-align:right;color:#8d98ac;font-size:12px}
+@media (max-width:1320px){.page{width:96%}.layout,.score-grid,.check-grid{grid-template-columns:1fr}}
+</style>
+
+
+<style id="platform-differentiation-v1">
+html{scroll-behavior:smooth}
+body{min-width:320px}
+#platform-shell,#platform-shell *,.platform-statusbar,.platform-statusbar *,.platform-story-panel,.platform-story-panel *{box-sizing:border-box}
+.platform-canvas>.top,.platform-canvas>.topbar{display:none!important}
+.platform-nav{display:flex;gap:6px;align-items:center}
+.platform-nav a{text-decoration:none;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease}
+.platform-nav a:hover{transform:translateY(-2px)}
+.platform-story-toggle{font:inherit;cursor:pointer}
+.platform-story-panel{position:fixed;z-index:1000;right:24px;top:88px;width:360px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.platform-story-panel[hidden]{display:none}
+.platform-story-panel h2{margin:0 0 8px;font-size:22px}
+.platform-story-panel p{margin:0 0 18px;line-height:1.7}
+.platform-story-panel ol{margin:0;padding-left:20px;line-height:1.9}
+.platform-story-panel button{position:absolute;right:16px;top:14px;border:0;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.platform-stage{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.platform-canvas{position:relative;z-index:1}
+.platform-canvas img{max-width:100%}
+.platform-canvas :is(button,a,input,select,textarea){font-family:inherit}
+@media(max-width:900px){
+  .platform-story-panel{left:16px;right:16px;top:76px;width:auto}
+  .platform-nav{overflow-x:auto;padding-bottom:4px}
+  .platform-canvas :is(.container,.page){width:auto!important;margin-left:14px!important;margin-right:14px!important}
+  .platform-canvas :is(.grid,.metrics,.score-grid,.grid2,.check-grid,.layout,.report-layout,.chart-area){grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="academy-theme">
+body[data-platform="academy"]{margin:0;background:#f2ede3;color:#243b38;font-family:"Microsoft YaHei","PingFang SC",sans-serif}
+body[data-platform="academy"]:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.32;background-image:radial-gradient(#c9bda9 .6px,transparent .6px);background-size:9px 9px}
+body[data-platform="academy"] #platform-shell{position:relative;z-index:20;background:#183f3b;color:#fff;border-bottom:6px solid #d97855}
+.academy-head{max-width:1320px;margin:auto;padding:20px 28px 16px;display:flex;align-items:center;gap:24px}
+.academy-brand{display:flex;align-items:center;gap:14px;color:#fff;text-decoration:none;min-width:330px}
+.academy-seal{width:50px;height:50px;border-radius:50%;border:1px solid #f3d9a7;display:grid;place-items:center;color:#f3d9a7;font:800 15px Georgia,serif;letter-spacing:.08em}
+.academy-brand strong{display:block;font:700 24px "STSong","SimSun",serif;letter-spacing:.06em}.academy-brand small{display:block;margin-top:4px;color:#c9ddd8;font-size:10px;letter-spacing:.15em}
+.academy-motto{flex:1;border-left:1px solid #52716d;padding-left:22px}.academy-motto span{color:#f3c082;font-size:12px;font-weight:800}.academy-motto p{margin:5px 0 0;color:#dce9e5;font-size:13px}
+.academy-head .platform-story-toggle{border:1px solid #d9b87a;background:transparent;color:#fff;padding:10px 15px;border-radius:2px}
+body[data-platform="academy"] .platform-nav{max-width:1320px;margin:auto;padding:0 28px 14px}
+body[data-platform="academy"] .platform-nav a{color:#cfe0dc;padding:8px 10px;border-bottom:2px solid transparent;font-size:13px}
+body[data-platform="academy"] .platform-nav a.active{color:#fff2d8;border-color:#f1b46f;background:#28524d}
+.academy-ribbon{background:#f8f2e8;border-bottom:1px solid #d6c9b6;display:flex;justify-content:center;gap:48px;padding:11px 20px;color:#755849;font-size:13px}.academy-ribbon strong{color:#204943}
+body[data-platform="academy"] .platform-story-panel{background:#fffaf0;border:1px solid #bfae96;border-radius:4px;color:#243b38}
+body[data-platform="academy"] .platform-canvas{padding:4px 0 44px}
+body[data-platform="academy"] .platform-canvas :is(.container,.page){max-width:1250px}
+body[data-platform="academy"] .platform-canvas :is(.card,.panel,.box,.question,.item,.metric-card,.task-card,.resource-card,.art-card,.prepare-card,.score-card,.chart-card,.info-card,.school-plan,.selected-item,.readiness-card,.soft-panel,.notice,.summary-card,.sum-card,.gate){border-radius:5px!important;border-color:#d8cdbd!important;box-shadow:none!important}
+body[data-platform="academy"] .platform-canvas :is(h1,h2,h3,.title,.title-lg,.panel-title){font-family:"STSong","SimSun","Microsoft YaHei",serif;letter-spacing:.025em;color:#193f3b!important}
+body[data-platform="academy"] .platform-canvas :is(.hero,.score){background:linear-gradient(105deg,#fff9ef,#e9f0e9)!important;color:#193f3b!important;border-left:8px solid #d97855!important}
+body[data-platform="academy"] .platform-canvas :is(.step.now,.tab.active,.main-tab.active,.sub-tab.active,.switch-item.active,.primary-btn,.btn.primary,.save-btn){background:#b6533e!important;color:#fff!important;border-color:#b6533e!important}
+body[data-platform="academy"] .platform-canvas :is(.step.ok,.done,.finished){background:#dcebe4!important;color:#1d675b!important}
+body[data-platform="academy"] .platform-canvas :is(.fill,.bar .fill,.progress-bar){background:#d97855!important}
+body[data-platform="academy"] .platform-canvas :is(.badge,.pill,.tag,.chip,.soft-tag){border-radius:2px!important}
+@media(max-width:900px){.academy-head{align-items:flex-start;flex-wrap:wrap}.academy-brand{min-width:0}.academy-motto{order:3;width:100%;border-left:0;padding-left:0}.academy-ribbon{justify-content:flex-start;overflow-x:auto}.academy-head .platform-story-toggle{margin-left:auto}}
+</style>
+</head>
+<body data-platform="academy">
+<header id="platform-shell"><div class="academy-head"><a class="academy-brand" href="01-教师成长全流程与能力模型_demo01.html"><span class="academy-seal">AI</span><span><strong>AI 教师成长学院</strong><small>FACULTY GROWTH ACADEMY</small></span></a><div class="academy-motto"><span>2026 秋季教师成长共同体</span><p>以导师陪伴和同伴研修驱动的教师持续成长平台</p></div><button class="platform-story-toggle" type="button" aria-expanded="false">查看学院方案</button></div><nav class="platform-nav" aria-label="教师成长学院功能导航"><a href="01-教师成长全流程与能力模型_demo01.html"><span>01</span> 成长首页</a><a href="02-摸底测评-demo01.html"><span>02</span> 能力访谈</a><a href="03-能力报告与5个计分维度-demo01.html"><span>03</span> 成长画像</a><a href="04-学校分层目标与个性化培训计划-demo01.html"><span>04</span> 导师计划</a><a href="05-课程学习与自主学习分轨-demo01.html"><span>05</span> 研修书架</a><a href="06-AI实训任务与作品-demo01.html"><span>06</span> 实践作坊</a><a href="07-教学应用发布-demo01.html"><span>07</span> 课堂行动</a><a href="08-研究成果治理与共享-demo01.html"><span>08</span> 教研札记</a><a href="09-成长报告与复测-demo01.html" class="active" aria-current="page"><span>09</span> 成长档案</a><a href="10-管理端匿名教师发展聚合-demo01.html"><span>10</span> 学院视图</a><a href="11-L1-L4四级能力等级分层培养目标-demo01.html"><span>11</span> 分层培养</a><a href="12-事实核验、数据版权和人工责任-demo01.html"><span>12</span> 可信素养</a></nav><div class="academy-ribbon"><span><strong>当前研修：</strong>成长档案</span><span><strong>导师：</strong>陈教授</span><span><strong>同伴组：</strong>生成式教学第 3 组</span></div></header><aside class="platform-story-panel" hidden aria-label="平台定位说明"><button type="button" aria-label="关闭平台定位">×</button><span class="platform-stage">核心功能定位</span><h2>AI 教师成长学院</h2><p>面向希望长期成长的教师，把一次培训改造成“诊断—导师计划—同伴研修—课堂实践—成长复盘”的学期制旅程。</p><ol><li>个体成长诊断</li><li>导师制研修</li><li>课堂实践复盘</li></ol></aside>
+<div class="platform-canvas">
+
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">AI</div>
+    <div class="brand-title">AI 教师成长学院<small>GENERAL AI TRAINING</small></div>
+  </div>
+  <div class="topnav">
+    <div class="pill">🎓 教师</div>
+    <div class="pill">👤 学生</div>
+    <div class="pill">🏫 教学管理</div>
+    <div class="pill">⟳ 重置演示</div>
+    <div class="pill" style="width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f2eeff;color:#745ff0;font-weight:800">周</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="role-switch">
+    <div class="role-item">教学工作</div>
+    <div class="role-item active">我的成长</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="crumb">周老师 · 教师个人成长空间</div>
+      <h1>我的 AI 成长</h1>
+      <p>十阶段连续闭环，以五维能力、四类证据和三项可信门槛共同支撑 L1—L4。</p>
+    </div>
+    <div class="hero-right">
+      <div class="lv">正式 L1 ・ 能力测算 L2</div>
+      <div class="meta">目标 L3 ・ 课程 0 项 ・ 实训 0 项</div>
+    </div>
+  </div>
+
+  <div class="stepper">
+    <div class="step done"><div class="circle">✓</div><div class="name">摸底测评</div><div class="status-text">已完成</div></div>
+    <div class="step done"><div class="circle">✓</div><div class="name">能力报告</div><div class="status-text">已完成</div></div>
+    <div class="step done"><div class="circle">✓</div><div class="name">导师计划</div><div class="status-text">已完成</div></div>
+    <div class="step current"><div class="circle">4</div><div class="name">课程学习</div><div class="status-text">可开始</div></div>
+    <div class="step current"><div class="circle">5</div><div class="name">自主学习</div><div class="status-text">可开始</div></div>
+    <div class="step current"><div class="circle">6</div><div class="name">AI 实训</div><div class="status-text">可开始</div></div>
+    <div class="step"><div class="circle">7</div><div class="name">教学应用</div><div class="status-text">待解锁</div></div>
+    <div class="step"><div class="circle">8</div><div class="name">研究成果</div><div class="status-text">待解锁</div></div>
+    <div class="step current"><div class="circle">9</div><div class="name">成长档案</div><div class="status-text">可开始</div></div>
+    <div class="step"><div class="circle">10</div><div class="name">结业复测</div><div class="status-text">待解锁</div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab">成长总览</div>
+    <div class="tab">摸底与报告</div>
+    <div class="tab">导师计划</div>
+    <div class="tab">课程学习与自主路径</div>
+    <div class="tab">实训记录与作品</div>
+    <div class="tab">教学应用</div>
+    <div class="tab">研究成果</div>
+    <div class="tab active">成长档案与复测</div>
+  </div>
+
+
+<div class="score-grid">
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">AI 基础认知</div><div class="score-meta">摸底 72 → 当前 85</div></div>
+    <div class="track"><div class="fill" style="width:86%"></div></div>
+  </div>
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">提示词与多模态</div><div class="score-meta">摸底 68 → 当前 82</div></div>
+    <div class="track"><div class="fill" style="width:82%"></div></div>
+  </div>
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">知识库与智能体</div><div class="score-meta">摸底 51 → 当前 51</div></div>
+    <div class="track"><div class="fill" style="width:51%"></div></div>
+  </div>
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">教学融合</div><div class="score-meta">摸底 74 → 当前 74</div></div>
+    <div class="track"><div class="fill" style="width:74%"></div></div>
+  </div>
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">研究创新</div><div class="score-meta">摸底 47 → 当前 47</div></div>
+    <div class="track"><div class="fill" style="width:47%"></div></div>
+  </div>
+</div>
+
+<div class="prepare-card">
+  <div class="prepare-head">
+    <div>
+      <div class="prepare-badge">严格复测门槛</div>
+      <div class="prepare-title">复测准备清单</div>
+      <div class="prepare-desc">全部十项满足后方开放复测提交；门槛未通过可以复测，但正式定级仍会被阻断。</div>
+    </div>
+    <div class="percent-big" id="percentValue">30%</div>
+  </div>
+  <div class="progress-shell"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="prepare-subline">
+    <div class="summary-mini">
+      <span class="summary-pill">已完成 <b id="doneCount">0</b> / <b id="totalCount">0</b></span>
+      <span class="summary-pill">目标：达到 100% 后可提交复测</span>
+    </div>
+    <div id="statusText">当前仍处于复测准备早期阶段，建议优先补齐课程、实训与应用闭环。</div>
+  </div>
+  <div class="check-grid">
+        <div class="check-item done">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">✓</div>
+              <div class="item-title">个人导师计划已确认</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记未完成</button>
+          </div>
+          <div class="item-desc">已邀请并确认个人导师计划</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">完成至少 1 个必修课程模块</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请完成至少 1 个必修模块及检查题</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">保存自主路径并完成至少 1 项资源</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请保存自主路径并完成至少 1 项资源</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">完成至少 2 项 AI 实训</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">还需完成 2 项 AI 实训</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">至少 1 项实践作品经人工确认</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请将至少 1 项实训成果提交复审并完成人工确认</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">形成至少 1 项教学应用闭环</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请完成至少 1 个“发布—使用—回流”闭环</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">关联至少 1 项已复核研究成果</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请关联至少 1 项通过治理检查的研究成果</div>
+        </div>
+        
+        <div class="check-item done">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">✓</div>
+              <div class="item-title">三项门槛均有可复核结果</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记未完成</button>
+          </div>
+          <div class="item-desc">事实核验、数据版权和人工责任均已评价</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">四类证据通道均有有效记录</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请补齐：task, artifact, application</div>
+        </div>
+        
+        <div class="check-item done">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">✓</div>
+              <div class="item-title">无待复核关键证据</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记未完成</button>
+          </div>
+          <div class="item-desc">没有待复核的关键证据</div>
+        </div>
+        </div>
+</div>
+<div class="footer">单文件网页 Demo ｜ 文件名：09-成长档案与复测-demo01.html</div>
+</div>
+
+<script>
+function initRetestPage(){
+  const percentEl = document.getElementById('percentValue');
+  const doneCountEl = document.getElementById('doneCount');
+  const totalCountEl = document.getElementById('totalCount');
+  const progressBar = document.getElementById('progressBar');
+  const statusText = document.getElementById('statusText');
+  const checklist = Array.from(document.querySelectorAll('.check-item'));
+
+  function updateSummary(){
+    const total = checklist.length;
+    const done = checklist.filter(item => item.classList.contains('done')).length;
+    const percent = Math.round(done / total * 100);
+
+    if (percentEl) percentEl.textContent = percent + '%';
+    if (doneCountEl) doneCountEl.textContent = done;
+    if (totalCountEl) totalCountEl.textContent = total;
+    if (progressBar) progressBar.style.width = percent + '%';
+
+    if(statusText){
+      if(percent < 40){
+        statusText.textContent = '当前仍处于复测准备早期阶段，建议优先补齐课程、实训与应用闭环。';
+      }else if(percent < 80){
+        statusText.textContent = '已具备部分复测条件，继续补齐关键缺口即可进入稳定复测准备状态。';
+      }else if(percent < 100){
+        statusText.textContent = '复测准备度较高，仅剩少量条件待完成。';
+      }else{
+        statusText.textContent = '所有复测条件均已满足，可以提交复测。';
+      }
+    }
+  }
+
+  checklist.forEach(item => {
+    item.addEventListener('click', function(e){
+      if (e.target.closest('.no-toggle')) return;
+      item.classList.toggle('done');
+      item.classList.toggle('pending');
+      updateSummary();
+    });
+  });
+
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      const card = btn.closest('.check-item');
+      if(!card) return;
+      card.classList.toggle('done');
+      card.classList.toggle('pending');
+      btn.textContent = card.classList.contains('done') ? '标记未完成' : '标记完成';
+      updateSummary();
+    });
+  });
+
+  updateSummary();
+}
+window.addEventListener('DOMContentLoaded', initRetestPage);
+</script>
+
+</div>
+
+<script id="platform-differentiation-behavior">
+(() => {
+  const toggle = document.querySelector('.platform-story-toggle');
+  const panel = document.querySelector('.platform-story-panel');
+  const close = panel?.querySelector('button');
+  const setOpen = (open) => {
+    if (!toggle || !panel) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+})();
+</script>
+</body>
+</html>

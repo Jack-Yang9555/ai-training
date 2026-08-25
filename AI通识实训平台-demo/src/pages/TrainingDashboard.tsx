@@ -24,8 +24,8 @@ export function TrainingDashboard({ snapshot, onNavigate, onOpenTask }: Training
         <div>
           <span className="eyebrow">高职教师 AI 实操培训 · 三日全程</span>
           <h1>从可信使用到 AI 教学综合应用</h1>
-          <p>平台覆盖三天任务、后两天多选任务和三次阶段验收，支持教师按日程完成实操、复核、修改与任务提交。</p>
-          <div className="hero-facts"><span><Clock3 size={17} />基础日程 18 小时</span><span><Layers3 size={17} />12 项必修 + 每天至少 1 项选修</span><span><ShieldCheck size={17} />3 次阶段验收</span></div>
+          <p>平台覆盖三天任务、每组两项有序选修和三次阶段验收，支持教师按日程完成实操、复核、修改与任务提交。</p>
+          <div className="hero-facts"><span><Clock3 size={17} />基础日程 18 小时</span><span><Layers3 size={17} />12 项必修 + 每组 2 项选修</span><span><ShieldCheck size={17} />3 次阶段验收</span></div>
           <div className="portal-hero-actions"><button className="primary-button" type="button" onClick={() => onOpenTask(primaryTaskId)}>{primaryActionLabel}<ArrowRight size={17} /></button><button className="secondary-button" type="button" onClick={() => onNavigate({ page: 'tasks' })}>查看任务清单</button></div>
           <p className="dashboard-next-task">当前优先：{primaryTask.title}</p>
         </div>
@@ -38,7 +38,7 @@ export function TrainingDashboard({ snapshot, onNavigate, onOpenTask }: Training
 
       <section className="dashboard-pass-rule" aria-labelledby="dashboard-pass-title">
         <div className="dashboard-pass-heading"><span><Award size={22} /></span><div><small>PASS RULE</small><h2 id="dashboard-pass-title">达标规则</h2></div></div>
-        <div className="dashboard-pass-items"><span><strong>总评 ≥ 80</strong><small>达到总体得分线</small></span><span><strong>两天选修达标</strong><small>第二、第三天各至少完成 1 项</small></span><span><strong>3 次阶段验收</strong><small>G01—G03 均须通过</small></span><span><CheckCircle2 size={17} /><strong>统一最低要求</strong><small>个人成果与小组协作均须达标</small></span></div>
+        <div className="dashboard-pass-items"><span><strong>总评 ≥ 80</strong><small>达到总体得分线</small></span><span><strong>两项选修达标</strong><small>组内定序、本人确认并完成</small></span><span><strong>3 次阶段验收</strong><small>G01—G03 均须通过</small></span><span><CheckCircle2 size={17} /><strong>统一最低要求</strong><small>个人成果与小组协作均须达标</small></span></div>
       </section>
 
       <section className="portal-section">

@@ -31,7 +31,7 @@ export function TrainingShell<Route extends string>({ route, task, steps, progre
       <header className="topbar">
         <button className="brand" type="button" onClick={onExitTask} aria-label="返回任务清单">
           <span className="brand-mark" aria-hidden="true"><BookOpenCheck size={21} /></span>
-          <span className="brand-copy"><strong>启境</strong><small>AI 通识实训平台 · 全程 Demo</small></span>
+          <span className="brand-copy"><strong>AI 通识实训平台</strong><small>GENERAL AI TRAINING · 全程 Demo</small></span>
         </button>
         <div className="topbar-actions">
           <div className="demo-boundary"><ShieldCheck size={16} />本地模拟数据</div>

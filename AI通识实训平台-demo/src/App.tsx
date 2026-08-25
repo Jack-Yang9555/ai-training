@@ -40,6 +40,53 @@ import { LocalM08WebRunner } from './m08/runner'
 import { calculateM08Score, createM08Assessment } from './m08/scoring'
 import { clearAllM08Progress, clearParticipantM08Progress, createConfirmedM08Webpage, loadM08Store, m08ProgressForParticipant, saveM08Store, updateParticipantM08Progress } from './m08/storage'
 import { confirmedM08WebpageIsCurrent, latestM08AssessmentIsCurrent, progressForM08, validateM08BrowserTest, validateM08Draft, validateM08Input, validateM08Iterations, validateM08PeerTest } from './m08/validation'
+import { createInitialM09Progress, createM09LocalSource, createM09SampleSources } from './m09/data'
+import type { M09CorrectionDraft, M09PeerTest, M09Progress, M09QualityAction, M09QualityIssueType, M09Route, M09Scenario, M09SourceRecord } from './m09/domain'
+import { applyRecommendedM09Quality, archiveM09TestChain, createM09Correction, LocalM09KnowledgeRunner, resolveM09QualityFinding, simulateM09PeerTest } from './m09/runner'
+import { calculateM09Score, createM09Assessment } from './m09/scoring'
+import { clearAllM09Progress, clearParticipantM09Progress, createConfirmedM09KnowledgeBase, loadM09Store, m09ProgressForParticipant, saveM09Store, updateParticipantM09Progress } from './m09/storage'
+import { confirmedM09KnowledgeBaseIsCurrent, latestM09AssessmentIsCurrent, progressForM09, validateM09Build, validateM09CorrectionRetest, validateM09FirstTest, validateM09Quality, validateM09Sources } from './m09/validation'
+import { calculateM10Score, clearAllM10Progress, clearParticipantM10Progress, confirmedM10AssistantIsCurrent, invalidateM10ReviewContext, latestM10AssessmentIsCurrent, loadM10Store, m10KnowledgeSourceFromM09, m10ProgressForParticipant, progressForM10, saveM10Store, synchronizeM10Source, updateParticipantM10Progress, validateM10Boundaries, validateM10Configuration, validateM10Flow, validateM10Previews, validateM10Source } from './m10'
+import type { M10Progress, M10Route } from './m10'
+import { calculateM11Score, clearAllM11Progress, clearParticipantM11Progress, confirmedM11PackageIsCurrent, invalidateM11PairingContext, latestM11AssessmentIsCurrent, loadM11Store, m11M10Fingerprint, m11ProgressForParticipant, m11RosterFingerprint, progressForM11, saveM11Store, updateParticipantM11Progress, validateM11Audit, validateM11FirstTest, validateM11Pairing, validateM11Retest, validateM11Revisions } from './m11'
+import type { M11M10Evidence, M11Progress, M11Route } from './m11'
+import { createInitialE01Progress } from './e01/data'
+import type { E01Progress, E01Route } from './e01/domain'
+import { archiveE01Attempt } from './e01/runner'
+import { calculateE01Score } from './e01/scoring'
+import { clearAllE01Progress, clearParticipantE01Progress, e01ProgressForParticipant, loadE01Store, saveE01Store, updateParticipantE01Progress } from './e01/storage'
+import { confirmedE01PackageIsCurrent, latestE01AssessmentIsCurrent, progressForE01, validateE01AiReview, validateE01Input, validateE01Rubric, validateE01TeacherReview } from './e01/validation'
+import { createInitialE02Progress } from './e02/data'
+import type { E02Progress, E02Route } from './e02/domain'
+import { archiveE02Attempt } from './e02/runner'
+import { calculateE02Score } from './e02/scoring'
+import { clearAllE02Progress, clearParticipantE02Progress, e02ProgressForParticipant, loadE02Store, saveE02Store, updateParticipantE02Progress } from './e02/storage'
+import { confirmedE02PackageIsCurrent, latestE02AssessmentIsCurrent, progressForE02, validateE02FinalDraft, validateE02InitialDraft, validateE02PeerReview, validateE02Source } from './e02/validation'
+import type { E03Progress, E03Route } from './e03/domain'
+import { invalidateE03ReviewContext } from './e03/runner'
+import { calculateE03Score } from './e03/scoring'
+import { clearAllE03Progress, clearParticipantE03Progress, e03ProgressForParticipant, loadE03Store, saveE03Store, updateParticipantE03Progress } from './e03/storage'
+import { confirmedE03PackageIsCurrent, latestE03AssessmentIsCurrent, progressForE03, validateE03Findings, validateE03InitialMeasures, validateE03PeerReview, validateE03Revision, validateE03Source } from './e03/validation'
+import type { E04Progress, E04Route } from './e04/domain'
+import { invalidateE04ReviewContext } from './e04/runner'
+import { calculateE04Score } from './e04/scoring'
+import { clearAllE04Progress, clearParticipantE04Progress, e04ProgressForParticipant, loadE04Store, saveE04Store, updateParticipantE04Progress } from './e04/storage'
+import { confirmedE04PackageIsCurrent, latestE04AssessmentIsCurrent, progressForE04, validateE04GraphReview, validateE04Nodes, validateE04Relations, validateE04Revision, validateE04Source } from './e04/validation'
+import type { E05Progress, E05Route } from './e05/domain'
+import { invalidateE05ReviewContext } from './e05/runner'
+import { calculateE05Score } from './e05/scoring'
+import { clearAllE05Progress, clearParticipantE05Progress, e05ProgressForParticipant, loadE05Store, saveE05Store, updateParticipantE05Progress } from './e05/storage'
+import { confirmedE05PackageIsCurrent, latestE05AssessmentIsCurrent, progressForE05, validateE05Mapping, validateE05PeerReview, validateE05Revision, validateE05Source, validateE05Suggestions, validateE05WebPage } from './e05/validation'
+import type { E06Progress, E06Route } from './e06/domain'
+import { invalidateE06ReviewContext } from './e06/runner'
+import { calculateE06Score } from './e06/scoring'
+import { clearAllE06Progress, clearParticipantE06Progress, e06ProgressForParticipant, loadE06Store, saveE06Store, updateParticipantE06Progress } from './e06/storage'
+import { confirmedE06PackageIsCurrent, latestE06AssessmentIsCurrent, progressForE06, validateE06Comparisons, validateE06InitialReview, validateE06PeerReview, validateE06Revision, validateE06Source } from './e06/validation'
+import { buildOfficialM12Evidence, createInitialM12Progress, getOfficialM12Progress, updateOfficialM12Progress } from './m12/data'
+import type { M12AssistantCard, M12CorrectionEvidence, M12Progress, M12Route } from './m12/domain'
+import { calculateM12Score, createM12Assessment } from './m12/scoring'
+import { clearAllM12Progress, clearParticipantM12Progress, createConfirmedM12Bundle, loadM12Store, m12ProgressForParticipant, saveM12Store, updateParticipantM12Progress } from './m12/storage'
+import { confirmedM12BundleIsCurrent, latestM12AssessmentIsCurrent, m12EvidenceFingerprint, officialProgressForM12, progressForM12, validateM12Assistant, validateM12Correction, validateM12Evidence, validateM12Flow, validateM12Retest, validateM12SafetyShowcase, validateM12TeacherConfirmation } from './m12/validation'
 import { createG01Assessment } from './g01/assessment'
 import { buildG01GroupContext } from './g01/data'
 import { clearAllG01Progress, clearGroupG01Progress, g01ProgressForGroup, invalidateAllG01Progress, loadG01Store, saveG01Store, updateGroupG01Progress } from './g01/storage'
@@ -49,6 +96,8 @@ import { buildG02GroupContext } from './g02/data'
 import { clearAllG02Progress, clearGroupG02Progress, g02ProgressForGroup, invalidateAllG02Progress, loadG02Store, saveG02Store, updateGroupG02Progress } from './g02/storage'
 import type { G02Contribution, G02CurrentEvidence, G02Progress, G02Revision, G02Route, G02Showcase } from './g02/types'
 import { createG02Assessment, latestG02AssessmentIsCurrent, progressForG02, validateG02Directory, validateG02Feedback, validateG02Revision, validateG02Showcase } from './g02/validation'
+import { buildG03GroupContext, clearAllG03Progress, clearGroupG03Progress, createG03Assessment, g03ProgressForGroup, invalidateAllG03Progress, latestG03AssessmentIsCurrent, loadG03Store, progressForG03, saveG03Store, updateGroupG03Progress, validateG03Contributions, validateG03Issues, validateG03Matrix, validateG03Scenarios, validateG03Showcase } from './g03'
+import type { G03CurrentEvidenceInput, G03Progress, G03Route } from './g03'
 import { M01Answers } from './pages/M01Answers'
 import { M01Corrections } from './pages/M01Corrections'
 import { M01GroupReview } from './pages/M01GroupReview'
@@ -63,7 +112,18 @@ import { M06AvatarVideoPage, M06DeckPage, M06InputPage, M06NarrationPage, M06Ove
 import { M07AnalysisPage, M07DataCheckPage, M07InputPage, M07LayerReviewPage, M07Overview, M07ResultPage, M07StatisticsPage } from './pages/M07Pages'
 import { G01AssessmentPage, G01ChecklistPage, G01CrossChecksPage, G01DirectoryPage, G01ErrorsPage, G01Overview } from './pages/G01Pages'
 import { G02AssessmentPage, G02DirectoryPage, G02FeedbackPage, G02Overview, G02RevisionPage, G02ShowcasePage } from './pages/G02Pages'
+import { G03WorkspacePage } from './pages/G03Pages'
 import { M08BrowserTestPage, M08DraftPage, M08InputPage, M08IterationsPage, M08Overview, M08PeerConfirmPage, M08ResultPage } from './pages/M08Pages'
+import { M09BuildPage, M09CorrectionRetestPage, M09FirstTestPage, M09Overview, M09PeerConfirmPage, M09QualityPage, M09ResultPage, M09SourcesPage } from './pages/M09Pages'
+import { M10WorkspacePage } from './pages/M10Pages'
+import { M11WorkspacePage } from './pages/M11Pages'
+import { E01WorkspacePage } from './pages/E01Pages'
+import { E02WorkspacePage } from './pages/E02Pages'
+import { E03WorkspacePage } from './pages/E03Pages'
+import { E04WorkspacePage } from './pages/E04Pages'
+import { E05WorkspacePage } from './pages/E05Pages'
+import { E06WorkspacePage } from './pages/E06Pages'
+import { M12WorkspacePage } from './pages/M12Pages'
 import { ParticipantsPage } from './pages/ParticipantsPage'
 import { PortfolioPage } from './pages/PortfolioPage'
 import { TaskFrameworkPage } from './pages/TaskFrameworkPage'
@@ -75,9 +135,9 @@ import { localM03PromptRunner } from './services/m03PromptRunner'
 import { localM04LessonPlanRunner } from './services/m04LessonPlanRunner'
 import { localM05QuestionRunner } from './services/m05QuestionRunner'
 import { m02CourseMaterial, m02LockedPrompt, m02ModelIds } from './m02/data'
-import { g01Steps, g02Steps, m01Steps, m02Steps, m03Steps, m04Steps, m05Steps, m06Steps, m07Steps, m08Steps, taskGroups, trainingTasks } from './training/catalog'
+import { e01Steps, e02Steps, e03Steps, e04Steps, e05Steps, e06Steps, g01Steps, g02Steps, g03Steps, m01Steps, m02Steps, m03Steps, m04Steps, m05Steps, m06Steps, m07Steps, m08Steps, m09Steps, m10Steps, m11Steps, m12Steps, taskGroups, trainingTasks } from './training/catalog'
 import { buildTrainingSnapshot } from './training/progress'
-import { clearPortalProgress, loadPortalProgress, savePortalProgress, selectedElectiveIds, updateElectiveAssignments, updateParticipantDirectory, updatePortalRoute } from './training/storage'
+import { clearPortalProgress, confirmCurrentMemberElectiveSelection, currentElectiveSelection, currentMemberElectiveConfirmed, loadPortalProgress, savePortalProgress, selectedElectiveIds, updateElectiveAssignments, updateParticipantDirectory, updatePortalRoute } from './training/storage'
 import { currentParticipant } from './training/participants'
 import type { ElectiveAssignments, PortalRoute, TaskArtifactSubmission, TaskGroupId, TrainingTaskId } from './training/types'
 import { taskWorkspaceRegistry } from './training/workspaces'
@@ -108,10 +168,32 @@ const m07RouteOrder: M07Route[] = ['overview', 'input', 'data-check', 'statistic
 const m07ShellSteps = m07Steps.map((step) => ({ ...step, route: step.id as M07Route }))
 const m08RouteOrder: M08Route[] = ['overview', 'input', 'draft', 'iterations', 'browser-test', 'peer-confirm', 'result']
 const m08ShellSteps = m08Steps.map((step) => ({ ...step, route: step.id as M08Route }))
+const m09RouteOrder: M09Route[] = ['overview', 'sources', 'quality', 'build', 'first-test', 'correction-retest', 'peer-confirm', 'result']
+const m09ShellSteps = m09Steps.map((step) => ({ ...step, route: step.id as M09Route }))
+const m10RouteOrder: M10Route[] = ['overview', 'source', 'configuration', 'flow', 'boundaries', 'preview', 'review-confirm', 'result']
+const m10ShellSteps = m10Steps.map((step) => ({ ...step, route: step.id as M10Route }))
+const m11RouteOrder: M11Route[] = ['overview', 'pairing', 'first-test', 'audit', 'revision', 'retest', 'confirmation', 'result']
+const m11ShellSteps = m11Steps.map((step) => ({ ...step, route: step.id as M11Route }))
+const m12RouteOrder: M12Route[] = ['overview', 'evidence', 'orchestration', 'correction', 'assistant', 'integration', 'safety', 'result']
+const m12ShellSteps = m12Steps.map((step) => ({ ...step, route: step.id as M12Route }))
+const e01RouteOrder: E01Route[] = ['overview', 'input', 'rubric', 'ai-review', 'teacher-review', 'peer-confirm', 'result']
+const e01ShellSteps = e01Steps.map((step) => ({ ...step, route: step.id as E01Route }))
+const e02RouteOrder: E02Route[] = ['overview', 'source', 'draft', 'safety-rubric', 'peer-review', 'teacher-revision', 'confirmation', 'result']
+const e02ShellSteps = e02Steps.map((step) => ({ ...step, route: step.id as E02Route }))
+const e03RouteOrder: E03Route[] = ['overview', 'source', 'findings', 'measures', 'peer-review', 'revision', 'confirmation', 'result']
+const e03ShellSteps = e03Steps.map((step) => ({ ...step, route: step.id as E03Route }))
+const e04RouteOrder: E04Route[] = ['overview', 'source', 'nodes', 'relations', 'graph-review', 'revision', 'confirmation', 'result']
+const e04ShellSteps = e04Steps.map((step) => ({ ...step, route: step.id as E04Route }))
+const e05RouteOrder: E05Route[] = ['overview', 'source', 'mapping', 'suggestions', 'peer-review', 'revision', 'confirmation', 'result']
+const e05ShellSteps = e05Steps.map((step) => ({ ...step, route: step.id as E05Route }))
+const e06RouteOrder: E06Route[] = ['overview', 'question', 'review', 'comparison', 'peer-review', 'revision', 'confirmation', 'result']
+const e06ShellSteps = e06Steps.map((step) => ({ ...step, route: step.id as E06Route }))
 const g01RouteOrder: G01Route[] = ['overview', 'directory', 'errors', 'cross-checks', 'checklist', 'assessment']
 const g01ShellSteps = g01Steps.map((step) => ({ ...step, route: step.id as G01Route }))
 const g02RouteOrder: G02Route[] = ['overview', 'directory', 'showcase', 'feedback', 'revision', 'assessment']
 const g02ShellSteps = g02Steps.map((step) => ({ ...step, route: step.id as G02Route }))
+const g03RouteOrder: G03Route[] = ['overview', 'matrix', 'issues', 'scenarios', 'showcase', 'contributions', 'assessment']
+const g03ShellSteps = g03Steps.map((step) => ({ ...step, route: step.id as G03Route }))
 
 function referenceToAnnotation(answerId: AnswerId, reference: ReferenceAnnotation, index: number): TextAnnotation | null {
   const answer = m01Answers.find((item) => item.id === answerId)
@@ -123,6 +205,23 @@ function referenceToAnnotation(answerId: AnswerId, reference: ReferenceAnnotatio
 
 function groupForTask(taskId: TrainingTaskId, assignments: ElectiveAssignments): TaskGroupId | undefined {
   return taskGroups.find((group) => group.items.some((entry) => entry.taskId === taskId || (entry.electiveBucketId && assignments[entry.electiveBucketId]?.some((id) => id === taskId))))?.id
+}
+
+function invalidateM09Pipeline(current: M09Progress, reason: string): M09Progress {
+  const initial = createInitialM09Progress()
+  return {
+    ...current,
+    knowledgeBase: undefined,
+    firstTest: [],
+    firstTestFrozen: false,
+    correctionDraft: initial.correctionDraft,
+    corrections: [],
+    retest: [],
+    peerTest: initial.peerTest,
+    teacherConfirmation: initial.teacherConfirmation,
+    confirmedKnowledgeBase: undefined,
+    testHistory: archiveM09TestChain(current, reason),
+  }
 }
 
 export default function App() {
@@ -142,8 +241,19 @@ export default function App() {
   const [m07Running, setM07Running] = useState(false)
   const [m08Store, setM08Store] = useState(() => loadM08Store())
   const [m08Running, setM08Running] = useState(false)
+  const [m09Store, setM09Store] = useState(() => loadM09Store())
+  const [m10Store, setM10Store] = useState(() => loadM10Store())
+  const [m11Store, setM11Store] = useState(() => loadM11Store())
+  const [e01Store, setE01Store] = useState(() => loadE01Store())
+  const [e02Store, setE02Store] = useState(() => loadE02Store())
+  const [e03Store, setE03Store] = useState(() => loadE03Store())
+  const [e04Store, setE04Store] = useState(() => loadE04Store())
+  const [e05Store, setE05Store] = useState(() => loadE05Store())
+  const [e06Store, setE06Store] = useState(() => loadE06Store())
+  const [m12Store, setM12Store] = useState(() => loadM12Store())
   const [g01Store, setG01Store] = useState(() => loadG01Store())
   const [g02Store, setG02Store] = useState(() => loadG02Store())
+  const [g03Store, setG03Store] = useState(() => loadG03Store())
   const [portalProgress, setPortalProgress] = useState(() => loadPortalProgress())
   const [verificationAnswerId, setVerificationAnswerId] = useState<AnswerId>('A')
 
@@ -155,14 +265,27 @@ export default function App() {
   useEffect(() => saveM06Store(m06Store), [m06Store])
   useEffect(() => saveM07Store(m07Store), [m07Store])
   useEffect(() => saveM08Store(m08Store), [m08Store])
+  useEffect(() => saveM09Store(m09Store), [m09Store])
+  useEffect(() => saveM10Store(m10Store), [m10Store])
+  useEffect(() => saveM11Store(m11Store), [m11Store])
+  useEffect(() => saveE01Store(e01Store), [e01Store])
+  useEffect(() => saveE02Store(e02Store), [e02Store])
+  useEffect(() => saveE03Store(e03Store), [e03Store])
+  useEffect(() => saveE04Store(e04Store), [e04Store])
+  useEffect(() => saveE05Store(e05Store), [e05Store])
+  useEffect(() => saveE06Store(e06Store), [e06Store])
+  useEffect(() => saveM12Store(m12Store), [m12Store])
   useEffect(() => saveG01Store(g01Store), [g01Store])
   useEffect(() => saveG02Store(g02Store), [g02Store])
+  useEffect(() => saveG03Store(g03Store), [g03Store])
   useEffect(() => savePortalProgress(portalProgress), [portalProgress])
 
   const m01ProgressPercent = useMemo(() => progressForRoute(m01Progress, portalProgress.participantDirectory), [m01Progress, portalProgress.participantDirectory])
   const m01Score = useMemo(() => calculateM01Score(m01Progress, portalProgress.participantDirectory), [m01Progress, portalProgress.participantDirectory])
   const activeParticipant = useMemo(() => currentParticipant(portalProgress.participantDirectory), [portalProgress.participantDirectory])
   const activeParticipantId = activeParticipant?.participantId ?? 'anonymous'
+  const activeGroupElectiveSelection = useMemo(() => currentElectiveSelection(portalProgress), [portalProgress])
+  const activeMemberElectiveConfirmed = useMemo(() => currentMemberElectiveConfirmed(portalProgress), [portalProgress])
   const m02Progress = useMemo(() => progressForParticipant(m02Store, activeParticipantId), [m02Store, activeParticipantId])
   const m02ProgressPercent = useMemo(() => progressForM02(m02Progress, portalProgress.participantDirectory), [m02Progress, portalProgress.participantDirectory])
   const m02Score = useMemo(() => calculateM02Score(m02Progress, portalProgress.participantDirectory), [m02Progress, portalProgress.participantDirectory])
@@ -200,6 +323,188 @@ export default function App() {
   const m08ProgressPercent = useMemo(() => progressForM08(m08Progress, portalProgress.participantDirectory), [m08Progress, portalProgress.participantDirectory])
   const m08Score = useMemo(() => calculateM08Score(m08Progress, portalProgress.participantDirectory), [m08Progress, portalProgress.participantDirectory])
   const m08Passed = useMemo(() => latestM08AssessmentIsCurrent(m08Progress, portalProgress.participantDirectory), [m08Progress, portalProgress.participantDirectory])
+  const m09Progress = useMemo(() => m09ProgressForParticipant(m09Store, activeParticipantId), [m09Store, activeParticipantId])
+  const m09ProgressPercent = useMemo(() => progressForM09(m09Progress, portalProgress.participantDirectory), [m09Progress, portalProgress.participantDirectory])
+  const m09Score = useMemo(() => calculateM09Score(m09Progress, portalProgress.participantDirectory), [m09Progress, portalProgress.participantDirectory])
+  const m09Passed = useMemo(() => latestM09AssessmentIsCurrent(m09Progress, portalProgress.participantDirectory), [m09Progress, portalProgress.participantDirectory])
+  const m10KnowledgeSource = useMemo(() => m10KnowledgeSourceFromM09(m09Progress, portalProgress.participantDirectory), [m09Progress, portalProgress.participantDirectory])
+  const m10Progress = useMemo(() => m10ProgressForParticipant(m10Store, activeParticipantId), [m10Store, activeParticipantId])
+  useEffect(() => {
+    setM10Store((current) => updateParticipantM10Progress(current, activeParticipantId, (saved) => synchronizeM10Source(saved, m10KnowledgeSource)))
+  }, [activeParticipantId, m10KnowledgeSource])
+  const m10ProgressPercent = useMemo(() => progressForM10(m10Progress, portalProgress.participantDirectory), [m10Progress, portalProgress.participantDirectory])
+  const m10Score = useMemo(() => calculateM10Score(m10Progress, portalProgress.participantDirectory), [m10Progress, portalProgress.participantDirectory])
+  const m10Passed = useMemo(() => latestM10AssessmentIsCurrent(m10Progress, portalProgress.participantDirectory), [m10Progress, portalProgress.participantDirectory])
+  const m11M10Evidence = useMemo<M11M10Evidence>(() => {
+    const assessment = m10Progress.assessments.at(-1)
+    const assistant = m10Progress.confirmedAssistant
+    if (m10Passed && assessment && assistant) return {
+      current: true,
+      participantId: activeParticipantId,
+      assistantId: assistant.assistantId,
+      version: assistant.version,
+      assessmentId: assessment.assessmentId,
+      contentFingerprint: assessment.contentFingerprint,
+      courseName: assistant.source.courseName,
+      knowledgeBaseVersion: assistant.source.version,
+      confirmedAt: assistant.confirmedAt,
+    }
+    return {
+      current: false,
+      participantId: activeParticipantId,
+      assistantId: '',
+      version: '',
+      assessmentId: '',
+      contentFingerprint: '',
+      courseName: m09Progress.scenario.courseName,
+      knowledgeBaseVersion: '',
+      unavailableReason: 'M10 尚无当前有效的教师确认课程 AI 助教 v1.0',
+    }
+  }, [activeParticipantId, m09Progress.scenario.courseName, m10Passed, m10Progress.assessments, m10Progress.confirmedAssistant])
+  const m11Progress = useMemo(() => m11ProgressForParticipant(m11Store, activeParticipantId), [m11Store, activeParticipantId])
+  useEffect(() => {
+    setM11Store((current) => updateParticipantM11Progress(current, activeParticipantId, (saved) => {
+      if (!saved.pairing) return saved
+      const sourceChanged = saved.pairing.m10Fingerprint !== m11M10Fingerprint(m11M10Evidence)
+      const rosterChanged = saved.pairing.rosterFingerprint !== m11RosterFingerprint(portalProgress.participantDirectory)
+      return sourceChanged || rosterChanged ? invalidateM11PairingContext(saved, sourceChanged ? 'M10 当前助教版本或验收发生变化' : '人员或分组发生变化') : saved
+    }))
+  }, [activeParticipantId, m11M10Evidence, portalProgress.participantDirectory])
+  const m11ProgressPercent = useMemo(() => progressForM11(m11Progress, portalProgress.participantDirectory, m11M10Evidence), [m11Progress, portalProgress.participantDirectory, m11M10Evidence])
+  const m11Score = useMemo(() => calculateM11Score(m11Progress, portalProgress.participantDirectory, m11M10Evidence), [m11Progress, portalProgress.participantDirectory, m11M10Evidence])
+  const m11Passed = useMemo(() => latestM11AssessmentIsCurrent(m11Progress, portalProgress.participantDirectory, m11M10Evidence), [m11Progress, portalProgress.participantDirectory, m11M10Evidence])
+  const e01Progress = useMemo(() => e01ProgressForParticipant(e01Store, activeParticipantId), [e01Store, activeParticipantId])
+  const e01ProgressPercent = useMemo(() => progressForE01(e01Progress, portalProgress.participantDirectory), [e01Progress, portalProgress.participantDirectory])
+  const e01Score = useMemo(() => calculateE01Score(e01Progress, portalProgress.participantDirectory), [e01Progress, portalProgress.participantDirectory])
+  const e01Passed = useMemo(() => latestE01AssessmentIsCurrent(e01Progress, portalProgress.participantDirectory), [e01Progress, portalProgress.participantDirectory])
+  const e02Progress = useMemo(() => e02ProgressForParticipant(e02Store, activeParticipantId), [e02Store, activeParticipantId])
+  const e02ProgressPercent = useMemo(() => progressForE02(e02Progress, portalProgress.participantDirectory), [e02Progress, portalProgress.participantDirectory])
+  const e02Score = useMemo(() => calculateE02Score(e02Progress, portalProgress.participantDirectory), [e02Progress, portalProgress.participantDirectory])
+  const e02Passed = useMemo(() => latestE02AssessmentIsCurrent(e02Progress, portalProgress.participantDirectory), [e02Progress, portalProgress.participantDirectory])
+  const e03Progress = useMemo(() => e03ProgressForParticipant(e03Store, activeParticipantId), [e03Store, activeParticipantId])
+  const e03ProgressPercent = useMemo(() => progressForE03(e03Progress, portalProgress.participantDirectory), [e03Progress, portalProgress.participantDirectory])
+  const e03Score = useMemo(() => calculateE03Score(e03Progress, portalProgress.participantDirectory), [e03Progress, portalProgress.participantDirectory])
+  const e03Passed = useMemo(() => latestE03AssessmentIsCurrent(e03Progress, portalProgress.participantDirectory), [e03Progress, portalProgress.participantDirectory])
+  const e04Progress = useMemo(() => e04ProgressForParticipant(e04Store, activeParticipantId), [e04Store, activeParticipantId])
+  const e04ProgressPercent = useMemo(() => progressForE04(e04Progress, portalProgress.participantDirectory), [e04Progress, portalProgress.participantDirectory])
+  const e04Score = useMemo(() => calculateE04Score(e04Progress, portalProgress.participantDirectory), [e04Progress, portalProgress.participantDirectory])
+  const e04Passed = useMemo(() => latestE04AssessmentIsCurrent(e04Progress, portalProgress.participantDirectory), [e04Progress, portalProgress.participantDirectory])
+  const e05Progress = useMemo(() => e05ProgressForParticipant(e05Store, activeParticipantId), [e05Store, activeParticipantId])
+  const e05ProgressPercent = useMemo(() => progressForE05(e05Progress, portalProgress.participantDirectory), [e05Progress, portalProgress.participantDirectory])
+  const e05Score = useMemo(() => calculateE05Score(e05Progress, portalProgress.participantDirectory), [e05Progress, portalProgress.participantDirectory])
+  const e05Passed = useMemo(() => latestE05AssessmentIsCurrent(e05Progress, portalProgress.participantDirectory), [e05Progress, portalProgress.participantDirectory])
+  const e06Progress = useMemo(() => e06ProgressForParticipant(e06Store, activeParticipantId), [e06Store, activeParticipantId])
+  const e06ProgressPercent = useMemo(() => progressForE06(e06Progress, portalProgress.participantDirectory), [e06Progress, portalProgress.participantDirectory])
+  const e06Score = useMemo(() => calculateE06Score(e06Progress, portalProgress.participantDirectory), [e06Progress, portalProgress.participantDirectory])
+  const e06Passed = useMemo(() => latestE06AssessmentIsCurrent(e06Progress, portalProgress.participantDirectory), [e06Progress, portalProgress.participantDirectory])
+  const m12OfficialEvidence = useMemo(() => {
+    const day2ElectiveId = portalProgress.electiveAssignments['day-2']?.[0]
+    const day3ElectiveId = portalProgress.electiveAssignments['day-3']?.[0]
+    const electiveEvidence = (taskId: typeof day2ElectiveId, dayLabel: string) => {
+      if (taskId === 'E01' && activeMemberElectiveConfirmed && e01Passed && e01Progress.confirmedPackage) {
+        return { current: true as const, sourceTaskId: taskId, sourceLabel: `${taskId} · ${dayLabel}个人选修`, artifactId: e01Progress.confirmedPackage.packageId, version: e01Progress.rubric.version, assessmentId: e01Progress.assessments.at(-1)?.assessmentId, updatedAt: e01Progress.confirmedPackage.confirmedAt, summary: `当前教师确认的完整 E01 成果包，含评分量规 ${e01Progress.confirmedPackage.artifacts[0].artifactId} 与五份批改反馈 ${e01Progress.confirmedPackage.artifacts[1].artifactId}。` }
+      }
+      if (taskId === 'E02' && activeMemberElectiveConfirmed && e02Passed && e02Progress.confirmedPackage && e02Progress.workingDraft) {
+        return { current: true as const, sourceTaskId: taskId, sourceLabel: `${taskId} · ${dayLabel}个人选修`, artifactId: e02Progress.confirmedPackage.packageId, version: e02Progress.workingDraft.rubric.version, assessmentId: e02Progress.assessments.at(-1)?.assessmentId, updatedAt: e02Progress.confirmedPackage.confirmedAt, summary: `当前教师确认的完整 E02 成果包，含实训任务书、安全检查单和 100 分评分量规共 ${e02Progress.confirmedPackage.artifacts.length} 项固定成果。` }
+      }
+      if (taskId === 'E03' && activeMemberElectiveConfirmed && e03Passed && e03Progress.confirmedPackage) {
+        return { current: true as const, sourceTaskId: taskId, sourceLabel: `${taskId} · ${dayLabel}个人选修`, artifactId: e03Progress.confirmedPackage.packageId, version: e03Progress.confirmedPackage.artifactVersion, assessmentId: e03Progress.assessments.at(-1)?.assessmentId, updatedAt: e03Progress.confirmedPackage.confirmedAt, summary: '当前教师确认的完整 E03 成果包，含可追溯的教学反思或评课记录与下一次课改进清单。' }
+      }
+      if (taskId === 'E04' && activeMemberElectiveConfirmed && e04Passed && e04Progress.confirmedPackage) {
+        return { current: true as const, sourceTaskId: taskId, sourceLabel: `${taskId} · ${dayLabel}个人选修`, artifactId: e04Progress.confirmedPackage.packageId, version: `v${e04Progress.confirmedPackage.graphVersion}`, assessmentId: e04Progress.assessments.at(-1)?.assessmentId, updatedAt: e04Progress.confirmedPackage.confirmedAt, summary: `当前教师确认的完整 E04 成果包，含 ${e04Progress.confirmedPackage.nodeCount} 个节点、${e04Progress.confirmedPackage.relationCount} 条关系及人工修正记录。` }
+      }
+      if (taskId === 'E05' && activeMemberElectiveConfirmed && e05Passed && e05Progress.confirmedPackage) {
+        return { current: true as const, sourceTaskId: taskId, sourceLabel: `${taskId} · ${dayLabel}个人选修`, artifactId: e05Progress.confirmedPackage.packageId, version: `v${e05Progress.confirmedPackage.webPageVersion}`, assessmentId: e05Progress.assessments.at(-1)?.assessmentId, updatedAt: e05Progress.confirmedPackage.confirmedAt, summary: `当前教师确认的完整 E05 成果包，含课程—岗位能力映射网页、3 项差距改进建议和 ${e05Progress.confirmedPackage.revisionCount} 条人工修正。` }
+      }
+      if (taskId === 'E06' && activeMemberElectiveConfirmed && e06Passed && e06Progress.confirmedPackage) {
+        return { current: true as const, sourceTaskId: taskId, sourceLabel: `${taskId} · ${dayLabel}个人选修`, artifactId: e06Progress.confirmedPackage.packageId, version: `v${e06Progress.version}`, assessmentId: e06Progress.assessments.at(-1)?.assessmentId, updatedAt: e06Progress.confirmedPackage.confirmedAt, summary: '当前教师确认的完整 E06 成果包，含文献梳理表、观点对比表和引用核验记录。' }
+      }
+      return { current: false as const, sourceTaskId: taskId, sourceLabel: taskId ? `${taskId} · ${dayLabel}个人选修` : `${dayLabel}选修任务`, unavailableReason: taskId ? `${taskId} 尚无当前有效的教师确认选修成果` : `${dayLabel}尚未选择个人选修任务` }
+    }
+    return buildOfficialM12Evidence(activeParticipantId, {
+      'lesson-plan': m04Passed && m04Progress.confirmedPlan ? { current: true, sourceTaskId: 'M04', artifactId: m04Progress.confirmedPlan.planId, version: m04Progress.confirmedPlan.sourceDraftId, assessmentId: m04Progress.assessments.at(-1)?.assessmentId, updatedAt: m04Progress.confirmedPlan.confirmedAt, summary: '当前教师确认版教案，保留目标、活动、评价和人工审校记录。' } : { current: false, sourceTaskId: 'M04', unavailableReason: 'M04 尚无当前有效的教师确认版教案' },
+      'question-pack': m05Passed && m05Progress.confirmedPackage ? { current: true, sourceTaskId: 'M05', artifactId: m05Progress.confirmedPackage.packageId, version: m05Progress.confirmedPackage.sourceDraftId, assessmentId: m05Progress.assessments.at(-1)?.assessmentId, updatedAt: m05Progress.confirmedPackage.confirmedAt, summary: '当前教师确认题目包，包含 8 道题及答案、解析、依据与评分要点。' } : { current: false, sourceTaskId: 'M05', unavailableReason: 'M05 尚无当前有效的课堂题目包' },
+      multimodal: m06Passed && m06Progress.confirmedPackage ? { current: true, sourceTaskId: 'M06', artifactId: m06Progress.confirmedPackage.packageId, version: m06Progress.confirmedPackage.sourceDraftId, assessmentId: m06Progress.assessmentHistory.at(-1)?.assessmentId, updatedAt: m06Progress.confirmedPackage.confirmedAt, summary: '当前教师确认的课件、讲解稿与数字人微课组合成果。' } : { current: false, sourceTaskId: 'M06', unavailableReason: 'M06 尚无当前有效的课件与数字人微课组合成果' },
+      'learning-analysis': m07Passed && m07Progress.confirmedDeliverable ? { current: true, sourceTaskId: 'M07', artifactId: m07Progress.confirmedDeliverable.deliverableId, version: m07Progress.confirmedDeliverable.sourceDraftId, assessmentId: m07Progress.assessmentHistory.at(-1)?.assessmentId, updatedAt: m07Progress.confirmedDeliverable.confirmedAt, summary: '当前教师确认的匿名学情分析与补强、巩固、拓展任务。' } : { current: false, sourceTaskId: 'M07', unavailableReason: 'M07 尚无当前有效的学情分析与分层任务' },
+      'interactive-web': m08Passed && m08Progress.confirmedWebpage ? { current: true, sourceTaskId: 'M08', artifactId: m08Progress.confirmedWebpage.webpageId, version: m08Progress.confirmedWebpage.sourceVersionId, assessmentId: m08Progress.assessments.at(-1)?.assessmentId, updatedAt: m08Progress.confirmedWebpage.confirmedAt, summary: '当前教师确认的离线单文件交互式教学网页。' } : { current: false, sourceTaskId: 'M08', unavailableReason: 'M08 尚无当前有效的交互式教学网页' },
+      'knowledge-base': m09Passed && m09Progress.confirmedKnowledgeBase ? { current: true, sourceTaskId: 'M09', artifactId: m09Progress.confirmedKnowledgeBase.sourceListArtifactId, version: m09Progress.confirmedKnowledgeBase.version, assessmentId: m09Progress.assessments.at(-1)?.assessmentId, updatedAt: m09Progress.confirmedKnowledgeBase.confirmedAt, summary: '当前教师确认的课程知识库 v1.0、来源清单和 9 项测试报告。' } : { current: false, sourceTaskId: 'M09', unavailableReason: 'M09 尚无当前有效的课程知识库 v1.0' },
+      assistant: m10Passed && m10Progress.confirmedAssistant ? { current: true, sourceTaskId: 'M10', artifactId: m10Progress.confirmedAssistant.artifacts[0].artifactId, version: m10Progress.confirmedAssistant.version, assessmentId: m10Progress.assessments.at(-1)?.assessmentId, updatedAt: m10Progress.confirmedAssistant.confirmedAt, summary: '当前教师确认的课程 AI 助教 v1.0，包含六要素、固定四步流程、五类边界规则和双场景预览。' } : { current: false, sourceTaskId: 'M10', unavailableReason: 'M10 尚无当前有效的课程 AI 助教 v1.0' },
+      'qa-test': m11Passed && m11Progress.confirmedPackage ? { current: true, sourceTaskId: 'M11', artifactId: m11Progress.confirmedPackage.portfolioArtifact.artifactId, version: 'retest-v1', assessmentId: m11Progress.assessments.at(-1)?.assessmentId, updatedAt: m11Progress.confirmedPackage.confirmedAt, summary: '当前教师确认的五类学生问题首测、规则修改与同题 5/5 复测记录。' } : { current: false, sourceTaskId: 'M11', unavailableReason: 'M11 尚无当前有效的答疑测试、修改与复测记录' },
+      'elective-day-2': electiveEvidence(day2ElectiveId, '第二天'),
+      'elective-day-3': electiveEvidence(day3ElectiveId, '第三天'),
+    })
+  }, [activeParticipantId, m04Passed, m04Progress.confirmedPlan, m04Progress.assessments, m05Passed, m05Progress.confirmedPackage, m05Progress.assessments, m06Passed, m06Progress.confirmedPackage, m06Progress.assessmentHistory, m07Passed, m07Progress.confirmedDeliverable, m07Progress.assessmentHistory, m08Passed, m08Progress.confirmedWebpage, m08Progress.assessments, m09Passed, m09Progress.confirmedKnowledgeBase, m09Progress.assessments, m10Passed, m10Progress.confirmedAssistant, m10Progress.assessments, m11Passed, m11Progress.confirmedPackage, m11Progress.assessments, activeMemberElectiveConfirmed, e01Passed, e01Progress.confirmedPackage, e01Progress.rubric.version, e01Progress.assessments, e02Passed, e02Progress.confirmedPackage, e02Progress.workingDraft, e02Progress.assessments, e03Passed, e03Progress.confirmedPackage, e03Progress.assessments, e04Passed, e04Progress.confirmedPackage, e04Progress.assessments, e05Passed, e05Progress.confirmedPackage, e05Progress.assessments, e06Passed, e06Progress.confirmedPackage, e06Progress.assessments, e06Progress.version, portalProgress.electiveAssignments])
+  const m12Progress = useMemo(() => m12ProgressForParticipant(m12Store, activeParticipantId), [m12Store, activeParticipantId])
+  const m12OfficialProgress = useMemo(() => getOfficialM12Progress(m12Progress), [m12Progress])
+  useEffect(() => {
+    if (m12OfficialProgress.evidence.length === 0 || m12EvidenceFingerprint(m12OfficialProgress.evidence) === m12EvidenceFingerprint(m12OfficialEvidence)) return
+    setM12Store((current) => updateParticipantM12Progress(current, activeParticipantId, (saved) => updateOfficialM12Progress(saved, (official) => ({ ...official, evidence: m12OfficialEvidence }))))
+  }, [activeParticipantId, m12OfficialEvidence, m12OfficialProgress.evidence])
+  const m12WorkbenchProgressPercent = useMemo(() => progressForM12(m12Progress, activeParticipantId, portalProgress.participantDirectory), [m12Progress, activeParticipantId, portalProgress.participantDirectory])
+  const m12OfficialProgressPercent = useMemo(() => officialProgressForM12(m12OfficialProgress, activeParticipantId, portalProgress.participantDirectory), [m12OfficialProgress, activeParticipantId, portalProgress.participantDirectory])
+  const m12Score = useMemo(() => calculateM12Score(m12OfficialProgress, activeParticipantId, portalProgress.participantDirectory), [m12OfficialProgress, activeParticipantId, portalProgress.participantDirectory])
+  const m12Passed = useMemo(() => latestM12AssessmentIsCurrent(m12OfficialProgress, portalProgress.participantDirectory), [m12OfficialProgress, portalProgress.participantDirectory])
+  const m12CorrectionOptions = useMemo<M12CorrectionEvidence[]>(() => {
+    const options: M12CorrectionEvidence[] = []
+    const m09Correction = m09Passed ? m09Progress.corrections.at(-1) : undefined
+    if (m09Correction && m09Progress.confirmedKnowledgeBase) options.push({ correctionId: m09Correction.correctionId, sourceTaskId: 'M09', sourceArtifactId: m09Progress.confirmedKnowledgeBase.testReportArtifactId, sourceParticipantId: activeParticipantId, sourceVersion: m09Progress.confirmedKnowledgeBase.version, sourceAssessmentId: m09Progress.assessments.at(-1)?.assessmentId, aiOriginal: m09Correction.before, issue: m09Progress.firstTest.find((item) => item.questionId === m09Correction.questionId)?.issueDescription ?? '首测回答不符合预期', teacherCorrection: m09Correction.after, basis: m09Correction.basis, confirmed: false, preview: false })
+    const m11Revision = m11Passed ? m11Progress.revisions.at(-1) : undefined
+    if (m11Revision && m11Progress.confirmedPackage) options.push({ correctionId: m11Revision.revisionId, sourceTaskId: 'M11', sourceArtifactId: m11Progress.confirmedPackage.portfolioArtifact.artifactId, sourceParticipantId: activeParticipantId, sourceVersion: 'retest-v1', sourceAssessmentId: m11Progress.assessments.at(-1)?.assessmentId, aiOriginal: m11Revision.beforeValue, issue: `M11 ${m11Revision.relatedQuestionIds.join('/')} 首测暴露答疑规则缺陷`, teacherCorrection: m11Revision.afterValue, basis: m11Revision.basis, confirmed: false, preview: false })
+    if (m08Passed && m08Progress.confirmedWebpage && m08Progress.peerTest.submitted) options.push({ correctionId: `M08-${m08Progress.confirmedWebpage.webpageId}-peer`, sourceTaskId: 'M08', sourceArtifactId: m08Progress.confirmedWebpage.webpageId, sourceParticipantId: activeParticipantId, sourceVersion: m08Progress.confirmedWebpage.sourceVersionId, sourceAssessmentId: m08Progress.assessments.at(-1)?.assessmentId, aiOriginal: m08Progress.peerTest.correctionBefore, issue: m08Progress.peerTest.issueFound, teacherCorrection: m08Progress.peerTest.correctionAfter, basis: m08Progress.peerTest.correctionBasis, confirmed: false, preview: false })
+    const e02Correction = e02Passed ? e02Progress.modifications.at(-1) : undefined
+    if (e02Correction && e02Progress.confirmedPackage && e02Progress.workingDraft) options.push({ correctionId: e02Correction.modificationId, sourceTaskId: 'E02', sourceArtifactId: e02Progress.confirmedPackage.packageId, sourceParticipantId: activeParticipantId, sourceVersion: e02Progress.workingDraft.rubric.version, sourceAssessmentId: e02Progress.assessments.at(-1)?.assessmentId, aiOriginal: e02Correction.beforeValue, issue: `E02 ${e02Correction.targetId} 的${e02Correction.category === 'step' ? '操作顺序' : e02Correction.category === 'safety' ? '安全表述' : '量规分值'}不符合当前规范`, teacherCorrection: e02Correction.afterValue, basis: `${e02Correction.basisClauseId} · ${e02Correction.basis}`, confirmed: false, preview: false })
+    const e03Correction = e03Passed ? e03Progress.revisions.at(-1) : undefined
+    if (e03Correction && e03Progress.confirmedPackage) options.push({ correctionId: e03Correction.revisionId, sourceTaskId: 'E03', sourceArtifactId: e03Progress.confirmedPackage.packageId, sourceParticipantId: activeParticipantId, sourceVersion: e03Progress.confirmedPackage.artifactVersion, sourceAssessmentId: e03Progress.assessments.at(-1)?.assessmentId, aiOriginal: e03Correction.before.teacherAction, issue: `E03 ${e03Correction.measureId} 原措施缺少可执行、可观察与可检查的闭环`, teacherCorrection: e03Correction.after.teacherAction, basis: `${e03Correction.sourceSuggestion} · ${e03Correction.authorBasis}`, confirmed: false, preview: false })
+    const e04Correction = e04Passed ? e04Progress.revisions.at(-1) : undefined
+    if (e04Correction && e04Progress.confirmedPackage) options.push({ correctionId: e04Correction.revisionId, sourceTaskId: 'E04', sourceArtifactId: e04Progress.confirmedPackage.packageId, sourceParticipantId: activeParticipantId, sourceVersion: `v${e04Progress.confirmedPackage.graphVersion}`, sourceAssessmentId: e04Progress.assessments.at(-1)?.assessmentId, aiOriginal: e04Correction.beforeValue, issue: `E04 ${e04Correction.targetId} 的${e04Correction.field === 'direction' ? '关系方向' : e04Correction.field === 'merge' ? '重复节点' : '图谱记录'}需要人工修正`, teacherCorrection: e04Correction.afterValue, basis: `${e04Correction.basisExcerptId} · ${e04Correction.basis}`, confirmed: false, preview: false })
+    const e05Correction = e05Passed ? e05Progress.revisions.at(-1) : undefined
+    if (e05Correction && e05Progress.confirmedPackage) options.push({ correctionId: e05Correction.revisionId, sourceTaskId: 'E05', sourceArtifactId: e05Progress.confirmedPackage.packageId, sourceParticipantId: activeParticipantId, sourceVersion: `v${e05Progress.confirmedPackage.webPageVersion}`, sourceAssessmentId: e05Progress.assessments.at(-1)?.assessmentId, aiOriginal: e05Correction.beforeValue, issue: `E05 ${e05Correction.targetId} 的${e05Correction.field === 'status' ? '覆盖状态' : e05Correction.field === 'courseAdjustment' ? '课程调整动作' : e05Correction.field === 'expectedEvidence' ? '可观察证据' : '映射判断依据'}需要人工修正`, teacherCorrection: e05Correction.afterValue, basis: `${e05Correction.courseEvidenceId} / ${e05Correction.jobEvidenceExcerptId} · ${e05Correction.basis}`, confirmed: false, preview: false })
+    const e06Correction = e06Passed ? e06Progress.revisions.at(-1) : undefined
+    if (e06Correction && e06Progress.confirmedPackage) options.push({ correctionId: e06Correction.revisionId, sourceTaskId: 'E06', sourceArtifactId: e06Progress.confirmedPackage.packageId, sourceParticipantId: activeParticipantId, sourceVersion: `v${e06Progress.version}`, sourceAssessmentId: e06Progress.assessments.at(-1)?.assessmentId, aiOriginal: e06Correction.beforeValue, issue: `E06 ${e06Correction.documentId} 的${e06Correction.field === 'finding' ? '研究发现' : e06Correction.field === 'boundary' ? '适用边界' : '引用记录'}需要人工修正`, teacherCorrection: e06Correction.afterValue, basis: `${e06Correction.sourceExcerptId} · ${e06Correction.basis}`, confirmed: false, preview: false })
+    return options
+  }, [activeParticipantId, m09Passed, m09Progress.corrections, m09Progress.confirmedKnowledgeBase, m09Progress.firstTest, m09Progress.assessments, m11Passed, m11Progress.revisions, m11Progress.confirmedPackage, m11Progress.assessments, m08Passed, m08Progress.confirmedWebpage, m08Progress.peerTest, m08Progress.assessments, e02Passed, e02Progress.modifications, e02Progress.confirmedPackage, e02Progress.workingDraft, e02Progress.assessments, e03Passed, e03Progress.revisions, e03Progress.confirmedPackage, e03Progress.assessments, e04Passed, e04Progress.revisions, e04Progress.confirmedPackage, e04Progress.assessments, e05Passed, e05Progress.revisions, e05Progress.confirmedPackage, e05Progress.assessments, e06Passed, e06Progress.revisions, e06Progress.confirmedPackage, e06Progress.assessments, e06Progress.version])
+  const m12AssistantOptions = useMemo<M12AssistantCard[]>(() => {
+    const assistant = m10Passed ? m10Progress.confirmedAssistant : undefined
+    const normal = assistant?.previews.find((item) => item.kind === 'normal')
+    const packageRecord = m11Passed ? m11Progress.confirmedPackage : undefined
+    const boundary = m11Progress.retest.find((item) => item.questionId === 'Q03')
+    const m10AssessmentId = m10Progress.assessments.at(-1)?.assessmentId
+    const m11AssessmentId = m11Progress.assessments.at(-1)?.assessmentId
+    if (!assistant || !normal?.source || !m10AssessmentId || !packageRecord || !boundary || !m11AssessmentId) return []
+    return [
+      {
+        cardId: `M12-M10-${normal.previewId}`,
+        kind: 'evidence',
+        sourceTaskId: 'M10',
+        sourceArtifactId: assistant.artifacts[0].artifactId,
+        sourceParticipantId: activeParticipantId,
+        sourceVersion: assistant.version,
+        sourceAssessmentId: m10AssessmentId,
+        question: normal.question,
+        answer: normal.rawAnswer,
+        citationLabel: normal.source.sourceLabel,
+        citationExcerpt: normal.source.excerpt,
+        teacherTakeover: '教师核对来源片段与当前知识库版本后，再决定是否用于教学。',
+        confirmed: false,
+        preview: false,
+      },
+      {
+        cardId: `M12-M11-${boundary.recordId}`,
+        kind: 'boundary',
+        sourceTaskId: 'M11',
+        sourceArtifactId: packageRecord.portfolioArtifact.artifactId,
+        sourceParticipantId: activeParticipantId,
+        sourceVersion: 'retest-v1',
+        sourceAssessmentId: m11AssessmentId,
+        question: boundary.studentQuestion,
+        answer: boundary.rawAnswer,
+        boundaryExplanation: '当前资料无法支持该问题；助教停止猜测、不伪造来源，并按 M11 复测规则转交教师。',
+        teacherTakeover: '课程教师核对问题范围和授权边界，决定后续人工答复。',
+        confirmed: false,
+        preview: false,
+      },
+    ]
+  }, [activeParticipantId, m10Passed, m10Progress.confirmedAssistant, m10Progress.assessments, m11Passed, m11Progress.confirmedPackage, m11Progress.retest, m11Progress.assessments])
   const g01CurrentEvidence = useMemo<G01CurrentMemberEvidence>(() => {
     const correction = Object.values(m01Progress.corrections).find((item) => item.revisedContent.trim() && item.reason.trim())
     const annotation = correction ? m01Progress.annotations.find((item) => item.id === correction.annotationId) : undefined
@@ -237,7 +542,20 @@ export default function App() {
     m06VideoArtifactId: m06Passed && m06Progress.confirmedPackage ? `${m06Progress.confirmedPackage.packageId}:video` : undefined,
     m08WebArtifactId: m08Passed ? m08Progress.confirmedWebpage?.webpageId : undefined,
     firstElectiveId: portalProgress.electiveAssignments['day-2']?.[0],
-  }), [activeParticipantId, m06Passed, m06Progress.confirmedPackage, m08Passed, m08Progress.confirmedWebpage, portalProgress.electiveAssignments])
+    firstElectiveArtifactId: portalProgress.electiveAssignments['day-2']?.[0] === 'E01' && activeMemberElectiveConfirmed && e01Passed
+      ? e01Progress.confirmedPackage?.packageId
+      : portalProgress.electiveAssignments['day-2']?.[0] === 'E02' && activeMemberElectiveConfirmed && e02Passed
+        ? e02Progress.confirmedPackage?.packageId
+        : portalProgress.electiveAssignments['day-2']?.[0] === 'E03' && activeMemberElectiveConfirmed && e03Passed
+          ? e03Progress.confirmedPackage?.packageId
+          : portalProgress.electiveAssignments['day-2']?.[0] === 'E04' && activeMemberElectiveConfirmed && e04Passed
+            ? e04Progress.confirmedPackage?.packageId
+            : portalProgress.electiveAssignments['day-2']?.[0] === 'E05' && activeMemberElectiveConfirmed && e05Passed
+              ? e05Progress.confirmedPackage?.packageId
+              : portalProgress.electiveAssignments['day-2']?.[0] === 'E06' && activeMemberElectiveConfirmed && e06Passed
+                ? e06Progress.confirmedPackage?.packageId
+                : undefined,
+  }), [activeParticipantId, m06Passed, m06Progress.confirmedPackage, m08Passed, m08Progress.confirmedWebpage, activeMemberElectiveConfirmed, e01Passed, e01Progress.confirmedPackage, e02Passed, e02Progress.confirmedPackage, e03Passed, e03Progress.confirmedPackage, e04Passed, e04Progress.confirmedPackage, e05Passed, e05Progress.confirmedPackage, e06Passed, e06Progress.confirmedPackage, portalProgress.electiveAssignments])
   const g02Context = useMemo(() => buildG02GroupContext(portalProgress.participantDirectory, g02CurrentEvidence), [g02CurrentEvidence, portalProgress.participantDirectory])
   const g02Progress = useMemo(() => g02ProgressForGroup(g02Store, g02Context), [g02Context, g02Store])
   const g02ProgressPercent = useMemo(() => progressForG02(g02Progress), [g02Progress])
@@ -250,6 +568,99 @@ export default function App() {
       return { ...current, groups: { ...current.groups, [g02Context.groupId]: synchronized } }
     })
   }, [g02Context])
+  const g03CurrentEvidence = useMemo<G03CurrentEvidenceInput>(() => {
+    const tasks: G03CurrentEvidenceInput['tasks'] = {}
+    if (m09Passed && m09Progress.confirmedKnowledgeBase) tasks.M09 = {
+      taskId: 'M09',
+      artifactId: m09Progress.confirmedKnowledgeBase.testReportArtifactId,
+      version: m09Progress.confirmedKnowledgeBase.version,
+      assessmentId: m09Progress.assessments.at(-1)?.assessmentId ?? '',
+      current: true,
+    }
+    if (m10Passed && m10Progress.confirmedAssistant) tasks.M10 = {
+      taskId: 'M10',
+      artifactId: m10Progress.confirmedAssistant.artifacts[0].artifactId,
+      version: m10Progress.confirmedAssistant.version,
+      assessmentId: m10Progress.assessments.at(-1)?.assessmentId ?? '',
+      current: true,
+    }
+    const m11Revision = m11Progress.revisions.at(-1)
+    if (m11Passed && m11Progress.confirmedPackage) tasks.M11 = {
+      taskId: 'M11',
+      artifactId: m11Progress.confirmedPackage.portfolioArtifact.artifactId,
+      version: 'retest-v1',
+      assessmentId: m11Progress.assessments.at(-1)?.assessmentId ?? '',
+      current: true,
+      issueId: m11Revision?.revisionId,
+      issue: m11Revision ? `${m11Revision.relatedQuestionIds.join('/')} 首测回答行为不符合预期` : undefined,
+      correction: m11Revision?.afterValue,
+      correctionEvidenceId: m11Revision?.revisionId,
+      retestResult: m11Revision ? '已通过' : undefined,
+      retestEvidenceId: m11Revision ? m11Progress.retest.find((item) => m11Revision.relatedQuestionIds.includes(item.questionId))?.recordId : undefined,
+    }
+    const scenarios: G03CurrentEvidenceInput['scenarios'] = []
+    const evidencePreview = m10Progress.confirmedAssistant?.previews.find((item) => item.kind === 'normal')
+    const questionRecord = m11Progress.retest.find((item) => item.questionId === 'Q02')
+    const boundaryRecord = m11Progress.retest.find((item) => item.questionId === 'Q03')
+    if (m10Passed && evidencePreview?.source) scenarios.push({
+      scenarioId: 'G03-SCENARIO-EVIDENCE',
+      kind: '有来源回答',
+      sourceTaskId: 'M10',
+      question: evidencePreview.question,
+      answer: evidencePreview.rawAnswer,
+      evidenceId: evidencePreview.previewId,
+      sourceId: evidencePreview.source.sourceId,
+      sourceLocation: evidencePreview.source.sourceLabel,
+      sourceExcerpt: evidencePreview.source.excerpt,
+      noFalseCitation: true,
+    })
+    if (m11Passed && questionRecord) scenarios.push({
+      scenarioId: 'G03-SCENARIO-QUESTION',
+      kind: '缺失条件追问',
+      sourceTaskId: 'M11',
+      question: questionRecord.studentQuestion,
+      answer: questionRecord.rawAnswer,
+      evidenceId: questionRecord.recordId,
+      missingCondition: '作品目标、当前效果与约束条件',
+      noFalseCitation: true,
+    })
+    if (m11Passed && boundaryRecord) scenarios.push({
+      scenarioId: 'G03-SCENARIO-BOUNDARY',
+      kind: '超范围说明与转交',
+      sourceTaskId: 'M11',
+      question: boundaryRecord.studentQuestion,
+      answer: boundaryRecord.rawAnswer,
+      evidenceId: boundaryRecord.recordId,
+      boundaryStatement: '当前绑定资料不包含未公开信息，助教停止猜测且不生成虚假引用。',
+      handoffTarget: '当前课程教师',
+      noFalseCitation: !boundaryRecord.sourceLabel && !boundaryRecord.sourceExcerpt,
+    })
+    const coverageRefs = m11Passed ? m11Progress.confirmedPackage?.coverageRefs : undefined
+    return {
+      participantId: activeParticipantId,
+      tasks,
+      m11Coverage: coverageRefs ? {
+        testedParticipantId: coverageRefs.outgoing.testedParticipantId,
+        testedRecordId: coverageRefs.outgoing.coverageId,
+        acceptedTestFromParticipantId: coverageRefs.incoming.testerParticipantId,
+        acceptedRecordId: coverageRefs.incoming.coverageId,
+        submitted: true,
+      } : undefined,
+      scenarios,
+    }
+  }, [activeParticipantId, m09Passed, m09Progress.confirmedKnowledgeBase, m09Progress.assessments, m10Passed, m10Progress.confirmedAssistant, m10Progress.assessments, m11Passed, m11Progress.confirmedPackage, m11Progress.assessments, m11Progress.pairing, m11Progress.revisions, m11Progress.retest])
+  const g03Context = useMemo(() => buildG03GroupContext(portalProgress.participantDirectory, g03CurrentEvidence), [portalProgress.participantDirectory, g03CurrentEvidence])
+  const g03Progress = useMemo(() => g03ProgressForGroup(g03Store, g03Context), [g03Store, g03Context])
+  const g03ProgressPercent = useMemo(() => progressForG03(g03Progress), [g03Progress])
+  const g03Passed = useMemo(() => latestG03AssessmentIsCurrent(g03Progress), [g03Progress])
+  useEffect(() => {
+    setG03Store((current) => {
+      if (!current.groups[g03Context.groupId]) return current
+      const synchronized = g03ProgressForGroup(current, g03Context)
+      if (JSON.stringify(current.groups[g03Context.groupId]) === JSON.stringify(synchronized)) return current
+      return { ...current, groups: { ...current.groups, [g03Context.groupId]: synchronized } }
+    })
+  }, [g03Context])
   const activeElectiveIds = useMemo(() => selectedElectiveIds(portalProgress.electiveAssignments), [portalProgress.electiveAssignments])
   const trainingSnapshot = useMemo(() => buildTrainingSnapshot({ taskProgress: {
     M01: { progressPercent: m01ProgressPercent, passed: m01Score.passed, score: m01Score.total },
@@ -262,7 +673,18 @@ export default function App() {
     M07: { progressPercent: m07ProgressPercent, passed: m07Passed, score: m07Score.total },
     M08: { progressPercent: m08ProgressPercent, passed: m08Passed, score: m08Score.total },
     G02: { progressPercent: g02ProgressPercent, passed: g02Passed },
-  }, selectedElectiveIds: activeElectiveIds }), [m01ProgressPercent, m01Score, m02ProgressPercent, m02Score, m03ProgressPercent, m03Passed, m03Score.total, m04ProgressPercent, m04Passed, m04Score.total, m05ProgressPercent, m05Passed, m05Score.total, g01ProgressPercent, g01Passed, m06ProgressPercent, m06Passed, m06Score.total, m07ProgressPercent, m07Passed, m07Score.total, m08ProgressPercent, m08Passed, m08Score.total, g02ProgressPercent, g02Passed, activeElectiveIds])
+    M09: { progressPercent: m09ProgressPercent, passed: m09Passed, score: m09Score.total },
+    M10: { progressPercent: m10ProgressPercent, passed: m10Passed, score: m10Score.total },
+    M11: { progressPercent: m11ProgressPercent, passed: m11Passed, score: m11Score.total },
+    E01: { progressPercent: e01ProgressPercent, passed: e01Passed, score: e01Score.total },
+    E02: { progressPercent: e02ProgressPercent, passed: e02Passed, score: e02Score.total },
+    E03: { progressPercent: e03ProgressPercent, passed: e03Passed, score: e03Score.total },
+    E04: { progressPercent: e04ProgressPercent, passed: e04Passed, score: e04Score.total },
+    E05: { progressPercent: e05ProgressPercent, passed: e05Passed, score: e05Score.total },
+    E06: { progressPercent: e06ProgressPercent, passed: e06Passed, score: e06Score.total },
+    M12: { progressPercent: m12OfficialProgressPercent, passed: m12Passed, score: m12Score.total },
+    G03: { progressPercent: g03ProgressPercent, passed: g03Passed },
+  }, selectedElectiveIds: activeElectiveIds, currentMemberElectiveConfirmed: activeMemberElectiveConfirmed }), [m01ProgressPercent, m01Score, m02ProgressPercent, m02Score, m03ProgressPercent, m03Passed, m03Score.total, m04ProgressPercent, m04Passed, m04Score.total, m05ProgressPercent, m05Passed, m05Score.total, g01ProgressPercent, g01Passed, m06ProgressPercent, m06Passed, m06Score.total, m07ProgressPercent, m07Passed, m07Score.total, m08ProgressPercent, m08Passed, m08Score.total, g02ProgressPercent, g02Passed, m09ProgressPercent, m09Passed, m09Score.total, m10ProgressPercent, m10Passed, m10Score.total, m11ProgressPercent, m11Passed, m11Score.total, e01ProgressPercent, e01Passed, e01Score.total, e02ProgressPercent, e02Passed, e02Score.total, e03ProgressPercent, e03Passed, e03Score.total, e04ProgressPercent, e04Passed, e04Score.total, e05ProgressPercent, e05Passed, e05Score.total, e06ProgressPercent, e06Passed, e06Score.total, m12OfficialProgressPercent, m12Passed, m12Score.total, g03ProgressPercent, g03Passed, activeElectiveIds, activeMemberElectiveConfirmed])
   const taskArtifactSubmissions = useMemo<Partial<Record<TrainingTaskId, TaskArtifactSubmission>>>(() => ({
     M01: {
       taskId: 'M01',
@@ -320,7 +742,85 @@ export default function App() {
       submittedAt: g02Passed ? g02Progress.assessments.at(-1)?.submittedAt : undefined,
       artifacts: g02Passed ? g02Progress.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: item.capturedAt })) : [],
     },
-  }), [m01Progress.updatedAt, m01Score.passed, m02Progress.updatedAt, m02Score.passed, m03Passed, m03Progress.assessments, m04Passed, m04Progress.assessments, m05Passed, m05Progress.assessments, g01Passed, g01Progress.artifacts, g01Progress.assessments, m06Passed, m06Progress.assessmentHistory, m06Progress.confirmedPackage, m07Passed, m07Progress.assessmentHistory, m07Progress.confirmedDeliverable, m08Passed, m08Progress.assessments, m08Progress.confirmedWebpage, g02Passed, g02Progress.artifacts, g02Progress.assessments])
+    M09: {
+      taskId: 'M09',
+      submittedAt: m09Passed ? m09Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: m09Passed && m09Progress.confirmedKnowledgeBase ? [
+        { artifactId: m09Progress.confirmedKnowledgeBase.sourceListArtifactId, name: trainingTasks.M09.outputs[0] },
+        { artifactId: m09Progress.confirmedKnowledgeBase.testReportArtifactId, name: trainingTasks.M09.outputs[1] },
+      ] : [],
+    },
+    M10: {
+      taskId: 'M10',
+      submittedAt: m10Passed ? m10Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: m10Passed && m10Progress.confirmedAssistant
+        ? m10Progress.confirmedAssistant.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: m10Progress.confirmedAssistant?.confirmedAt }))
+        : [],
+    },
+    M11: {
+      taskId: 'M11',
+      submittedAt: m11Passed ? m11Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: m11Passed && m11Progress.confirmedPackage
+        ? m11Progress.confirmedPackage.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: m11Progress.confirmedPackage?.confirmedAt }))
+        : [],
+    },
+    E01: {
+      taskId: 'E01',
+      submittedAt: e01Passed ? e01Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: e01Passed && e01Progress.confirmedPackage
+        ? e01Progress.confirmedPackage.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: e01Progress.confirmedPackage?.confirmedAt }))
+        : [],
+    },
+    E02: {
+      taskId: 'E02',
+      submittedAt: e02Passed ? e02Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: e02Passed && e02Progress.confirmedPackage
+        ? e02Progress.confirmedPackage.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: e02Progress.confirmedPackage?.confirmedAt }))
+        : [],
+    },
+    E03: {
+      taskId: 'E03',
+      submittedAt: e03Passed ? e03Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: e03Passed && e03Progress.confirmedPackage
+        ? e03Progress.confirmedPackage.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: e03Progress.confirmedPackage?.confirmedAt }))
+        : [],
+    },
+    E04: {
+      taskId: 'E04',
+      submittedAt: e04Passed ? e04Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: e04Passed && e04Progress.confirmedPackage
+        ? e04Progress.confirmedPackage.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: e04Progress.confirmedPackage?.confirmedAt }))
+        : [],
+    },
+    E05: {
+      taskId: 'E05',
+      submittedAt: e05Passed ? e05Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: e05Passed && e05Progress.confirmedPackage
+        ? e05Progress.confirmedPackage.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: e05Progress.confirmedPackage?.confirmedAt }))
+        : [],
+    },
+    E06: {
+      taskId: 'E06',
+      submittedAt: e06Passed ? e06Progress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: e06Passed && e06Progress.confirmedPackage
+        ? e06Progress.confirmedPackage.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: e06Progress.confirmedPackage?.confirmedAt }))
+        : [],
+    },
+    M12: {
+      taskId: 'M12',
+      submittedAt: m12Passed ? m12OfficialProgress.assessments.at(-1)?.assessedAt : undefined,
+      artifacts: m12Passed && m12OfficialProgress.confirmedBundle ? [
+        { artifactId: m12OfficialProgress.confirmedBundle.directoryArtifactId, name: trainingTasks.M12.outputs[0] },
+        { artifactId: m12OfficialProgress.confirmedBundle.usageArtifactId, name: trainingTasks.M12.outputs[1] },
+        { artifactId: m12OfficialProgress.confirmedBundle.revisionArtifactId, name: trainingTasks.M12.outputs[2] },
+      ] : [],
+    },
+    G03: {
+      taskId: 'G03',
+      submittedAt: g03Passed ? g03Progress.assessments.at(-1)?.submittedAt : undefined,
+      artifacts: g03Passed ? g03Progress.artifacts.map((item) => ({ artifactId: item.artifactId, name: item.name, updatedAt: item.capturedAt })) : [],
+    },
+  }), [m01Progress.updatedAt, m01Score.passed, m02Progress.updatedAt, m02Score.passed, m03Passed, m03Progress.assessments, m04Passed, m04Progress.assessments, m05Passed, m05Progress.assessments, g01Passed, g01Progress.artifacts, g01Progress.assessments, m06Passed, m06Progress.assessmentHistory, m06Progress.confirmedPackage, m07Passed, m07Progress.assessmentHistory, m07Progress.confirmedDeliverable, m08Passed, m08Progress.assessments, m08Progress.confirmedWebpage, g02Passed, g02Progress.artifacts, g02Progress.assessments, m09Passed, m09Progress.assessments, m09Progress.confirmedKnowledgeBase, m10Passed, m10Progress.assessments, m10Progress.confirmedAssistant, m11Passed, m11Progress.assessments, m11Progress.confirmedPackage, e01Passed, e01Progress.assessments, e01Progress.confirmedPackage, e02Passed, e02Progress.assessments, e02Progress.confirmedPackage, e03Passed, e03Progress.assessments, e03Progress.confirmedPackage, e04Passed, e04Progress.assessments, e04Progress.confirmedPackage, e05Passed, e05Progress.assessments, e05Progress.confirmedPackage, e06Passed, e06Progress.assessments, e06Progress.confirmedPackage, m12Passed, m12OfficialProgress.assessments, m12OfficialProgress.confirmedBundle, g03Passed, g03Progress.assessments, g03Progress.artifacts])
 
   function updateM01Progress(updater: (current: M01Progress) => M01Progress) {
     setM01Progress((current) => ({ ...updater(current), updatedAt: new Date().toISOString() }))
@@ -354,12 +854,106 @@ export default function App() {
     setM08Store((current) => updateParticipantM08Progress(current, activeParticipantId, updater))
   }
 
+  function updateM09Progress(updater: (current: M09Progress) => M09Progress) {
+    setM09Store((current) => updateParticipantM09Progress(current, activeParticipantId, updater))
+  }
+
+  function updateM10Progress(updater: (current: M10Progress) => M10Progress) {
+    setM10Store((current) => updateParticipantM10Progress(current, activeParticipantId, updater))
+  }
+
+  function updateM11Progress(updater: (current: M11Progress) => M11Progress) {
+    setM11Store((current) => updateParticipantM11Progress(current, activeParticipantId, updater))
+  }
+
+  function updateE01Progress(updater: (current: E01Progress) => E01Progress) {
+    setE01Store((current) => updateParticipantE01Progress(current, activeParticipantId, updater))
+  }
+
+  function updateE02Progress(updater: (current: E02Progress) => E02Progress) {
+    setE02Store((current) => updateParticipantE02Progress(current, activeParticipantId, updater))
+  }
+
+  function updateE03Progress(updater: (current: E03Progress) => E03Progress) {
+    setE03Store((current) => updateParticipantE03Progress(current, activeParticipantId, updater))
+  }
+
+  function updateE04Progress(updater: (current: E04Progress) => E04Progress) {
+    setE04Store((current) => updateParticipantE04Progress(current, activeParticipantId, updater))
+  }
+
+  function updateE05Progress(updater: (current: E05Progress) => E05Progress) {
+    setE05Store((current) => updateParticipantE05Progress(current, activeParticipantId, updater))
+  }
+
+  function updateE06Progress(updater: (current: E06Progress) => E06Progress) {
+    setE06Store((current) => updateParticipantE06Progress(current, activeParticipantId, updater))
+  }
+
+  function invalidateE01RosterContext(progress: E01Progress): E01Progress {
+    const initial = createInitialE01Progress()
+    return {
+      ...progress,
+      peerReview: initial.peerReview,
+      teacherConfirmation: initial.teacherConfirmation,
+      confirmedPackage: undefined,
+      attemptHistory: archiveE01Attempt(progress, '培训人员名单或当前小组发生变化'),
+    }
+  }
+
+  function invalidateE02RosterContext(progress: E02Progress): E02Progress {
+    const initial = createInitialE02Progress()
+    return {
+      ...progress,
+      peerReview: initial.peerReview,
+      modifications: [],
+      teacherConfirmation: initial.teacherConfirmation,
+      confirmedPackage: undefined,
+      attemptHistory: archiveE02Attempt(progress, '培训人员名单或当前小组发生变化'),
+    }
+  }
+
+  function invalidateE03RosterContext(progress: E03Progress): E03Progress {
+    return invalidateE03ReviewContext(progress, '培训人员名单或当前小组发生变化')
+  }
+
+  function invalidateE04RosterContext(progress: E04Progress): E04Progress {
+    return invalidateE04ReviewContext(progress, '培训人员名单或当前小组发生变化')
+  }
+
+  function invalidateE05RosterContext(progress: E05Progress): E05Progress {
+    return invalidateE05ReviewContext(progress, '培训人员名单或当前小组发生变化')
+  }
+
+  function invalidateE06RosterContext(progress: E06Progress): E06Progress {
+    return invalidateE06ReviewContext(progress, '培训人员名单或当前小组发生变化')
+  }
+
+  function updateM12Progress(updater: (current: M12Progress) => M12Progress) {
+    setM12Store((current) => updateParticipantM12Progress(current, activeParticipantId, updater))
+  }
+  function invalidateM12ParticipantContext(progress: M12Progress) {
+    const initial = createInitialM12Progress()
+    const invalidate = (current: M12Progress): M12Progress => ({
+      ...current,
+      showcase: initial.showcase,
+      teacherConfirmation: initial.teacherConfirmation,
+      previewCompletedAt: undefined,
+      confirmedBundle: undefined,
+    })
+    return updateOfficialM12Progress(invalidate(progress), invalidate)
+  }
+
   function updateG01Progress(updater: (current: G01Progress) => G01Progress) {
     setG01Store((current) => updateGroupG01Progress(current, g01Context, updater))
   }
 
   function updateG02Progress(updater: (current: G02Progress) => G02Progress) {
     setG02Store((current) => updateGroupG02Progress(current, g02Context, updater))
+  }
+
+  function updateG03Progress(updater: (current: G03Progress) => G03Progress) {
+    setG03Store((current) => updateGroupG03Progress(current, g03Context, updater))
   }
 
   function navigatePortal(route: PortalRoute) {
@@ -499,6 +1093,126 @@ export default function App() {
     return validateM08PeerTest(m08Progress, portalProgress.participantDirectory).valid && confirmedM08WebpageIsCurrent(m08Progress, portalProgress.participantDirectory)
   }
 
+  function navigateM09(route: M09Route) { updateM09Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextM09(route: M09Route) { const index = m09RouteOrder.indexOf(route); navigateM09(m09RouteOrder[index + 1] ?? 'result') }
+  function canNavigateM09(route: M09Route) {
+    if (route === 'overview' || route === 'sources') return true
+    if (route === 'quality') return validateM09Sources(m09Progress).valid
+    if (route === 'build') return validateM09Quality(m09Progress).valid
+    if (route === 'first-test') return validateM09Build(m09Progress).valid
+    if (route === 'correction-retest') return validateM09FirstTest(m09Progress).valid
+    if (route === 'peer-confirm') return validateM09CorrectionRetest(m09Progress).valid
+    return confirmedM09KnowledgeBaseIsCurrent(m09Progress, portalProgress.participantDirectory)
+  }
+
+  function navigateM10(route: M10Route) { updateM10Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextM10(route: M10Route) { const index = m10RouteOrder.indexOf(route); navigateM10(m10RouteOrder[index + 1] ?? 'result') }
+  function canNavigateM10(route: M10Route) {
+    if (route === 'overview' || route === 'source') return true
+    if (route === 'configuration') return validateM10Source(m10Progress, activeParticipantId).valid
+    if (route === 'flow') return validateM10Configuration(m10Progress, activeParticipantId).valid
+    if (route === 'boundaries') return validateM10Flow(m10Progress, activeParticipantId).valid
+    if (route === 'preview') return validateM10Boundaries(m10Progress, activeParticipantId).valid
+    if (route === 'review-confirm') return validateM10Previews(m10Progress, activeParticipantId).valid
+    return confirmedM10AssistantIsCurrent(m10Progress, portalProgress.participantDirectory)
+  }
+
+  function navigateM11(route: M11Route) { updateM11Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextM11(route: M11Route) { const index = m11RouteOrder.indexOf(route); navigateM11(m11RouteOrder[index + 1] ?? 'result') }
+  function canNavigateM11(route: M11Route) {
+    if (route === 'overview' || route === 'pairing') return true
+    if (route === 'first-test') return validateM11Pairing(m11Progress, portalProgress.participantDirectory, m11M10Evidence).valid
+    if (route === 'audit') return validateM11FirstTest(m11Progress, portalProgress.participantDirectory, m11M10Evidence).valid
+    if (route === 'revision') return validateM11Audit(m11Progress, portalProgress.participantDirectory, m11M10Evidence).valid
+    if (route === 'retest') return validateM11Revisions(m11Progress, portalProgress.participantDirectory, m11M10Evidence).valid
+    if (route === 'confirmation') return validateM11Retest(m11Progress, portalProgress.participantDirectory, m11M10Evidence).valid
+    return confirmedM11PackageIsCurrent(m11Progress, portalProgress.participantDirectory, m11M10Evidence)
+  }
+
+  function navigateE01(route: E01Route) { updateE01Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextE01(route: E01Route) { const index = e01RouteOrder.indexOf(route); navigateE01(e01RouteOrder[index + 1] ?? 'result') }
+  function canNavigateE01(route: E01Route) {
+    if (route === 'overview' || route === 'input') return true
+    if (route === 'rubric') return validateE01Input(e01Progress).valid
+    if (route === 'ai-review') return validateE01Rubric(e01Progress).valid && e01Progress.rubric.teacherConfirmed
+    if (route === 'teacher-review') return validateE01AiReview(e01Progress, activeParticipantId).valid
+    if (route === 'peer-confirm') return validateE01TeacherReview(e01Progress, activeParticipantId).valid
+    return confirmedE01PackageIsCurrent(e01Progress, portalProgress.participantDirectory)
+  }
+
+  function navigateE02(route: E02Route) { updateE02Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextE02(route: E02Route) { const index = e02RouteOrder.indexOf(route); navigateE02(e02RouteOrder[index + 1] ?? 'result') }
+  function canNavigateE02(route: E02Route) {
+    if (route === 'overview' || route === 'source') return true
+    if (route === 'draft') return validateE02Source(e02Progress).valid
+    if (route === 'safety-rubric' || route === 'peer-review') return validateE02InitialDraft(e02Progress, activeParticipantId).valid
+    if (route === 'teacher-revision') return validateE02PeerReview(e02Progress, portalProgress.participantDirectory).valid
+    if (route === 'confirmation') return validateE02FinalDraft(e02Progress, portalProgress.participantDirectory).valid
+    return confirmedE02PackageIsCurrent(e02Progress, portalProgress.participantDirectory)
+  }
+
+  function navigateE03(route: E03Route) { updateE03Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextE03(route: E03Route) { const index = e03RouteOrder.indexOf(route); navigateE03(e03RouteOrder[index + 1] ?? 'result') }
+  function canNavigateE03(route: E03Route) {
+    if (route === 'overview' || route === 'source') return true
+    if (route === 'findings') return validateE03Source(e03Progress).valid
+    if (route === 'measures') return validateE03Findings(e03Progress, activeParticipantId).valid
+    if (route === 'peer-review') return validateE03InitialMeasures(e03Progress, activeParticipantId).valid
+    if (route === 'revision') return validateE03PeerReview(e03Progress, portalProgress.participantDirectory).valid
+    if (route === 'confirmation') return validateE03Revision(e03Progress, portalProgress.participantDirectory).valid
+    return confirmedE03PackageIsCurrent(e03Progress, portalProgress.participantDirectory)
+  }
+
+  function navigateE04(route: E04Route) { updateE04Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextE04(route: E04Route) { const index = e04RouteOrder.indexOf(route); navigateE04(e04RouteOrder[index + 1] ?? 'result') }
+  function canNavigateE04(route: E04Route) {
+    if (route === 'overview' || route === 'source') return true
+    if (route === 'nodes') return validateE04Source(e04Progress).valid
+    if (route === 'relations') return validateE04Nodes(e04Progress, activeParticipantId).valid
+    if (route === 'graph-review') return validateE04Relations(e04Progress, activeParticipantId).valid
+    if (route === 'revision') return validateE04GraphReview(e04Progress, portalProgress.participantDirectory).valid
+    if (route === 'confirmation') return validateE04Revision(e04Progress, portalProgress.participantDirectory).valid
+    return confirmedE04PackageIsCurrent(e04Progress, portalProgress.participantDirectory)
+  }
+
+  function navigateE05(route: E05Route) { updateE05Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextE05(route: E05Route) { const index = e05RouteOrder.indexOf(route); navigateE05(e05RouteOrder[index + 1] ?? 'result') }
+  function canNavigateE05(route: E05Route) {
+    if (route === 'overview' || route === 'source') return true
+    if (route === 'mapping') return validateE05Source(e05Progress).valid
+    if (route === 'suggestions') return validateE05Mapping(e05Progress, activeParticipantId).valid
+    if (route === 'peer-review') return validateE05Suggestions(e05Progress, activeParticipantId).valid && validateE05WebPage(e05Progress, activeParticipantId).valid
+    if (route === 'revision') return validateE05PeerReview(e05Progress, portalProgress.participantDirectory).valid
+    if (route === 'confirmation') return validateE05Revision(e05Progress, portalProgress.participantDirectory).valid
+    return confirmedE05PackageIsCurrent(e05Progress, portalProgress.participantDirectory)
+  }
+
+  function navigateE06(route: E06Route) { updateE06Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextE06(route: E06Route) { const index = e06RouteOrder.indexOf(route); navigateE06(e06RouteOrder[index + 1] ?? 'result') }
+  function canNavigateE06(route: E06Route) {
+    if (route === 'overview' || route === 'question') return true
+    if (route === 'review') return validateE06Source(e06Progress).valid
+    if (route === 'comparison') return validateE06InitialReview(e06Progress, activeParticipantId).valid
+    if (route === 'peer-review') return validateE06Comparisons(e06Progress, activeParticipantId).valid
+    if (route === 'revision') return validateE06PeerReview(e06Progress, portalProgress.participantDirectory).valid
+    if (route === 'confirmation') return validateE06Revision(e06Progress, portalProgress.participantDirectory).valid
+    return confirmedE06PackageIsCurrent(e06Progress, portalProgress.participantDirectory)
+  }
+
+  function navigateM12(route: M12Route) { updateM12Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextM12(route: M12Route) { const index = m12RouteOrder.indexOf(route); navigateM12(m12RouteOrder[index + 1] ?? 'result') }
+  function canNavigateM12(route: M12Route) {
+    if (route === 'overview' || route === 'evidence') return true
+    if (route === 'orchestration') return validateM12Evidence(m12Progress, activeParticipantId).valid
+    if (route === 'correction') return validateM12Flow(m12Progress, activeParticipantId).valid
+    if (route === 'assistant') return validateM12Correction(m12Progress).valid
+    if (route === 'integration') return validateM12Assistant(m12Progress).valid
+    if (route === 'safety') return validateM12Retest(m12Progress).valid
+    return m12Progress.mode === 'preview'
+      ? Boolean(m12Progress.previewCompletedAt && validateM12TeacherConfirmation(m12Progress, activeParticipantId).valid)
+      : confirmedM12BundleIsCurrent(m12Progress, portalProgress.participantDirectory)
+  }
+
   function navigateG01(route: G01Route) {
     updateG01Progress((current) => ({ ...current, route }))
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -523,7 +1237,24 @@ export default function App() {
     return validateG02Revision(g02Progress).valid
   }
 
+  function navigateG03(route: G03Route) { updateG03Progress((current) => ({ ...current, route })); window.scrollTo({ top: 0, behavior: 'smooth' }) }
+  function nextG03(route: G03Route) { const index = g03RouteOrder.indexOf(route); navigateG03(g03RouteOrder[index + 1] ?? 'assessment') }
+  function canNavigateG03(route: G03Route) {
+    // 阶段验收页始终可进入，才能在证据未齐时保存一次真实的“未通过初验”。
+    // 其余制作步骤仍按前序证据逐段放行。
+    if (route === 'overview' || route === 'matrix' || route === 'assessment') return true
+    if (route === 'issues') return validateG03Matrix(g03Progress).valid
+    if (route === 'scenarios') return validateG03Issues(g03Progress).valid
+    if (route === 'showcase') return validateG03Scenarios(g03Progress).valid
+    if (route === 'contributions') return validateG03Showcase(g03Progress).valid
+    return validateG03Contributions(g03Progress).valid
+  }
+
   function openTask(taskId: TrainingTaskId) {
+    if (trainingTasks[taskId].kind === 'elective' && (!activeElectiveIds.some((id) => id === taskId) || !activeMemberElectiveConfirmed)) {
+      navigatePortal({ page: 'task', taskId })
+      return
+    }
     const workspace = taskWorkspaceRegistry[taskId]
     if (workspace?.workspaceId === 'm01' && m01Progress.route === 'day1') updateM01Progress((current) => ({ ...current, route: m01ProgressPercent > 0 ? 'answers' : 'overview' }))
     if (workspace?.workspaceId === 'm02' && m02Progress.route === 'overview' && m02ProgressPercent > 0) updateM02Progress((current) => ({ ...current, route: current.peerReview.submitted ? 'result' : validateM02Selection(current).valid && validateM02Correction(current).valid ? 'peer-review' : current.blindReviewSubmitted ? 'rating' : current.run ? 'compliance' : 'run' }))
@@ -533,7 +1264,22 @@ export default function App() {
     if (workspace?.workspaceId === 'm06' && m06Progress.route === 'overview' && m06ProgressPercent > 0) updateM06Progress((current) => ({ ...current, route: current.confirmedPackage ? 'result' : current.videoPreview ? 'review-confirm' : current.draft ? 'deck' : 'input' }))
     if (workspace?.workspaceId === 'm07' && m07Progress.route === 'overview' && m07ProgressPercent > 0) updateM07Progress((current) => ({ ...current, route: current.confirmedDeliverable ? 'result' : current.draft ? 'statistics' : current.dataCheck.teacherConfirmed ? 'statistics' : 'input' }))
     if (workspace?.workspaceId === 'm08' && m08Progress.route === 'overview' && m08ProgressPercent > 0) updateM08Progress((current) => ({ ...current, route: current.confirmedWebpage ? 'result' : current.peerTest.submitted ? 'peer-confirm' : current.iterationRecords.length === 2 ? 'browser-test' : current.versions.length ? 'iterations' : 'input' }))
+    if (workspace?.workspaceId === 'm09' && m09Progress.route === 'overview' && m09ProgressPercent > 0) updateM09Progress((current) => ({ ...current, route: current.confirmedKnowledgeBase ? 'result' : current.retest.length ? 'peer-confirm' : current.firstTest.length ? 'correction-retest' : current.knowledgeBase ? 'first-test' : validateM09Quality(current).valid ? 'build' : current.sources.length ? 'quality' : 'sources' }))
+    const m10HasAuthoredWork = Object.values(m10Progress.sixElements).some((value) => value.trim())
+      || m10Progress.flowSteps.some((step) => step.action.trim() || step.failureHandling.trim())
+      || m10Progress.boundaryRules.some((rule) => rule.trigger.trim() || rule.response.trim() || rule.handoff.trim())
+      || Boolean(m10Progress.previews.length || m10Progress.peerReview.reviewId || m10Progress.revisions.length || m10Progress.confirmedAssistant || m10Progress.assessments.length)
+    if (workspace?.workspaceId === 'm10' && m10Progress.route === 'overview' && m10HasAuthoredWork) updateM10Progress((current) => ({ ...current, route: confirmedM10AssistantIsCurrent(current, portalProgress.participantDirectory) ? 'result' : validateM10Previews(current, activeParticipantId).valid ? 'review-confirm' : validateM10Boundaries(current, activeParticipantId).valid ? 'preview' : validateM10Flow(current, activeParticipantId).valid ? 'boundaries' : validateM10Configuration(current, activeParticipantId).valid ? 'flow' : validateM10Source(current, activeParticipantId).valid ? 'configuration' : 'source' }))
+    if (workspace?.workspaceId === 'm11' && m11Progress.route === 'overview' && m11ProgressPercent > 0) updateM11Progress((current) => ({ ...current, route: confirmedM11PackageIsCurrent(current, portalProgress.participantDirectory, m11M10Evidence) ? 'result' : validateM11Retest(current, portalProgress.participantDirectory, m11M10Evidence).valid ? 'confirmation' : validateM11Revisions(current, portalProgress.participantDirectory, m11M10Evidence).valid ? 'retest' : validateM11Audit(current, portalProgress.participantDirectory, m11M10Evidence).valid ? 'revision' : validateM11FirstTest(current, portalProgress.participantDirectory, m11M10Evidence).valid ? 'audit' : validateM11Pairing(current, portalProgress.participantDirectory, m11M10Evidence).valid ? 'first-test' : 'pairing' }))
+    if (workspace?.workspaceId === 'e01' && e01Progress.route === 'overview' && e01ProgressPercent > 0) updateE01Progress((current) => ({ ...current, route: current.confirmedPackage ? 'result' : validateE01TeacherReview(current, activeParticipantId).valid ? 'peer-confirm' : validateE01AiReview(current, activeParticipantId).valid ? 'teacher-review' : validateE01Rubric(current).valid && current.rubric.teacherConfirmed ? 'ai-review' : validateE01Input(current).valid ? 'rubric' : 'input' }))
+    if (workspace?.workspaceId === 'e02' && e02Progress.route === 'overview' && e02ProgressPercent > 0) updateE02Progress((current) => ({ ...current, route: current.confirmedPackage ? 'result' : validateE02FinalDraft(current, portalProgress.participantDirectory).valid ? 'confirmation' : validateE02PeerReview(current, portalProgress.participantDirectory).valid ? 'teacher-revision' : current.peerReview.recordId ? 'peer-review' : validateE02InitialDraft(current, activeParticipantId).valid ? 'safety-rubric' : validateE02Source(current).valid ? 'draft' : 'source' }))
+    if (workspace?.workspaceId === 'e03' && e03Progress.route === 'overview' && e03ProgressPercent > 0) updateE03Progress((current) => ({ ...current, route: current.confirmedPackage ? 'result' : validateE03Revision(current, portalProgress.participantDirectory).valid ? 'confirmation' : current.peerReview.submitted ? 'revision' : validateE03InitialMeasures(current, activeParticipantId).valid ? 'peer-review' : validateE03Findings(current, activeParticipantId).valid ? 'measures' : current.aiDraft ? 'findings' : validateE03Source(current).valid ? 'findings' : 'source' }))
+    if (workspace?.workspaceId === 'e04' && e04Progress.route === 'overview' && e04ProgressPercent > 0) updateE04Progress((current) => ({ ...current, route: current.confirmedPackage ? 'result' : validateE04Revision(current, portalProgress.participantDirectory).valid ? 'confirmation' : current.graphReview.submitted ? 'revision' : validateE04Relations(current, activeParticipantId).valid ? 'graph-review' : current.aiDraft ? 'nodes' : validateE04Source(current).valid ? 'nodes' : 'source' }))
+    if (workspace?.workspaceId === 'e05' && e05Progress.route === 'overview' && e05ProgressPercent > 0) updateE05Progress((current) => ({ ...current, route: current.confirmedPackage ? 'result' : validateE05Revision(current, portalProgress.participantDirectory).valid ? 'confirmation' : current.peerReview.submitted ? 'revision' : validateE05WebPage(current, activeParticipantId).valid ? 'peer-review' : validateE05Mapping(current, activeParticipantId).valid ? 'suggestions' : validateE05Source(current).valid ? 'mapping' : 'source' }))
+    if (workspace?.workspaceId === 'e06' && e06Progress.route === 'overview' && e06ProgressPercent > 0) updateE06Progress((current) => ({ ...current, route: current.confirmedPackage ? 'result' : validateE06Revision(current, portalProgress.participantDirectory).valid ? 'confirmation' : current.peerReview.submitted ? 'revision' : validateE06Comparisons(current, activeParticipantId).valid ? 'peer-review' : validateE06InitialReview(current, activeParticipantId).valid ? 'comparison' : validateE06Source(current).valid ? 'review' : 'question' }))
+    if (workspace?.workspaceId === 'm12' && m12Progress.route === 'overview' && m12WorkbenchProgressPercent > 0) updateM12Progress((current) => ({ ...current, route: current.previewCompletedAt || current.confirmedBundle ? 'result' : validateM12Retest(current).valid ? 'safety' : validateM12Assistant(current).valid ? 'integration' : validateM12Correction(current).valid ? 'assistant' : validateM12Flow(current, activeParticipantId).valid ? 'correction' : validateM12Evidence(current, activeParticipantId).valid ? 'orchestration' : 'evidence' }))
     if (workspace?.workspaceId === 'g02' && g02Progress.route === 'overview' && g02ProgressPercent > 0) updateG02Progress((current) => ({ ...current, route: current.assessments.length ? 'assessment' : current.feedbackConfirmed ? 'revision' : current.showcase.confirmed ? 'feedback' : current.directoryConfirmed ? 'showcase' : 'directory' }))
+    if (workspace?.workspaceId === 'g03' && g03Progress.route === 'overview' && g03ProgressPercent > 0) updateG03Progress((current) => ({ ...current, route: current.assessments.length ? 'assessment' : validateG03Contributions(current).valid ? 'assessment' : validateG03Showcase(current).valid ? 'contributions' : validateG03Scenarios(current).valid ? 'showcase' : validateG03Issues(current).valid ? 'scenarios' : validateG03Matrix(current).valid ? 'issues' : 'matrix' }))
     navigatePortal({ page: 'task', taskId })
   }
 
@@ -594,6 +1340,66 @@ export default function App() {
     window.scrollTo({ top: 0 })
   }
 
+  function resetM09() {
+    if (!window.confirm('重置后将只清除当前教师的 M09 来源、质检、知识库、首复测、小组测试和验收历史，是否继续？')) return
+    setM09Store((current) => clearParticipantM09Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetM10() {
+    if (!window.confirm('重置后将只清除当前教师的 M10 助教配置、预览、互评、修订和验收历史，是否继续？')) return
+    setM10Store((current) => updateParticipantM10Progress(clearParticipantM10Progress(current, activeParticipantId), activeParticipantId, (saved) => synchronizeM10Source(saved, m10KnowledgeSource)))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetM11() {
+    if (!window.confirm('重置后将只清除当前教师的 M11 配对、首复测、逐题审校、修订和验收历史，是否继续？')) return
+    setM11Store((current) => clearParticipantM11Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetE01() {
+    if (!window.confirm('重置后将只清除当前教师的 E01 量规、五份试评、人工修正、同组复核和验收历史，是否继续？')) return
+    setE01Store((current) => clearParticipantE01Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetE02() {
+    if (!window.confirm('重置后将只清除当前教师的 E02 任务书、安全检查、100 分量规、同组复核和验收历史，是否继续？')) return
+    setE02Store((current) => clearParticipantE02Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetE03() {
+    if (!window.confirm('重置后将只清除当前教师的 E03 课堂发现、改进措施、同组复核、修订与验收历史，是否继续？')) return
+    setE03Store((current) => clearParticipantE03Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetE04() {
+    if (!window.confirm('重置后将只清除当前教师的 E04 来源、节点关系、同组复核、人工修正与验收历史，是否继续？')) return
+    setE04Store((current) => clearParticipantE04Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetE05() {
+    if (!window.confirm('重置后将只清除当前教师的 E05 课程与岗位来源、映射网页、差距建议、同组复核、人工修正和验收历史，是否继续？')) return
+    setE05Store((current) => clearParticipantE05Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetE06() {
+    if (!window.confirm('重置后将只清除当前教师的 E06 教研问题、文献梳理、观点对比、引用核验、人工修正和验收历史，是否继续？')) return
+    setE06Store((current) => clearParticipantE06Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
+  function resetM12() {
+    if (!window.confirm('重置后将只清除当前教师的 M12 成果目录、流程编排、联调修改、展示确认和验收历史，是否继续？')) return
+    setM12Store((current) => clearParticipantM12Progress(current, activeParticipantId))
+    window.scrollTo({ top: 0 })
+  }
+
   function resetG01() {
     if (!window.confirm('重置后只清除当前小组的 G01 目录、核验、贡献和验收历史，是否继续？')) return
     setG01Store((current) => clearGroupG01Progress(current, g01Context.groupId))
@@ -606,8 +1412,14 @@ export default function App() {
     window.scrollTo({ top: 0 })
   }
 
+  function resetG03() {
+    if (!window.confirm('重置后只清除当前小组的 G03 双向矩阵、问题闭环、场景、路演、贡献和验收历史，是否继续？')) return
+    setG03Store((current) => clearGroupG03Progress(current, g03Context.groupId))
+    window.scrollTo({ top: 0 })
+  }
+
   function resetAll() {
-    if (!window.confirm('重置后将恢复示例培训人员名单，并清除选修选择、M01、全部教师的 M02—M08 进度和所有小组 G01、G02 验收数据，是否继续？')) return
+    if (!window.confirm('重置后将恢复示例培训人员名单，并清除选修选择、全部教师的 M01—M12、E01—E06 进度和所有小组 G01—G03 验收数据，是否继续？')) return
     setM01Progress(clearProgress())
     setPortalProgress(clearPortalProgress())
     setM02Store(clearAllM02Progress())
@@ -617,8 +1429,19 @@ export default function App() {
     setM06Store(clearAllM06Progress())
     setM07Store(clearAllM07Progress())
     setM08Store(clearAllM08Progress())
+    setM09Store(clearAllM09Progress())
+    setM10Store(clearAllM10Progress())
+    setM11Store(clearAllM11Progress())
+    setE01Store(clearAllE01Progress())
+    setE02Store(clearAllE02Progress())
+    setE03Store(clearAllE03Progress())
+    setE04Store(clearAllE04Progress())
+    setE05Store(clearAllE05Progress())
+    setE06Store(clearAllE06Progress())
+    setM12Store(clearAllM12Progress())
     setG01Store(clearAllG01Progress())
     setG02Store(clearAllG02Progress())
+    setG03Store(clearAllG03Progress())
     setVerificationAnswerId('A')
     window.scrollTo({ top: 0 })
   }
@@ -911,7 +1734,94 @@ export default function App() {
     updateM08Progress((current) => ({ ...current, browserTest: { ...current.browserTest, downloaded: true }, confirmedWebpage: undefined }))
   }
 
-  const activeWorkspace = portalProgress.route.page === 'task' ? taskWorkspaceRegistry[portalProgress.route.taskId] : undefined
+  function loadM09Samples() {
+    updateM09Progress((current) => ({
+      ...invalidateM09Pipeline(current, '重新载入课程样例'),
+      sources: createM09SampleSources(),
+      importNotice: '已载入 4 份课程样例。S02 缺页、S03 局部重复、S04 错误版本将在下一步分别处置。',
+    }))
+  }
+
+  async function readM09LocalFiles(files: File[]) {
+    const accepted = files.filter((file) => /\.(?:txt|md)$/iu.test(file.name) && file.size > 0)
+    const rejected = files.filter((file) => !/\.(?:txt|md)$/iu.test(file.name) || file.size === 0)
+    const loaded = await Promise.all(accepted.map(async (file, index) => createM09LocalSource(`L${Date.now()}-${index + 1}`, file.name, await file.text())))
+    updateM09Progress((current) => ({
+      ...invalidateM09Pipeline(current, '读取或追加本地资料'),
+      sources: [...current.sources, ...loaded],
+      importNotice: `已在浏览器本地读取 ${loaded.length} 份；${rejected.length ? `拒绝 ${rejected.length} 份空文件或非 .txt/.md 文件；` : ''}内容未上传。请补全版本、范围、授权和教师决定。`,
+    }))
+  }
+
+  function updateM09Scenario(patch: Partial<M09Scenario>) {
+    updateM09Progress((current) => ({ ...invalidateM09Pipeline(current, '课程场景发生变化'), scenario: { ...current.scenario, ...patch } }))
+  }
+
+  function updateM09Source(sourceId: string, patch: Partial<M09SourceRecord>) {
+    updateM09Progress((current) => ({ ...invalidateM09Pipeline(current, `资料 ${sourceId} 登记信息发生变化`), sources: current.sources.map((source) => source.sourceId === sourceId ? { ...source, ...patch } : source) }))
+  }
+
+  function removeM09Source(sourceId: string) {
+    updateM09Progress((current) => ({ ...invalidateM09Pipeline(current, `移除资料 ${sourceId}`), sources: current.sources.filter((source) => source.sourceId !== sourceId) }))
+  }
+
+  function applyM09QualityRecommendations() {
+    updateM09Progress((current) => ({ ...invalidateM09Pipeline(current, '质量处置发生变化'), sources: applyRecommendedM09Quality(current.sources) }))
+  }
+
+  function resolveM09Quality(sourceId: string, issueType: M09QualityIssueType, action: M09QualityAction, rationale?: string) {
+    updateM09Progress((current) => ({ ...invalidateM09Pipeline(current, `资料 ${sourceId} 质量处置发生变化`), sources: current.sources.map((source) => source.sourceId === sourceId ? resolveM09QualityFinding(source, issueType, action, rationale) : source) }))
+  }
+
+  function buildM09KnowledgeBase() {
+    updateM09Progress((current) => {
+      const next = invalidateM09Pipeline(current, '重新建立知识库 v0')
+      return { ...next, knowledgeBase: new LocalM09KnowledgeRunner().build({ ...next, sources: current.sources }, activeParticipantId) }
+    })
+  }
+
+  function runM09FirstTest() {
+    updateM09Progress((current) => ({ ...current, firstTest: new LocalM09KnowledgeRunner().runTests(current, 'first'), firstTestFrozen: true, corrections: [], retest: [], peerTest: createInitialM09Progress().peerTest, teacherConfirmation: createInitialM09Progress().teacherConfirmation, confirmedKnowledgeBase: undefined }))
+  }
+
+  function verifyM09Test(round: 'first' | 'retest', questionId: string, checked: boolean) {
+    updateM09Progress((current) => ({ ...current, [round === 'first' ? 'firstTest' : 'retest']: (round === 'first' ? current.firstTest : current.retest).map((item) => item.questionId === questionId ? { ...item, teacherVerified: checked } : item), confirmedKnowledgeBase: undefined }))
+  }
+
+  function verifyAllM09Tests(round: 'first' | 'retest') {
+    updateM09Progress((current) => ({ ...current, [round === 'first' ? 'firstTest' : 'retest']: (round === 'first' ? current.firstTest : current.retest).map((item) => ({ ...item, teacherVerified: true })), confirmedKnowledgeBase: undefined }))
+  }
+
+  function saveM09Correction() {
+    updateM09Progress((current) => {
+      const correction = createM09Correction(current)
+      const testHistory = current.retest.length ? archiveM09TestChain(current, '新增实质修正，上一轮复测转入历史') : current.testHistory
+      return {
+        ...current,
+        answerRule: correction.target === '回答规则' ? { version: correction.ruleVersion, text: correction.after } : current.answerRule,
+        corrections: [...current.corrections, correction],
+        retest: [],
+        peerTest: createInitialM09Progress().peerTest,
+        teacherConfirmation: createInitialM09Progress().teacherConfirmation,
+        confirmedKnowledgeBase: undefined,
+        testHistory,
+      }
+    })
+  }
+
+  function runM09Retest() {
+    updateM09Progress((current) => ({ ...current, retest: new LocalM09KnowledgeRunner().runTests(current, 'retest'), peerTest: createInitialM09Progress().peerTest, teacherConfirmation: createInitialM09Progress().teacherConfirmation, confirmedKnowledgeBase: undefined }))
+  }
+
+  function updateM09Peer(patch: Partial<M09PeerTest>) {
+    updateM09Progress((current) => ({ ...current, peerTest: { ...current.peerTest, ...patch, submitted: patch.submitted ?? false }, confirmedKnowledgeBase: undefined }))
+  }
+
+  const activeTaskId = portalProgress.route.page === 'task' ? portalProgress.route.taskId : undefined
+  const activeWorkspace = activeTaskId
+    && (trainingTasks[activeTaskId].kind !== 'elective' || (activeMemberElectiveConfirmed && activeElectiveIds.some((id) => id === activeTaskId)))
+    ? taskWorkspaceRegistry[activeTaskId]
+    : undefined
   if (activeWorkspace?.workspaceId === 'm01') {
     const activeRoute = m01Progress.route === 'day1' ? 'overview' : m01Progress.route
     let page: React.ReactNode
@@ -1046,6 +1956,87 @@ export default function App() {
     return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '必修' }} steps={m08ShellSteps} progressPercent={m08ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateM08} canNavigate={canNavigateM08} onExitTask={() => navigatePortal({ page: 'tasks', groupId: 'day-2' })} onReset={resetM08}>{page}</TrainingShell>
   }
 
+  if (activeWorkspace?.workspaceId === 'm09') {
+    const activeRoute = m09Progress.route
+    let page: React.ReactNode
+    switch (activeRoute) {
+      case 'overview': page = <M09Overview onNext={() => nextM09('overview')} />; break
+      case 'sources': page = <M09SourcesPage progress={m09Progress} onLoadSamples={loadM09Samples} onFiles={readM09LocalFiles} onUpdateScenario={updateM09Scenario} onUpdateSource={updateM09Source} onRemoveSource={removeM09Source} onNext={() => nextM09('sources')} />; break
+      case 'quality': page = <M09QualityPage progress={m09Progress} onApplyRecommendations={applyM09QualityRecommendations} onResolve={resolveM09Quality} onNext={() => nextM09('quality')} />; break
+      case 'build': page = <M09BuildPage progress={m09Progress} onBuild={buildM09KnowledgeBase} onNext={() => nextM09('build')} />; break
+      case 'first-test': page = <M09FirstTestPage progress={m09Progress} onUpdateQuestion={(questionId, question) => updateM09Progress((current) => current.firstTestFrozen ? current : ({ ...current, questions: current.questions.map((item) => item.questionId === questionId ? { ...item, question } : item), confirmedKnowledgeBase: undefined }))} onRun={runM09FirstTest} onVerify={(questionId, checked) => verifyM09Test('first', questionId, checked)} onVerifyAll={() => verifyAllM09Tests('first')} onNext={() => nextM09('first-test')} />; break
+      case 'correction-retest': page = <M09CorrectionRetestPage progress={m09Progress} onUpdateDraft={(patch: Partial<M09CorrectionDraft>) => updateM09Progress((current) => ({ ...current, correctionDraft: { ...current.correctionDraft, ...patch }, confirmedKnowledgeBase: undefined }))} onSaveCorrection={saveM09Correction} onRunRetest={runM09Retest} onVerify={(questionId, checked) => verifyM09Test('retest', questionId, checked)} onVerifyAll={() => verifyAllM09Tests('retest')} onNext={() => nextM09('correction-retest')} />; break
+      case 'peer-confirm': page = <M09PeerConfirmPage progress={m09Progress} directory={portalProgress.participantDirectory} onUpdatePeer={updateM09Peer} onSimulatePeer={() => updateM09Progress((current) => ({ ...current, peerTest: simulateM09PeerTest(current, portalProgress.participantDirectory), confirmedKnowledgeBase: undefined }))} onSubmitPeer={() => updateM09Progress((current) => ({ ...current, peerTest: { ...current.peerTest, submitted: true, submittedAt: new Date().toISOString() }, confirmedKnowledgeBase: undefined }))} onUpdateConfirmation={(patch) => updateM09Progress((current) => ({ ...current, teacherConfirmation: { ...current.teacherConfirmation, ...patch }, confirmedKnowledgeBase: undefined }))} onConfirm={() => updateM09Progress((current) => ({ ...current, confirmedKnowledgeBase: createConfirmedM09KnowledgeBase(current, portalProgress.participantDirectory) }))} onNext={() => nextM09('peer-confirm')} />; break
+      case 'result': page = <M09ResultPage progress={m09Progress} result={m09Score} directory={portalProgress.participantDirectory} onNavigate={navigateM09} onSubmitAssessment={() => updateM09Progress((current) => ({ ...current, assessments: [...current.assessments, createM09Assessment(current, portalProgress.participantDirectory)] }))} onReset={resetM09} />; break
+      default: page = <M09Overview onNext={() => nextM09('overview')} />
+    }
+    const task = trainingTasks.M09
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '必修' }} steps={m09ShellSteps} progressPercent={m09ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateM09} canNavigate={canNavigateM09} onExitTask={() => navigatePortal({ page: 'tasks', groupId: 'day-3' })} onReset={resetM09}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'm10') {
+    const activeRoute = m10Progress.route
+    const task = trainingTasks.M10
+    const page = <M10WorkspacePage progress={m10Progress} participantId={activeParticipantId} directory={portalProgress.participantDirectory} onUpdate={updateM10Progress} onNavigate={navigateM10} onNext={() => nextM10(activeRoute)} onReset={resetM10} onOpenM09={() => openTask('M09')} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '必修' }} steps={m10ShellSteps} progressPercent={m10ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateM10} canNavigate={canNavigateM10} onExitTask={() => navigatePortal({ page: 'tasks', groupId: 'day-3' })} onReset={resetM10}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'm11') {
+    const activeRoute = m11Progress.route
+    const task = trainingTasks.M11
+    const page = <M11WorkspacePage progress={m11Progress} participantId={activeParticipantId} directory={portalProgress.participantDirectory} m10Evidence={m11M10Evidence} onUpdate={updateM11Progress} onNavigate={navigateM11} onNext={() => nextM11(activeRoute)} onReset={resetM11} onOpenM10={() => openTask('M10')} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '必修' }} steps={m11ShellSteps} progressPercent={m11ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateM11} canNavigate={canNavigateM11} onExitTask={() => navigatePortal({ page: 'tasks', groupId: 'day-3' })} onReset={resetM11}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'e01') {
+    const activeRoute = e01Progress.route
+    const task = trainingTasks.E01
+    const page = <E01WorkspacePage progress={e01Progress} participantId={activeParticipantId} directory={portalProgress.participantDirectory} onUpdate={updateE01Progress} onNavigate={navigateE01} onNext={() => nextE01(activeRoute)} onReset={resetE01} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '选修' }} steps={e01ShellSteps} progressPercent={e01ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateE01} canNavigate={canNavigateE01} onExitTask={() => navigatePortal({ page: 'tasks', groupId: groupForTask('E01', portalProgress.electiveAssignments) ?? 'elective-pool' })} onReset={resetE01}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'e02') {
+    const activeRoute = e02Progress.route
+    const task = trainingTasks.E02
+    const page = <E02WorkspacePage progress={e02Progress} participantId={activeParticipantId} directory={portalProgress.participantDirectory} onUpdate={updateE02Progress} onNavigate={navigateE02} onNext={() => nextE02(activeRoute)} onReset={resetE02} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '选修' }} steps={e02ShellSteps} progressPercent={e02ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateE02} canNavigate={canNavigateE02} onExitTask={() => navigatePortal({ page: 'tasks', groupId: groupForTask('E02', portalProgress.electiveAssignments) ?? 'elective-pool' })} onReset={resetE02}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'e03') {
+    const activeRoute = e03Progress.route
+    const task = trainingTasks.E03
+    const page = <E03WorkspacePage progress={e03Progress} participantId={activeParticipantId} directory={portalProgress.participantDirectory} onUpdate={updateE03Progress} onNavigate={navigateE03} onNext={() => nextE03(activeRoute)} onReset={resetE03} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '选修' }} steps={e03ShellSteps} progressPercent={e03ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateE03} canNavigate={canNavigateE03} onExitTask={() => navigatePortal({ page: 'tasks', groupId: groupForTask('E03', portalProgress.electiveAssignments) ?? 'elective-pool' })} onReset={resetE03}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'e04') {
+    const activeRoute = e04Progress.route
+    const task = trainingTasks.E04
+    const page = <E04WorkspacePage progress={e04Progress} participantId={activeParticipantId} directory={portalProgress.participantDirectory} onUpdate={updateE04Progress} onNavigate={navigateE04} onNext={() => nextE04(activeRoute)} onReset={resetE04} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '选修' }} steps={e04ShellSteps} progressPercent={e04ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateE04} canNavigate={canNavigateE04} onExitTask={() => navigatePortal({ page: 'tasks', groupId: groupForTask('E04', portalProgress.electiveAssignments) ?? 'elective-pool' })} onReset={resetE04}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'e05') {
+    const activeRoute = e05Progress.route
+    const task = trainingTasks.E05
+    const page = <E05WorkspacePage progress={e05Progress} participantId={activeParticipantId} directory={portalProgress.participantDirectory} onUpdate={updateE05Progress} onNavigate={navigateE05} onNext={() => nextE05(activeRoute)} onReset={resetE05} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '选修' }} steps={e05ShellSteps} progressPercent={e05ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateE05} canNavigate={canNavigateE05} onExitTask={() => navigatePortal({ page: 'tasks', groupId: groupForTask('E05', portalProgress.electiveAssignments) ?? 'elective-pool' })} onReset={resetE05}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'e06') {
+    const activeRoute = e06Progress.route
+    const task = trainingTasks.E06
+    const page = <E06WorkspacePage progress={e06Progress} participantId={activeParticipantId} directory={portalProgress.participantDirectory} onUpdate={updateE06Progress} onNavigate={navigateE06} onNext={() => nextE06(activeRoute)} onReset={resetE06} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '选修' }} steps={e06ShellSteps} progressPercent={e06ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateE06} canNavigate={canNavigateE06} onExitTask={() => navigatePortal({ page: 'tasks', groupId: groupForTask('E06', portalProgress.electiveAssignments) ?? 'elective-pool' })} onReset={resetE06}>{page}</TrainingShell>
+  }
+
+  if (activeWorkspace?.workspaceId === 'm12') {
+    const activeRoute = m12Progress.route
+    const task = trainingTasks.M12
+    const page = <M12WorkspacePage progress={m12Progress} officialEvidence={m12OfficialEvidence} participantId={activeParticipantId} directory={portalProgress.participantDirectory} correctionOptions={m12CorrectionOptions} assistantOptions={m12AssistantOptions} onUpdate={updateM12Progress} onNavigate={navigateM12} onNext={() => nextM12(activeRoute)} onOpenSource={openTask} onReset={resetM12} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '必修' }} steps={m12ShellSteps} progressPercent={m12WorkbenchProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateM12} canNavigate={canNavigateM12} onExitTask={() => navigatePortal({ page: 'tasks', groupId: 'day-3' })} onReset={resetM12}>{page}</TrainingShell>
+  }
+
   if (activeWorkspace?.workspaceId === 'g01') {
     const activeRoute = g01Progress.route
     let page: React.ReactNode
@@ -1078,12 +2069,19 @@ export default function App() {
     return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '阶段验收' }} steps={g02ShellSteps} progressPercent={g02ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateG02} canNavigate={canNavigateG02} onExitTask={() => navigatePortal({ page: 'tasks', groupId: 'day-2' })} onReset={resetG02}>{page}</TrainingShell>
   }
 
+  if (activeWorkspace?.workspaceId === 'g03') {
+    const activeRoute = g03Progress.route
+    const task = trainingTasks.G03
+    const page = <G03WorkspacePage progress={g03Progress} onUpdate={updateG03Progress} onNavigate={navigateG03} onSubmitAssessment={() => updateG03Progress((current) => { const result = createG03Assessment(current, activeParticipant?.name ?? '培训师'); return { ...current, assessments: [...current.assessments, result.assessment], artifacts: result.artifacts, assessmentModificationSummary: '' } })} onReset={resetG03} />
+    return <TrainingShell route={activeRoute} task={{ id: task.id, title: task.title, duration: task.duration, kindLabel: '阶段验收' }} steps={g03ShellSteps} progressPercent={g03ProgressPercent} currentParticipant={activeParticipant} participantDirectory={portalProgress.participantDirectory} onNavigate={navigateG03} canNavigate={canNavigateG03} onExitTask={() => navigatePortal({ page: 'tasks', groupId: 'day-3' })} onReset={resetG03}>{page}</TrainingShell>
+  }
+
   let portalPage: React.ReactNode
   const route = portalProgress.route
   switch (route.page) {
     case 'dashboard': portalPage = <TrainingDashboard snapshot={trainingSnapshot} onNavigate={navigatePortal} onOpenTask={openTask} />; break
-    case 'tasks': portalPage = <TaskListPage groupId={route.groupId} focusElectiveBucketId={route.focusElectiveBucketId} snapshot={trainingSnapshot} electiveAssignments={portalProgress.electiveAssignments} onElectiveChange={(assignments) => setPortalProgress((current) => updateElectiveAssignments(current, assignments))} onNavigate={navigatePortal} onOpenTask={openTask} />; break
-    case 'participants': portalPage = <ParticipantsPage directory={portalProgress.participantDirectory} onConfirm={(directory) => { setPortalProgress((current) => updateParticipantDirectory(current, directory)); updateM01Progress((current) => ({ ...current, groupReview: createInitialGroupReview() })); setM02Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, targetParticipantId: '', targetArtifactId: '', submitted: false } }])) })); setM03Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, targetParticipantId: '', targetArtifactId: '', submitted: false }, assessmentModificationSummary: '' }])) })); setM04Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, targetParticipantId: '', targetArtifactId: '', submitted: false }, confirmedPlan: undefined, assessmentModificationSummary: '' }])) })); setM05Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, targetParticipantId: '', targetArtifactId: '', targetQuestionId: '', submitted: false }, confirmedPackage: undefined, assessmentModificationSummary: '' }])) })); setM06Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, reviewerId: '', artifactId: '', submitted: false }, confirmedPackage: undefined }])) })); setM07Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, reviewerId: '', artifactId: '', submitted: false }, confirmedDeliverable: undefined }])) })); setM08Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerTest: { ...progress.peerTest, reviewerId: '', artifactId: '', submitted: false }, confirmedWebpage: undefined }])) })); setG01Store((current) => invalidateAllG01Progress(current)); setG02Store((current) => invalidateAllG02Progress(current)) }} onCurrentParticipantChange={(participantId) => { setPortalProgress((current) => updateParticipantDirectory(current, { ...current.participantDirectory, currentParticipantId: participantId })); updateM01Progress((current) => ({ ...current, groupReview: createInitialGroupReview() })) }} />; break
+    case 'tasks': portalPage = <TaskListPage groupId={route.groupId} focusElectiveBucketId={route.focusElectiveBucketId} snapshot={trainingSnapshot} electiveAssignments={portalProgress.electiveAssignments} electiveSelection={activeGroupElectiveSelection} participantDirectory={portalProgress.participantDirectory} currentMemberElectiveConfirmed={activeMemberElectiveConfirmed} onElectiveChange={(assignments) => setPortalProgress((current) => updateElectiveAssignments(current, assignments))} onElectiveConfirm={() => setPortalProgress((current) => confirmCurrentMemberElectiveSelection(current))} onNavigate={navigatePortal} onOpenTask={openTask} />; break
+    case 'participants': portalPage = <ParticipantsPage directory={portalProgress.participantDirectory} onConfirm={(directory) => { setPortalProgress((current) => updateParticipantDirectory(current, directory)); updateM01Progress((current) => ({ ...current, groupReview: createInitialGroupReview() })); setM02Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, targetParticipantId: '', targetArtifactId: '', submitted: false } }])) })); setM03Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, targetParticipantId: '', targetArtifactId: '', submitted: false }, assessmentModificationSummary: '' }])) })); setM04Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, targetParticipantId: '', targetArtifactId: '', submitted: false }, confirmedPlan: undefined, assessmentModificationSummary: '' }])) })); setM05Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, targetParticipantId: '', targetArtifactId: '', targetQuestionId: '', submitted: false }, confirmedPackage: undefined, assessmentModificationSummary: '' }])) })); setM06Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, reviewerId: '', artifactId: '', submitted: false }, confirmedPackage: undefined }])) })); setM07Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerReview: { ...progress.peerReview, reviewerId: '', artifactId: '', submitted: false }, confirmedDeliverable: undefined }])) })); setM08Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerTest: { ...progress.peerTest, reviewerId: '', artifactId: '', submitted: false }, confirmedWebpage: undefined }])) })); setM09Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, { ...progress, peerTest: { ...createInitialM09Progress().peerTest }, teacherConfirmation: createInitialM09Progress().teacherConfirmation, confirmedKnowledgeBase: undefined }])) })); setM10Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateM10ReviewContext(progress, '培训人员名单或当前小组发生变化')])) })); setM11Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateM11PairingContext(progress, '培训人员名单或当前小组发生变化')])) })); setE01Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateE01RosterContext(progress)])) })); setE02Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateE02RosterContext(progress)])) })); setE03Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateE03RosterContext(progress)])) })); setE04Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateE04RosterContext(progress)])) })); setE05Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateE05RosterContext(progress)])) })); setE06Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateE06RosterContext(progress)])) })); setM12Store((current) => ({ ...current, participants: Object.fromEntries(Object.entries(current.participants).map(([participantId, progress]) => [participantId, invalidateM12ParticipantContext(progress)])) })); setG01Store((current) => invalidateAllG01Progress(current)); setG02Store((current) => invalidateAllG02Progress(current)); setG03Store((current) => invalidateAllG03Progress(current)) }} onCurrentParticipantChange={(participantId) => { setPortalProgress((current) => updateParticipantDirectory(current, { ...current.participantDirectory, currentParticipantId: participantId })); updateM01Progress((current) => ({ ...current, groupReview: createInitialGroupReview() })) }} />; break
     case 'portfolio': portalPage = <PortfolioPage snapshot={trainingSnapshot} electiveAssignments={portalProgress.electiveAssignments} submissions={taskArtifactSubmissions} />; break
     case 'task': {
       const task = trainingTasks[route.taskId]

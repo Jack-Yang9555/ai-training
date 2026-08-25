@@ -443,11 +443,12 @@ export function TeacherResearchWorkspace({
               {agent.testResult && <div className="agent-test-result"><CheckCircle2 size={18} /><div><strong>模拟运行通过</strong><p>{agent.testResult}</p></div></div>}
               {agent.linkedOutput && <div className="agent-linked-output"><FileCheck2 size={18} />{agent.linkedOutput}</div>}
             </section>
-            <aside className="research-agent-governance"><Bot size={28} /><span className="section-kicker">运行与交付边界</span><h2>四项状态必须可见</h2>{[
+            <aside className="research-agent-governance"><Bot size={28} /><span className="section-kicker">运行与交付边界</span><h2>五项状态必须可见</h2>{[
               ["citations", "来源引用", "每条观点回到原始资料"],
               ["manualReview", "人工确认", "教师确认后才能进入成果"],
               ["anonymousData", "匿名数据", "不处理真实身份字段"],
               ["aiDisclosure", "AI 使用披露", "记录模型、提示与辅助范围"],
+              ["parameterArchive", "参数归档", "保留模型版本与提示参数"],
             ].map(([key, label, detail]) => <div key={key}><CheckCircle2 size={17} /><span><strong>{label}</strong><small>{detail}</small></span></div>)}</aside>
           </div>
         );

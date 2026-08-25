@@ -18,6 +18,8 @@ import { useTeachingOperations } from "./teachingOperations";
 import type { ManagerSelection, ManagerWorkspaceTab } from "./types";
 import { WorkspaceHeader } from "./ui";
 import { teacherClasses } from "./workspaceData";
+import { TeacherDevelopmentManager } from "./teacherDevelopmentManager";
+import { useDemoState } from "./demoState";
 
 const tabs: Array<{ id: ManagerWorkspaceTab; label: string; short: string; icon: typeof Activity }> = [
   { id: "overview", label: "运行总览", short: "总", icon: Activity },
@@ -34,7 +36,9 @@ const organizations = [
 ];
 
 export function ManagerWorkspace({ onToast }: { onToast: (message: string) => void }) {
+  const { state: { schoolTeacherDevelopmentGoals }, dispatch } = useDemoState();
   const [tab, setTab] = useState<ManagerWorkspaceTab>("overview");
+  const [aiView, setAiView] = useState<"operations" | "teacher-development">("operations");
   const [selection, setSelection] = useState<ManagerSelection>({
     organizationId: "school",
     courseId: null,
@@ -60,7 +64,7 @@ export function ManagerWorkspace({ onToast }: { onToast: (message: string) => vo
         variant="overview"
         eyebrow="王主任 · 教学运行管理空间"
         title={tabs.find((item) => item.id === tab)?.label ?? "教学管理"}
-        description="只管理课程、班级、学习质量、测评与 AI 应用运行；教师个人成长、笔记、培训计划和研究草稿不在管理范围。"
+        description="管理课程、学习质量、测评、AI 应用与教师发展匿名汇总；不开放教师个人答案、笔记、作品或研究草稿。"
         summary={<div className="manager-scope-summary"><strong>{organizations.find((item) => item.id === selection.organizationId)?.label}</strong><span>2 门课程 · 4 个班级</span></div>}
       />
       <div className="manager-filter-bar">
@@ -71,7 +75,7 @@ export function ManagerWorkspace({ onToast }: { onToast: (message: string) => vo
             </button>
           ))}
         </div>
-        <span><ShieldCheck size={14} /> 聚合数据 + 匿名学生证据</span>
+        <span><ShieldCheck size={14} /> 聚合数据 + 匿名学生证据 + 教师发展汇总</span>
       </div>
       <nav className="manager-tabs" aria-label="教学管理任务面">
         {tabs.map(({ id, label, icon: Icon }) => (
@@ -87,6 +91,9 @@ export function ManagerWorkspace({ onToast }: { onToast: (message: string) => vo
             <article><small>待复核</small><strong>5</strong><span>评分与情境方案</span></article>
             <article><small>预警闭环</small><strong>{resolved}/{alerts.length}</strong><span>实时回流</span></article>
           </div>
+          <button className="manager-development-entry" type="button" onClick={() => { setAiView("teacher-development"); setTab("ai"); }}>
+            <span><GraduationCap size={20} /></span><div><strong>教师 AI 分层培养</strong><p>查看 L1—L4、待通关、五维短板与匿名培养群组</p></div><ArrowRight size={16} />
+          </button>
           <section className="manager-alert-section">
             <div className="workspace-title"><div><span className="section-kicker">优先待办</span><h2>确定性教学运行预警</h2><p>预警只展示聚合和匿名证据，不暴露姓名、原始作品或个人报告。</p></div></div>
             <div className="manager-alert-grid">
@@ -140,7 +147,12 @@ export function ManagerWorkspace({ onToast }: { onToast: (message: string) => vo
       )}
 
       {tab === "ai" && (
-        <section className="manager-panel">
+        <div className="manager-content-stack">
+          <div className="path-mode-switch manager-ai-view-switch" role="tablist" aria-label="AI 应用二级视图">
+            <button type="button" role="tab" aria-selected={aiView === "operations"} className={aiView === "operations" ? "is-active" : ""} onClick={() => setAiView("operations")}>应用运行</button>
+            <button type="button" role="tab" aria-selected={aiView === "teacher-development"} className={aiView === "teacher-development" ? "is-active" : ""} onClick={() => setAiView("teacher-development")}>教师发展</button>
+          </div>
+          {aiView === "operations" ? <section className="manager-panel">
           <div className="workspace-title"><div><span className="section-kicker">命中—置信度—接管—复核</span><h2>AI 应用运行</h2><p>低置信度结果进入人工队列；证据不足不会显示为确定结论。</p></div></div>
           <div className="manager-quality-grid">
             {[
@@ -154,7 +166,15 @@ export function ManagerWorkspace({ onToast }: { onToast: (message: string) => vo
             <button type="button" onClick={() => openEvidence("evidence-tutor-low-confidence")}><span>证据不足</span><strong>学校版权审批制度回答</strong><small>置信度 42% · 已转人工复核</small></button>
             <button type="button" onClick={() => openEvidence("evidence-ai-score")}><span>已人工修改</span><strong>林一诺作品 AI 评分</strong><small>AI 原值 43 → 最终值 42</small></button>
           </div>
-        </section>
+          </section> : (
+            <TeacherDevelopmentManager
+              onToast={onToast}
+              initialScopeId={selection.organizationId}
+              publishedGoals={schoolTeacherDevelopmentGoals}
+              onPublish={(plan) => dispatch({ type: "PUBLISH_SCHOOL_DEVELOPMENT_GOAL", plan })}
+            />
+          )}
+        </div>
       )}
 
       {activeAlert && (

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>可信 AI 能力认证中心｜实训取证</title>
+<style>
+:root{
+  --bg:#f5f7fc;--card:#fff;--line:#e8edf5;--text:#24324b;--muted:#78859f;
+  --primary:#6368ea;--primary2:#857ef0;--mint:#eef8f5;--mint-line:#d9ece6;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f8faff 0,#f5f7fc 100%);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--text)}
+.topbar{height:68px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#5b6af0,#735df0);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.brand .text{font-weight:800;line-height:1.1}.brand .text small{display:block;font-size:10px;color:#97a1b4;letter-spacing:.6px}
+.topnav{display:flex;gap:10px}.pill{padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#5f6d86;font-size:14px}
+.page{width:1260px;margin:18px auto 30px}
+.role-switch{display:flex;align-items:center;gap:0;width:max-content;background:#fff;border:1px solid #dfe4ef;border-radius:16px;padding:4px;box-shadow:0 6px 14px rgba(84,98,151,.04)}
+.switch-item{padding:12px 18px;border-radius:12px;color:#5f6d86;font-weight:700;cursor:pointer}
+.switch-item.active{background:#f3f4ff;color:#5d5fe6}
+.hero{margin-top:18px;background:#eff9f6;border:1px solid var(--mint-line);border-radius:20px;padding:24px;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;box-shadow:0 12px 24px rgba(80,96,150,.04)}
+.crumb{font-size:14px;font-weight:700;color:#159978;margin-bottom:10px}
+.hero h1{margin:0 0 10px;font-size:44px;line-height:1.1}
+.hero p{margin:0;color:#6a7892;font-size:15px}
+.hero-right{text-align:right;padding-top:8px}
+.hero-right .lv{font-size:22px;color:#3648c5;font-weight:800;margin-bottom:8px}
+.hero-right .meta{font-size:14px;color:#67758f}
+.stepper{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;padding:24px 2px 12px}
+.step{position:relative;text-align:center;min-height:96px}
+.step:not(:last-child)::after{content:"";position:absolute;top:20px;right:-10px;width:20px;height:2px;background:#e0e5f0}
+.circle{width:30px;height:30px;border-radius:50%;margin:0 auto 8px;border:1.5px solid #d0d8e5;background:#fff;color:#8c98ad;font-weight:800;display:flex;align-items:center;justify-content:center}
+.step.done .circle{background:#ecfbf5;border-color:#32b58d;color:#189f7a}.step.current .circle{background:#f5f4ff;border-color:#746df0;color:#615cea}
+.name{font-size:13px;font-weight:700;color:#61708a;line-height:1.28}.status{font-size:12px;color:#8c97ad;margin-top:4px}.step.done .name{color:#129977}
+.toolbar-shell{background:#fff;border:1px solid var(--line);border-radius:22px;padding:6px;box-shadow:0 10px 24px rgba(84,98,151,.04)}
+.toolbar{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.main-tab{min-height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;color:#5f6d86;font-size:14px;font-weight:700;line-height:1.3;cursor:pointer}
+.main-tab.active{background:linear-gradient(135deg,#6368ea,#7d79f2);color:#fff;box-shadow:0 8px 18px rgba(99,104,235,.22)}
+.info-card{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 8px 18px rgba(83,99,151,.03)}
+.info-left{display:flex;gap:14px;align-items:flex-start}
+.info-icon{width:24px;height:24px;border-radius:8px;background:#f0ecff;color:#695ff0;display:flex;align-items:center;justify-content:center;flex:0 0 24px;margin-top:3px}
+.info-title{font-size:16px;font-weight:800;margin-bottom:6px}
+.info-desc{font-size:14px;color:#6a7892;line-height:1.65}
+.cta{border:none;border-radius:14px;background:linear-gradient(135deg,#3672f3,#4168ef);color:#fff;font-size:15px;font-weight:800;padding:12px 22px;cursor:pointer;box-shadow:0 10px 18px rgba(61,107,240,.18)}
+.quick{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+.quick-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 8px 18px rgba(83,99,151,.03)}
+.quick-card .k{font-size:13px;color:#7c89a2;margin-bottom:8px}
+.quick-card .v{font-size:22px;font-weight:800}
+.quick-card .v small{font-size:14px;color:#6a7892;font-weight:700}
+.task-area{display:none;gap:14px;margin-top:18px}
+.task-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 18px rgba(83,99,151,.03)}
+.task-card-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.task-left{display:flex;gap:14px;align-items:flex-start}
+.task-no{width:32px;height:32px;border-radius:11px;background:#eef1ff;color:#5b68e5;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 32px}
+.task-title{font-size:17px;font-weight:800;margin-bottom:8px}
+.task-meta{font-size:13px;color:#6d7b95}
+.task-desc{margin-top:12px;color:#61708a;font-size:14px;line-height:1.72}
+.task-actions{display:flex;gap:10px;margin-top:14px}
+.mini-btn,.ghost-btn{padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer}
+.mini-btn{background:#f1f3ff;color:#5963e1;border:none}
+.ghost-btn{background:#fff;color:#4b5ddb;border:1px solid #d8dff0}
+.task-status{padding:6px 12px;border-radius:999px;font-size:13px;font-weight:800}
+.task-status.finished{background:#edf8f4;color:#189f7a}
+.task-status.review{background:#f3f4ff;color:#5c62e7}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:18px 0 12px}
+.section-head h3{margin:0;font-size:17px}
+.count-tag{padding:7px 12px;border-radius:999px;background:#eef1ff;color:#5665e3;font-size:13px;font-weight:700}
+.art-area{display:none}
+.art-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 18px rgba(83,99,151,.03)}
+.art-main{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.art-left{display:flex;gap:12px;align-items:flex-start}
+.art-badge{padding:7px 10px;border-radius:10px;background:#eef1ff;color:#5866e5;font-size:12px;font-weight:800}
+.art-title{font-size:16px;font-weight:800;margin-bottom:8px}
+.art-meta{font-size:13px;color:#6d7b95}
+.art-desc{margin-top:12px;color:#61708a;font-size:14px;line-height:1.72}
+.empty-state{margin-top:18px;min-height:238px;border:1.5px dashed #d7dfef;border-radius:20px;background:#fbfcff;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.empty-icon{width:52px;height:52px;border-radius:16px;background:#f0ecff;color:#725ef1;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:16px}
+.empty-title{font-size:17px;font-weight:800;color:#586a8c;margin-bottom:10px}
+.empty-desc{font-size:14px;color:#7a86a0}
+.footer{margin-top:14px;text-align:right;color:#8d98ac;font-size:12px}
+@media(max-width:1320px){.page{width:96%}}
+</style>
+
+<style id="platform-differentiation-v1">
+html{scroll-behavior:smooth}
+body{min-width:320px}
+#platform-shell,#platform-shell *,.platform-statusbar,.platform-statusbar *,.platform-story-panel,.platform-story-panel *{box-sizing:border-box}
+.platform-canvas>.top,.platform-canvas>.topbar{display:none!important}
+.platform-nav{display:flex;gap:6px;align-items:center}
+.platform-nav a{text-decoration:none;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease}
+.platform-nav a:hover{transform:translateY(-2px)}
+.platform-story-toggle{font:inherit;cursor:pointer}
+.platform-story-panel{position:fixed;z-index:1000;right:24px;top:88px;width:360px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.platform-story-panel[hidden]{display:none}
+.platform-story-panel h2{margin:0 0 8px;font-size:22px}
+.platform-story-panel p{margin:0 0 18px;line-height:1.7}
+.platform-story-panel ol{margin:0;padding-left:20px;line-height:1.9}
+.platform-story-panel button{position:absolute;right:16px;top:14px;border:0;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.platform-stage{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.platform-canvas{position:relative;z-index:1}
+.platform-canvas img{max-width:100%}
+.platform-canvas :is(button,a,input,select,textarea){font-family:inherit}
+@media(max-width:900px){
+  .platform-story-panel{left:16px;right:16px;top:76px;width:auto}
+  .platform-nav{overflow-x:auto;padding-bottom:4px}
+  .platform-canvas :is(.container,.page){width:auto!important;margin-left:14px!important;margin-right:14px!important}
+  .platform-canvas :is(.grid,.metrics,.score-grid,.grid2,.check-grid,.layout,.report-layout,.chart-area){grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="cert-theme">
+body[data-platform="cert"]{margin:0;background:#07121c;color:#d8ebf2;font-family:"Segoe UI","Microsoft YaHei",sans-serif}
+body[data-platform="cert"]:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(72,182,207,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(72,182,207,.06) 1px,transparent 1px);background-size:28px 28px}
+body[data-platform="cert"] #platform-shell{position:fixed;z-index:40;left:0;top:0;bottom:0;width:268px;background:#091b28;border-right:1px solid #1d495a;padding:24px 18px;display:flex;flex-direction:column}
+.cert-brand{color:#eefcff;text-decoration:none;border-bottom:1px solid #1d495a;padding:0 6px 20px}.cert-brand-mark{display:inline-grid;place-items:center;width:38px;height:38px;background:#00d9e8;color:#06141d;font-weight:900;margin-bottom:14px}.cert-brand strong{display:block;font-size:20px}.cert-brand small{display:block;margin-top:5px;color:#65b7c5;font:700 10px Consolas,monospace;letter-spacing:.12em}
+body[data-platform="cert"] .platform-nav{display:flex;flex-direction:column;align-items:stretch;gap:3px;margin:18px 0;overflow:auto}
+body[data-platform="cert"] .platform-nav a{color:#8caab5;padding:8px 10px;border-left:2px solid transparent;font:600 13px Consolas,"Microsoft YaHei",sans-serif}
+body[data-platform="cert"] .platform-nav a.active{color:#04141d;background:#00d9e8;border-color:#b8ff63}
+.cert-rule{margin-top:auto;background:#0d2635;border:1px solid #1d495a;padding:13px}.cert-rule .platform-stage{color:#b8ff63}.cert-rule p{font-size:12px;line-height:1.55;color:#9bb5bf;margin:7px 0 12px}.cert-rule strong{font:800 12px Consolas,monospace;color:#eefcff}
+.cert-rule .platform-story-toggle{width:100%;border:1px solid #00d9e8;background:transparent;color:#00d9e8;padding:9px}
+.platform-statusbar{position:fixed;z-index:35;left:268px;right:0;top:0;height:54px;background:rgba(7,18,28,.94);border-bottom:1px solid #1d495a;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font:700 12px Consolas,monospace;color:#8aaab7;letter-spacing:.04em}.platform-statusbar strong{color:#b8ff63}.status-live{display:flex;align-items:center;gap:8px}.status-live:before{content:"";width:7px;height:7px;background:#b8ff63;box-shadow:0 0 10px #b8ff63;border-radius:50%}
+body[data-platform="cert"] .platform-story-panel{background:#0d2635;border:1px solid #00d9e8;color:#d8ebf2;border-radius:0}
+body[data-platform="cert"] .platform-canvas{margin-left:268px;padding:70px 20px 48px;min-height:100vh}
+body[data-platform="cert"] .platform-canvas :is(.container,.page){width:auto!important;max-width:1240px!important;margin:0 auto 28px!important}
+body[data-platform="cert"] .platform-canvas :is(.card,.panel,.box,.question,.item,.metric-card,.task-card,.resource-card,.art-card,.prepare-card,.score-card,.chart-card,.info-card,.school-plan,.selected-item,.readiness-card,.soft-panel,.notice,.summary-card,.sum-card,.gate){background:#0d202e!important;border:1px solid #1e4a5c!important;border-radius:2px!important;box-shadow:none!important;color:#d8ebf2!important}
+body[data-platform="cert"] .platform-canvas :is(h1,h2,h3,strong,.title,.title-lg,.title-sm,.panel-title,.item-title,.task-title,.metric-value){color:#f2fbff!important}
+body[data-platform="cert"] .platform-canvas :is(p,small,.desc,.sub,.meta,.muted,.item-desc,.task-desc,.metric-sub){color:#91aab5!important}
+body[data-platform="cert"] .platform-canvas :is(.hero,.score){background:linear-gradient(105deg,#0d2b3a,#0b5360)!important;border:1px solid #00a8bb!important;color:#effcff!important;border-radius:2px!important}
+body[data-platform="cert"] .platform-canvas :is(.step.now,.tab.active,.main-tab.active,.sub-tab.active,.switch-item.active,.primary-btn,.btn.primary,.save-btn){background:#00d9e8!important;color:#05141d!important;border-color:#00d9e8!important;border-radius:2px!important}
+body[data-platform="cert"] .platform-canvas :is(.step.ok,.done,.finished){background:#153a39!important;color:#b8ff63!important}
+body[data-platform="cert"] .platform-canvas :is(.fill,.bar .fill,.progress-bar){background:#00d9e8!important}
+body[data-platform="cert"] .platform-canvas :is(input,select,textarea){background:#071722!important;color:#eafaff!important;border-color:#28566a!important}
+body[data-platform="cert"] .platform-canvas :is(table,.table){background:#0a1b27!important;color:#d8ebf2!important}body[data-platform="cert"] .platform-canvas :is(th,td){border-color:#214657!important}
+body[data-platform="cert"] .platform-canvas :is(.badge,.pill,.tag,.chip,.soft-tag){border-radius:2px!important}
+@media(max-width:900px){body[data-platform="cert"] #platform-shell{position:relative;width:auto;height:auto}.cert-brand{padding-bottom:12px}body[data-platform="cert"] .platform-nav{display:grid;grid-template-columns:repeat(3,1fr);max-height:180px}.cert-rule{margin-top:0}.platform-statusbar{position:relative;left:0;height:auto;padding:10px 16px;gap:12px;flex-wrap:wrap}body[data-platform="cert"] .platform-canvas{margin-left:0;padding:18px 0 40px}}
+</style>
+</head>
+<body data-platform="cert">
+<aside id="platform-shell"><a class="cert-brand" href="01-教师成长全流程与能力模型_demo02.html"><span class="cert-brand-mark">CERT</span><strong>可信 AI 能力认证中心</strong><small>TRUSTED AI CERTIFICATION</small></a><nav class="platform-nav" aria-label="可信认证功能导航"><a href="01-教师成长全流程与能力模型_demo02.html"><span>01</span> 控制总览</a><a href="02-摸底测评-demo02.html"><span>02</span> 摸底采集</a><a href="03-能力报告与5个计分维度-demo02.html"><span>03</span> 评分结果</a><a href="04-学校分层目标与个性化培训计划-demo02.html"><span>04</span> 认证路径</a><a href="05-课程学习与自主学习分轨-demo02.html"><span>05</span> 学习记录</a><a href="06-AI实训任务与作品-demo02.html" class="active" aria-current="page"><span>06</span> 实训取证</a><a href="07-教学应用发布-demo02.html"><span>07</span> 应用核验</a><a href="08-研究成果治理与共享-demo02.html"><span>08</span> 研究审计</a><a href="09-成长报告与复测-demo02.html"><span>09</span> 复测队列</a><a href="10-管理端匿名教师发展聚合-demo02.html"><span>10</span> 组织看板</a><a href="11-L1-L4四级能力等级分层培养目标-demo02.html"><span>11</span> 等级策略</a><a href="12-事实核验、数据版权和人工责任-demo02.html"><span>12</span> 门槛规则</a></nav><div class="cert-rule"><span class="platform-stage">CURRENT MODULE</span><p>实训取证<br>规则驱动、证据可追溯、通关门槛一票阻断的能力认证平台</p><strong>RULESET / 2026.08</strong><button class="platform-story-toggle" type="button" aria-expanded="false">查看认证逻辑</button></div></aside><div class="platform-statusbar"><span class="status-live"><strong>ENGINE ONLINE</strong> · 证据规则引擎运行中</span><span>周期 GROWTH-2026-A · AUDIT TRACE ENABLED</span></div><aside class="platform-story-panel" hidden aria-label="平台定位说明"><button type="button" aria-label="关闭平台定位">×</button><span class="platform-stage">核心功能定位</span><h2>可信 AI 能力认证中心</h2><p>面向学校质量管理与正式认证，用统一规则汇集测评、任务、作品和应用证据；三项可信门槛独立判定，所有等级都可回溯。</p><ol><li>结构化证据台账</li><li>三项门槛判定</li><li>L1—L4正式认证</li></ol></aside>
+<div class="platform-canvas">
+<div class="topbar">
+  <div class="brand"><div class="logo">AI</div><div class="text">可信 AI 能力认证中心<small>GENERAL AI TRAINING</small></div></div>
+  <div class="topnav">
+    <div class="pill">🎓 教师</div><div class="pill">👤 学生</div><div class="pill">🏫 教学管理</div><div class="pill">⟳ 重置演示</div>
+    <div class="pill" style="width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f2eeff;color:#745ff0;font-weight:800">周</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="role-switch">
+    <div class="switch-item">教学工作</div>
+    <div class="switch-item active">我的成长</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="crumb">周老师 · 教师个人成长空间</div>
+      <h1>我的 AI 成长</h1>
+      <p>十阶段连续闭环，以五维能力、四类证据和三项可信门槛共同支撑 L1—L4。</p>
+    </div>
+    <div class="hero-right">
+      <div class="lv">正式 L1 ・ 能力测算 L2</div>
+      <div class="meta">目标 L3 ・ 课程 0 项 ・ 实训 0 项</div>
+    </div>
+  </div>
+
+  <div class="stepper">
+    <div class="step done"><div class="circle">✓</div><div class="name">摸底测评</div><div class="status">已完成</div></div>
+    <div class="step done"><div class="circle">✓</div><div class="name">能力报告</div><div class="status">已完成</div></div>
+    <div class="step done"><div class="circle">✓</div><div class="name">认证路径</div><div class="status">已完成</div></div>
+    <div class="step current"><div class="circle">4</div><div class="name">课程学习</div><div class="status">可开始</div></div>
+    <div class="step current"><div class="circle">5</div><div class="name">自主学习</div><div class="status">可开始</div></div>
+    <div class="step current"><div class="circle">6</div><div class="name">AI 实训</div><div class="status">可开始</div></div>
+    <div class="step"><div class="circle">7</div><div class="name">教学应用</div><div class="status">待解锁</div></div>
+    <div class="step"><div class="circle">8</div><div class="name">研究成果</div><div class="status">待解锁</div></div>
+    <div class="step"><div class="circle">9</div><div class="name">认证报告</div><div class="status">待解锁</div></div>
+    <div class="step"><div class="circle">10</div><div class="name">结业复测</div><div class="status">待解锁</div></div>
+  </div>
+
+  <div class="toolbar-shell">
+    <div class="toolbar">
+      <div class="main-tab">认证总览</div>
+      <div class="main-tab">摸底与报告</div>
+      <div class="main-tab">认证路径</div>
+      <div class="main-tab">课程学习与自主路径</div>
+      <div class="main-tab active">实训记录与作品</div>
+      <div class="main-tab">教学应用</div>
+      <div class="main-tab">研究成果</div>
+      <div class="main-tab">认证报告与复测</div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-left">
+      <div class="info-icon">⚗</div>
+      <div>
+        <div class="info-title">共享 13 类 AI 工具，任务与作品分步记录</div>
+        <div class="info-desc">完成工具任务先形成任务证据；作品只有通过复审并由教师确认后才进入作品通道。</div>
+      </div>
+    </div>
+    <button class="cta enter-training-btn">进入自由实训 →</button>
+  </div>
+
+  <div class="quick">
+    <div class="quick-card"><div class="k">教师实训任务</div><div class="v"><span id="trainingCount">0</span> <small>项</small></div></div>
+    <div class="quick-card"><div class="k">待确认作品</div><div class="v"><span id="reviewCount">0</span> <small>项</small></div></div>
+  </div>
+
+  <div class="task-area" id="taskArea"></div>
+  <div class="art-area" id="artArea"></div>
+
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">⚗</div>
+    <div class="empty-title">还没有教师实训任务</div>
+    <div class="empty-desc">进入自由实训完成任一工具任务后，这里将生成待确认作品。</div>
+  </div>
+
+  <div class="footer">单文件网页 Demo ｜ 文件名：06-AI实训任务与作品-demo02.html</div>
+</div>
+
+<script>
+function bootTrainingPage(root=document){
+  const enterBtns = root.querySelectorAll('.enter-training-btn');
+  const emptyState = root.querySelector('#emptyState');
+  const taskArea = root.querySelector('#taskArea');
+  const artArea = root.querySelector('#artArea');
+  const countBadge = root.querySelector('#trainingCount');
+  const reviewBadge = root.querySelector('#reviewCount');
+  const artCountText = root.querySelector('#artCountText');
+
+  let taskCount = 0;
+  let reviewCount = 0;
+
+  function renderCounts(){
+    if(countBadge) countBadge.textContent = taskCount;
+    if(reviewBadge) reviewBadge.textContent = reviewCount;
+    if(artCountText) artCountText.textContent = `${reviewCount} 项待确认作品`;
+  }
+
+  function showEmpty(show=true){
+    if(emptyState) emptyState.style.display = show ? 'flex' : 'none';
+    if(taskArea) taskArea.style.display = show ? 'none' : 'grid';
+    if(artArea) artArea.style.display = show ? 'none' : 'block';
+  }
+
+  function addTrainingTask(){
+    taskCount += 1;
+    reviewCount += 1;
+    renderCounts();
+    showEmpty(false);
+
+    if(taskArea){
+      taskArea.innerHTML = `
+        <div class="task-card">
+          <div class="task-card-top">
+            <div class="task-left">
+              <div class="task-no">1</div>
+              <div>
+                <div class="task-title">自由实训：课堂提示词优化与结果核验</div>
+                <div class="task-meta">实训工具：通用对话助手 ・ 分类：教学融合 ・ 状态：已完成任务，待教师确认作品</div>
+              </div>
+            </div>
+            <div class="task-status finished">已完成</div>
+          </div>
+          <div class="task-desc">完成一次课堂场景提示词设计、结果核验与改写，提交任务证据后，系统已自动生成待确认作品。</div>
+          <div class="task-actions">
+            <button class="mini-btn" type="button" onclick="alert('演示版：这里可查看任务证据。')">查看任务证据</button>
+            <button class="ghost-btn" type="button" onclick="alert('演示版：这里可继续补充说明或重新提交。')">补充说明</button>
+          </div>
+        </div>
+      `;
+    }
+
+    if(artArea){
+      artArea.innerHTML = `
+        <div class="section-head">
+          <h3>待确认作品</h3>
+          <div class="count-tag" id="artCountText">${reviewCount} 项待确认作品</div>
+        </div>
+        <div class="art-card">
+          <div class="art-main">
+            <div class="art-left">
+              <div class="art-badge">作品</div>
+              <div>
+                <div class="art-title">课堂提示词优化案例单</div>
+                <div class="art-meta">来源任务：自由实训 ・ 提交时间：刚刚 ・ 审核状态：待教师确认</div>
+              </div>
+            </div>
+            <div class="task-status review">待确认</div>
+          </div>
+          <div class="art-desc">作品已从任务证据中生成，待教师查看规范性、完整性与适用性后进入作品通道。</div>
+        </div>
+      `;
+    }
+  }
+
+  renderCounts();
+  showEmpty(true);
+
+  enterBtns.forEach(btn=>{
+    btn.addEventListener('click', addTrainingTask);
+  });
+
+  root.querySelectorAll('.main-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      root.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  root.querySelectorAll('.switch-item').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      tab.parentElement.querySelectorAll('.switch-item').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+}
+window.addEventListener('DOMContentLoaded', ()=>bootTrainingPage());
+</script>
+
+</div>
+
+<script id="platform-differentiation-behavior">
+(() => {
+  const toggle = document.querySelector('.platform-story-toggle');
+  const panel = document.querySelector('.platform-story-panel');
+  const close = panel?.querySelector('button');
+  const setOpen = (open) => {
+    if (!toggle || !panel) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+})();
+</script>
+</body>
+</html>

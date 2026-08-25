@@ -96,36 +96,38 @@ describe('AI 通识实训平台 Demo 关键交互', () => {
     expect(screen.getByRole('combobox', { name: '当前演示人员' })).toHaveValue('P01')
   })
 
-  it('后两天选修可以多选、每天至少一项且不能跨天重复', async () => {
+  it('选修按教研组选择两个不同任务、确定顺序并由当前成员确认', async () => {
     const user = userEvent.setup()
     render(<App />)
 
     await user.click(screen.getByRole('button', { name: /^任务清单$/ }))
     await user.click(screen.getByRole('button', { name: /选修任务库/ }))
     await user.click(screen.getByRole('button', { name: /课程改进 · E03 \+ E04/ }))
-    expect(screen.getByText('两天选修任务已满足最低要求')).toBeInTheDocument()
+    expect(screen.getByText('两项顺序已确定，等待当前教师确认')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '我已确认本组选修顺序' })).toBeEnabled()
+    expect(screen.getByRole('alert')).toHaveTextContent('当前教师尚未确认')
 
     const e05Card = screen.getByRole('heading', { name: '课程目标与岗位能力映射网页' }).closest('article')!
-    await user.click(within(e05Card).getByRole('button', { name: '加入第二天' }))
-    expect(within(e05Card).getByRole('button', { name: '已在第二天' })).toBeDisabled()
-    expect(screen.getByText('第二天：E03、E05；第三天：E04。所有选择已同步到对应 DAY 和成果中心。')).toBeInTheDocument()
+    await user.click(within(e05Card).getByRole('button', { name: '设为第 1 项' }))
+    expect(within(e05Card).getByRole('button', { name: '已设为第 1 项' })).toBeInTheDocument()
+    expect(screen.getByText('第 1 项（第二天）：E05；第 2 项（第三天）：E04。选择按教研组保存，并同步到日程和成果中心。')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '我已确认本组选修顺序' }))
+    expect(screen.getByText('当前教师已确认，可按顺序开始实训')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '本人已确认' })).toBeDisabled()
 
     await user.click(screen.getByRole('button', { name: /DAY 2/ }))
-    expect(screen.getByRole('heading', { name: '第二天已选 2 项任务' })).toBeInTheDocument()
-    expect(screen.getByText(/E03 · AI 辅助教学反思与评课/)).toBeInTheDocument()
-    expect(screen.getByText(/E05 · 课程目标与岗位能力映射网页/)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '第 1 项：E05 · 课程目标与岗位能力映射网页' })).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /DAY 3/ }))
-    expect(screen.getByRole('heading', { name: '第三天已选 1 项任务' })).toBeInTheDocument()
-    expect(screen.getByText(/E04 · AI 辅助课程知识图谱设计/)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: '第 2 项：E04 · AI 辅助课程知识图谱设计' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: '调整第三天选修' }))
-    await user.click(screen.getByRole('button', { name: '从第三天移除 E04' }))
-    expect(screen.getByRole('alert')).toHaveTextContent('第三天尚未选择任务')
-    expect(screen.getByText('请为第二天和第三天各选择至少 1 项')).toBeInTheDocument()
-    expect(screen.getByText('第二天：E03、E05；第三天：未选择。所有选择已同步到对应 DAY 和成果中心。')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: '调整第 2 项' }))
+    await user.click(screen.getByRole('button', { name: '清空第 2 项 E04' }))
+    expect(screen.getByRole('alert')).toHaveTextContent('第 2 项尚未选择')
+    expect(screen.getByText('请为本组选择两个不同的选修任务')).toBeInTheDocument()
+    expect(screen.getByText('第 1 项（第二天）：E05；第 2 项（第三天）：未选择。选择按教研组保存，并同步到日程和成果中心。')).toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: /DAY 3/ }))
     expect(screen.getByRole('heading', { name: '第三天选修尚未配置' })).toBeInTheDocument()
-    expect(screen.getByText('未满足最低要求')).toBeInTheDocument()
+    expect(screen.getByText('尚未满足选修配置要求')).toBeInTheDocument()
   })
 
   it('选择判断和填写依据后实时更新分项完成数', async () => {

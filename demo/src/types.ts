@@ -584,6 +584,9 @@ export interface TeacherAbilityReport {
   total: number;
   dimensions: Array<{ label: string; value: number }>;
   nextTask: string;
+  calculatedLevel?: "L1" | "L2" | "L3" | "L4";
+  certifiedLevel?: "L1" | "L2" | "L3" | "L4" | null;
+  gatePassed?: boolean;
 }
 
 export type TeacherWorkspaceMode = "teaching" | "growth"
@@ -591,11 +594,13 @@ export type TeacherWorkspaceMode = "teaching" | "growth"
 export type LearnerKind = "student" | "teacher"
 
 export type TeacherGrowthSection =
+  | "overview"
   | "assessment"
   | "plan"
   | "learning"
-  | "path"
   | "practice"
+  | "application"
+  | "research"
   | "report"
 
 export type TeacherAssessmentStage = "baseline" | "progress" | "final"
@@ -678,6 +683,7 @@ export interface TeacherPracticeRecord {
   duration: number
   score: number
   artifact: string
+  artifactConfirmed: boolean
   completedAt: string
 }
 
@@ -691,11 +697,13 @@ export interface ResearchAgentDraft {
   status: "draft" | "tested" | "saved"
   testResult?: string
   linkedOutput?: string
+  sharedOutput?: string
   checks: {
     citations: boolean
     manualReview: boolean
     anonymousData: boolean
     aiDisclosure: boolean
+    parameterArchive: boolean
   }
 }
 
@@ -705,9 +713,39 @@ export interface TeacherGrowthState {
   resources: ImportedLearningResource[]
   recommendedPath: TeacherLearningPath
   customPath: TeacherLearningPath
+  selfLearningProgress: Record<string, number>
   practiceRecords: TeacherPracticeRecord[]
   researchAgent: ResearchAgentDraft
-  evidenceLedger: TeacherGrowthEvidence[]
+}
+
+export type TeacherDevelopmentScopeId = "school" | "ai-college" | "creative-college"
+
+export type TeacherDevelopmentLevel = "L1" | "L2" | "L3" | "L4"
+
+export type TeacherDevelopmentDimension = TeacherAbilityDimensionName
+
+export interface TeacherDevelopmentPlanConfig {
+  scopeId: TeacherDevelopmentScopeId
+  targetLevel: TeacherDevelopmentLevel
+  focusDimension: TeacherDevelopmentDimension
+  deadline: string
+}
+
+export interface TeacherDevelopmentPlanSummary extends TeacherDevelopmentPlanConfig {
+  id: string
+  scopeLabel: string
+  eligibleCount: number
+  groupCount: number
+  groupSizeSummary: string
+  sourceSegment: string
+  requiredModules: string[]
+  gateRequirement: string
+  cadence: string
+}
+
+export interface SchoolTeacherDevelopmentGoal extends TeacherDevelopmentPlanSummary {
+  status: "published"
+  publishedAt: string
 }
 
 export type ManagerWorkspaceTab =
@@ -781,29 +819,6 @@ export interface EvidenceRecord {
     change: string;
     at: string;
   }>;
-}
-
-export type TeacherGrowthEvidenceSource =
-  | "课程学习"
-  | "自由实训"
-  | "智能备课与教学实施"
-  | "AI批改和人工复核"
-  | "分层干预"
-  | "AI研究和科研智能体"
-  | "结业复测";
-
-export interface TeacherGrowthEvidence {
-  id: string;
-  teacherId: string;
-  source: TeacherGrowthEvidenceSource;
-  task: string;
-  course: string;
-  artifactVersion: string;
-  dimensions: TeacherAbilityDimensionName[];
-  reviewStatus: "待复核" | "已确认";
-  anonymous: boolean;
-  abilityImpact: string;
-  completedAt: string;
 }
 
 export type TeachingOperationAlertStatus = "待处理" | "已交办" | "已解决";

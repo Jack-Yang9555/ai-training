@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>可信 AI 能力认证中心｜评分结果</title>
+<style>
+:root{
+  --bg:#f5f7fc;--panel:#fff;--line:#e7ecf4;--text:#22324b;--muted:#78859f;
+  --blue:#6167ea;--violet:#8a80ed;--soft:#f3f4ff;--mint:#edf8f5;--mintline:#c8e6db;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#f7f9ff 0,#f4f6fb 100%);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--text)}
+.topbar{height:68px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#596af0,#735df0);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.brand strong{display:block;font-size:16px;line-height:1.1}
+.brand small{display:block;font-size:10px;color:#98a2b4;letter-spacing:.6px}
+.topnav{display:flex;gap:10px}
+.pill{padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#5f6d86;font-size:14px}
+.page{width:1260px;margin:16px auto 30px}
+.soft-panel{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 10px 24px rgba(76,96,156,.05)}
+.step-wrap{padding:10px 0 14px}
+.stepper{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}
+.step{text-align:center;position:relative;min-height:96px}
+.step:not(:last-child)::after{content:"";position:absolute;top:18px;right:-10px;width:20px;height:2px;background:#dfe5f0}
+.step .circle{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid #d3d9e6;background:#fff;color:#8d99af;font-weight:700;margin:0 auto 8px}
+.step.done .circle{background:#ebfbf4;border-color:#31b58e;color:#17a27b}
+.step.current .circle{background:#f5f3ff;border-color:#746df0;color:#5f5ceb}
+.step .name{font-size:13px;font-weight:700;color:#62708a;line-height:1.3}
+.step .status{font-size:12px;color:#8b96ac;margin-top:4px}
+.tabs{margin-top:10px;padding:6px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.tab{border-radius:16px;min-height:60px;display:flex;align-items:center;justify-content:center;text-align:center;color:#5f6d86;font-size:14px;font-weight:700;cursor:pointer;line-height:1.3}
+.tab.active{background:linear-gradient(135deg,var(--blue),#7e79f2);color:#fff;box-shadow:0 8px 18px rgba(98,104,235,.22)}
+.hero{margin-top:18px;padding:28px 24px;border-radius:26px;background:linear-gradient(110deg,#585dd8 0,#6c71e6 45%,#8a82ea 100%);color:#fff;display:flex;align-items:center;justify-content:space-between;min-height:178px;box-shadow:0 16px 28px rgba(87,92,216,.18)}
+.hero .sub{font-size:16px;font-weight:700;margin-bottom:10px}
+.hero .score{font-size:64px;font-weight:800;line-height:1;margin-bottom:8px}
+.hero .desc{font-size:15px;margin-bottom:8px}
+.hero .level{font-size:15px;font-weight:800}
+.cta{padding:14px 22px;border-radius:16px;border:none;background:#fff;color:#4f5cd7;font-size:16px;font-weight:800;cursor:pointer}
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.gate{background:var(--mint);border:1px solid var(--mintline);border-radius:18px;padding:16px 18px}
+.gate h4{margin:0 0 6px;font-size:16px;display:flex;align-items:center;gap:10px}
+.icon{width:30px;height:30px;border-radius:10px;background:#dff6ee;color:#21a57e;display:flex;align-items:center;justify-content:center}
+.gate p{margin:0;color:#738199;font-size:14px}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:18px}
+.metric-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 6px 14px rgba(78,98,152,.03);transition:.18s}
+.metric-card.hovering{box-shadow:0 14px 30px rgba(82,95,163,.1)}
+.metric-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.metric-head b{font-size:15px}
+.metric-head span{font-size:14px;color:#5c65dd;font-weight:800}
+.track{height:8px;background:#e8ecf4;border-radius:999px;overflow:hidden;margin-bottom:14px}
+.track i{display:block;height:100%;background:linear-gradient(90deg,#6a67eb,#8a80ed);border-radius:999px}
+.metric-card p{margin:0;color:#6e7b95;font-size:14px;line-height:1.75;min-height:76px}
+.triple{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:18px}
+.box{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px 18px;min-height:230px}
+.box h3{margin:0 0 14px;font-size:18px}
+.box ul{list-style:none;padding:0;margin:0}
+.box li{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed #edf1f7;color:#54637d;line-height:1.65}
+.box li:last-child{border-bottom:none}
+.dot{width:18px;height:18px;flex:0 0 18px;border-radius:50%;background:#edf1ff;color:#6170ea;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.mini-btn{display:inline-block;margin-top:14px;padding:10px 14px;border-radius:12px;background:#f1f3ff;color:#5f67e3;font-weight:700;font-size:14px;cursor:pointer}
+.footer{margin-top:16px;text-align:right;color:#8b96aa;font-size:12px}
+@media (max-width:1320px){.page{width:96%}}
+</style>
+
+<style id="platform-differentiation-v1">
+html{scroll-behavior:smooth}
+body{min-width:320px}
+#platform-shell,#platform-shell *,.platform-statusbar,.platform-statusbar *,.platform-story-panel,.platform-story-panel *{box-sizing:border-box}
+.platform-canvas>.top,.platform-canvas>.topbar{display:none!important}
+.platform-nav{display:flex;gap:6px;align-items:center}
+.platform-nav a{text-decoration:none;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease}
+.platform-nav a:hover{transform:translateY(-2px)}
+.platform-story-toggle{font:inherit;cursor:pointer}
+.platform-story-panel{position:fixed;z-index:1000;right:24px;top:88px;width:360px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.platform-story-panel[hidden]{display:none}
+.platform-story-panel h2{margin:0 0 8px;font-size:22px}
+.platform-story-panel p{margin:0 0 18px;line-height:1.7}
+.platform-story-panel ol{margin:0;padding-left:20px;line-height:1.9}
+.platform-story-panel button{position:absolute;right:16px;top:14px;border:0;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.platform-stage{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.platform-canvas{position:relative;z-index:1}
+.platform-canvas img{max-width:100%}
+.platform-canvas :is(button,a,input,select,textarea){font-family:inherit}
+@media(max-width:900px){
+  .platform-story-panel{left:16px;right:16px;top:76px;width:auto}
+  .platform-nav{overflow-x:auto;padding-bottom:4px}
+  .platform-canvas :is(.container,.page){width:auto!important;margin-left:14px!important;margin-right:14px!important}
+  .platform-canvas :is(.grid,.metrics,.score-grid,.grid2,.check-grid,.layout,.report-layout,.chart-area){grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="cert-theme">
+body[data-platform="cert"]{margin:0;background:#07121c;color:#d8ebf2;font-family:"Segoe UI","Microsoft YaHei",sans-serif}
+body[data-platform="cert"]:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(72,182,207,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(72,182,207,.06) 1px,transparent 1px);background-size:28px 28px}
+body[data-platform="cert"] #platform-shell{position:fixed;z-index:40;left:0;top:0;bottom:0;width:268px;background:#091b28;border-right:1px solid #1d495a;padding:24px 18px;display:flex;flex-direction:column}
+.cert-brand{color:#eefcff;text-decoration:none;border-bottom:1px solid #1d495a;padding:0 6px 20px}.cert-brand-mark{display:inline-grid;place-items:center;width:38px;height:38px;background:#00d9e8;color:#06141d;font-weight:900;margin-bottom:14px}.cert-brand strong{display:block;font-size:20px}.cert-brand small{display:block;margin-top:5px;color:#65b7c5;font:700 10px Consolas,monospace;letter-spacing:.12em}
+body[data-platform="cert"] .platform-nav{display:flex;flex-direction:column;align-items:stretch;gap:3px;margin:18px 0;overflow:auto}
+body[data-platform="cert"] .platform-nav a{color:#8caab5;padding:8px 10px;border-left:2px solid transparent;font:600 13px Consolas,"Microsoft YaHei",sans-serif}
+body[data-platform="cert"] .platform-nav a.active{color:#04141d;background:#00d9e8;border-color:#b8ff63}
+.cert-rule{margin-top:auto;background:#0d2635;border:1px solid #1d495a;padding:13px}.cert-rule .platform-stage{color:#b8ff63}.cert-rule p{font-size:12px;line-height:1.55;color:#9bb5bf;margin:7px 0 12px}.cert-rule strong{font:800 12px Consolas,monospace;color:#eefcff}
+.cert-rule .platform-story-toggle{width:100%;border:1px solid #00d9e8;background:transparent;color:#00d9e8;padding:9px}
+.platform-statusbar{position:fixed;z-index:35;left:268px;right:0;top:0;height:54px;background:rgba(7,18,28,.94);border-bottom:1px solid #1d495a;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font:700 12px Consolas,monospace;color:#8aaab7;letter-spacing:.04em}.platform-statusbar strong{color:#b8ff63}.status-live{display:flex;align-items:center;gap:8px}.status-live:before{content:"";width:7px;height:7px;background:#b8ff63;box-shadow:0 0 10px #b8ff63;border-radius:50%}
+body[data-platform="cert"] .platform-story-panel{background:#0d2635;border:1px solid #00d9e8;color:#d8ebf2;border-radius:0}
+body[data-platform="cert"] .platform-canvas{margin-left:268px;padding:70px 20px 48px;min-height:100vh}
+body[data-platform="cert"] .platform-canvas :is(.container,.page){width:auto!important;max-width:1240px!important;margin:0 auto 28px!important}
+body[data-platform="cert"] .platform-canvas :is(.card,.panel,.box,.question,.item,.metric-card,.task-card,.resource-card,.art-card,.prepare-card,.score-card,.chart-card,.info-card,.school-plan,.selected-item,.readiness-card,.soft-panel,.notice,.summary-card,.sum-card,.gate){background:#0d202e!important;border:1px solid #1e4a5c!important;border-radius:2px!important;box-shadow:none!important;color:#d8ebf2!important}
+body[data-platform="cert"] .platform-canvas :is(h1,h2,h3,strong,.title,.title-lg,.title-sm,.panel-title,.item-title,.task-title,.metric-value){color:#f2fbff!important}
+body[data-platform="cert"] .platform-canvas :is(p,small,.desc,.sub,.meta,.muted,.item-desc,.task-desc,.metric-sub){color:#91aab5!important}
+body[data-platform="cert"] .platform-canvas :is(.hero,.score){background:linear-gradient(105deg,#0d2b3a,#0b5360)!important;border:1px solid #00a8bb!important;color:#effcff!important;border-radius:2px!important}
+body[data-platform="cert"] .platform-canvas :is(.step.now,.tab.active,.main-tab.active,.sub-tab.active,.switch-item.active,.primary-btn,.btn.primary,.save-btn){background:#00d9e8!important;color:#05141d!important;border-color:#00d9e8!important;border-radius:2px!important}
+body[data-platform="cert"] .platform-canvas :is(.step.ok,.done,.finished){background:#153a39!important;color:#b8ff63!important}
+body[data-platform="cert"] .platform-canvas :is(.fill,.bar .fill,.progress-bar){background:#00d9e8!important}
+body[data-platform="cert"] .platform-canvas :is(input,select,textarea){background:#071722!important;color:#eafaff!important;border-color:#28566a!important}
+body[data-platform="cert"] .platform-canvas :is(table,.table){background:#0a1b27!important;color:#d8ebf2!important}body[data-platform="cert"] .platform-canvas :is(th,td){border-color:#214657!important}
+body[data-platform="cert"] .platform-canvas :is(.badge,.pill,.tag,.chip,.soft-tag){border-radius:2px!important}
+@media(max-width:900px){body[data-platform="cert"] #platform-shell{position:relative;width:auto;height:auto}.cert-brand{padding-bottom:12px}body[data-platform="cert"] .platform-nav{display:grid;grid-template-columns:repeat(3,1fr);max-height:180px}.cert-rule{margin-top:0}.platform-statusbar{position:relative;left:0;height:auto;padding:10px 16px;gap:12px;flex-wrap:wrap}body[data-platform="cert"] .platform-canvas{margin-left:0;padding:18px 0 40px}}
+</style>
+</head>
+<body data-platform="cert">
+<aside id="platform-shell"><a class="cert-brand" href="01-教师成长全流程与能力模型_demo02.html"><span class="cert-brand-mark">CERT</span><strong>可信 AI 能力认证中心</strong><small>TRUSTED AI CERTIFICATION</small></a><nav class="platform-nav" aria-label="可信认证功能导航"><a href="01-教师成长全流程与能力模型_demo02.html"><span>01</span> 控制总览</a><a href="02-摸底测评-demo02.html"><span>02</span> 摸底采集</a><a href="03-能力报告与5个计分维度-demo02.html" class="active" aria-current="page"><span>03</span> 评分结果</a><a href="04-学校分层目标与个性化培训计划-demo02.html"><span>04</span> 认证路径</a><a href="05-课程学习与自主学习分轨-demo02.html"><span>05</span> 学习记录</a><a href="06-AI实训任务与作品-demo02.html"><span>06</span> 实训取证</a><a href="07-教学应用发布-demo02.html"><span>07</span> 应用核验</a><a href="08-研究成果治理与共享-demo02.html"><span>08</span> 研究审计</a><a href="09-成长报告与复测-demo02.html"><span>09</span> 复测队列</a><a href="10-管理端匿名教师发展聚合-demo02.html"><span>10</span> 组织看板</a><a href="11-L1-L4四级能力等级分层培养目标-demo02.html"><span>11</span> 等级策略</a><a href="12-事实核验、数据版权和人工责任-demo02.html"><span>12</span> 门槛规则</a></nav><div class="cert-rule"><span class="platform-stage">CURRENT MODULE</span><p>评分结果<br>规则驱动、证据可追溯、通关门槛一票阻断的能力认证平台</p><strong>RULESET / 2026.08</strong><button class="platform-story-toggle" type="button" aria-expanded="false">查看认证逻辑</button></div></aside><div class="platform-statusbar"><span class="status-live"><strong>ENGINE ONLINE</strong> · 证据规则引擎运行中</span><span>周期 GROWTH-2026-A · AUDIT TRACE ENABLED</span></div><aside class="platform-story-panel" hidden aria-label="平台定位说明"><button type="button" aria-label="关闭平台定位">×</button><span class="platform-stage">核心功能定位</span><h2>可信 AI 能力认证中心</h2><p>面向学校质量管理与正式认证，用统一规则汇集测评、任务、作品和应用证据；三项可信门槛独立判定，所有等级都可回溯。</p><ol><li>结构化证据台账</li><li>三项门槛判定</li><li>L1—L4正式认证</li></ol></aside>
+<div class="platform-canvas">
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">AI</div>
+    <div><strong>可信 AI 能力认证中心</strong><small>GENERAL AI TRAINING</small></div>
+  </div>
+  <div class="topnav">
+    <div class="pill">🎓 教师</div>
+    <div class="pill">👤 学生</div>
+    <div class="pill">🏫 教学管理</div>
+    <div class="pill">⟳ 重置演示</div>
+    <div class="pill" style="width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f2eeff;color:#745ff0;font-weight:800">周</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="step-wrap">
+    <div class="stepper">
+      <div class="step done"><div class="circle">✓</div><div class="name">摸底测评</div><div class="status">已完成</div></div>
+      <div class="step done"><div class="circle">✓</div><div class="name">能力报告</div><div class="status">已完成</div></div>
+      <div class="step current"><div class="circle">3</div><div class="name">认证路径</div><div class="status">可开始</div></div>
+      <div class="step"><div class="circle">4</div><div class="name">课程学习</div><div class="status">待解锁</div></div>
+      <div class="step"><div class="circle">5</div><div class="name">自主学习</div><div class="status">待解锁</div></div>
+      <div class="step"><div class="circle">6</div><div class="name">AI 实训</div><div class="status">待解锁</div></div>
+      <div class="step"><div class="circle">7</div><div class="name">教学应用</div><div class="status">待解锁</div></div>
+      <div class="step"><div class="circle">8</div><div class="name">研究成果</div><div class="status">待解锁</div></div>
+      <div class="step"><div class="circle">9</div><div class="name">认证报告</div><div class="status">待解锁</div></div>
+      <div class="step"><div class="circle">10</div><div class="name">结业复测</div><div class="status">待解锁</div></div>
+    </div>
+  </div>
+
+  <div class="soft-panel tabs">
+    <div class="tab">认证总览</div>
+    <div class="tab active">摸底与报告</div>
+    <div class="tab">认证路径</div>
+    <div class="tab">课程学习与自主路径</div>
+    <div class="tab">实训记录与作品</div>
+    <div class="tab">教学应用</div>
+    <div class="tab">研究成果</div>
+    <div class="tab">认证报告与复测</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="sub">首次摸底已完成 · 刚刚 · 首次摸底</div>
+      <div class="score">64</div>
+      <div class="desc">L2 AI实践者 · 已形成详细能力证据与提升目标</div>
+      <div class="level">正式 L1 · 能力测算 L2</div>
+    </div>
+    <button class="cta mini-btn" style="margin-top:0;background:#fff;color:#4f5cd7">查看个性化认证路径 →</button>
+  </div>
+
+  <div class="gates">
+    <div class="gate"><h4><span class="icon">🛡</span>事实核验</h4><p>已通过 · 不计入能力分，但决定能否正式定级</p></div>
+    <div class="gate"><h4><span class="icon">🛡</span>数据版权</h4><p>已通过 · 不计入能力分，但决定能否正式定级</p></div>
+    <div class="gate"><h4><span class="icon">🛡</span>人工责任</h4><p>已通过 · 不计入能力分，但决定能否正式定级</p></div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric-card"><div class="metric-head"><b>AI 基础认知</b><span>72 / 85</span></div><div class="track"><i style="width:84.7%"></i></div><p>理论题 8/10；能够识别生成式 AI 的基本边界，能较好理解输出的不确定性。</p></div>
+    <div class="metric-card"><div class="metric-head"><b>提示词与多模态</b><span>68 / 82</span></div><div class="track"><i style="width:82.9%"></i></div><p>能完成结构化提示，但仍缺少多轮校验与多模态约束，复杂任务稳定性一般。</p></div>
+    <div class="metric-card"><div class="metric-head"><b>知识库与智能体</b><span>51 / 78</span></div><div class="track"><i style="width:65.4%"></i></div><p>理解检索增强概念，尚未独立完成稳定的智能体编排，调用链路还需打磨。</p></div>
+    <div class="metric-card"><div class="metric-head"><b>教学融合</b><span>74 / 86</span></div><div class="track"><i style="width:86%"></i></div><p>能够将 AI 用于备课与评价，课堂应用证据较完整，具备较好的落地能力。</p></div>
+    <div class="metric-card"><div class="metric-head"><b>研究创新</b><span>47 / 75</span></div><div class="track"><i style="width:62.7%"></i></div><p>具备研究问题意识，但引用核验、AI 披露与创新成果表达还需进一步补强。</p></div>
+  </div>
+
+  <div class="triple">
+    <div class="box">
+      <h3>优势证据</h3>
+      <ul>
+        <li><span class="dot">✓</span><span>教学情境判断准确，能将 AI 与教学目标较自然地结合。</span></li>
+        <li><span class="dot">✓</span><span>能够识别隐私与事实核验风险，有较好的合规意识。</span></li>
+        <li><span class="dot">✓</span><span>对 AI 备课、课堂评价与资料整理等场景较为熟悉。</span></li>
+        <li><span class="dot">✓</span><span>能产出结构化证据，便于认证报告与后续复测使用。</span></li>
+      </ul>
+      <div class="mini-btn">查看优势详情</div>
+    </div>
+
+    <div class="box">
+      <h3>优先补强</h3>
+      <ul>
+        <li><span class="dot">!</span><span>知识库检索与引用链路：建立资料核验、版本记录与回溯机制。</span></li>
+        <li><span class="dot">!</span><span>科研智能体工具编排：加强任务分解、流程设计与输出验证方法。</span></li>
+        <li><span class="dot">!</span><span>多模态复杂提示：提升文图表混合任务下的表达与控制能力。</span></li>
+        <li><span class="dot">!</span><span>AI 参与披露：在研究与成果中更明确地说明 AI 使用边界。</span></li>
+      </ul>
+      <div class="mini-btn">生成补强方案</div>
+    </div>
+
+    <div class="box">
+      <h3>推荐目标</h3>
+      <ul>
+        <li><span class="dot">★</span><span>完成“知识库与智能体基础实训”，打通从检索到输出的全链路。</span></li>
+        <li><span class="dot">★</span><span>建立科研引用核验清单，完善成果提交前的审查流程。</span></li>
+        <li><span class="dot">★</span><span>完成 2 个可展示案例，沉淀为教学应用与实训取证证据。</span></li>
+        <li><span class="dot">★</span><span>将综合能力分提升至 72+，为后续 L2 稳定定级做准备。</span></li>
+      </ul>
+      <div class="mini-btn">导出建议报告</div>
+    </div>
+  </div>
+
+  <div class="footer">单文件网页 Demo ｜ 文件名：03-能力报告与5个计分维度-demo02.html</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+document.querySelectorAll('.mini-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    alert('这是单文件 Demo 演示页，可继续扩展为跳转、抽屉或弹窗。');
+  });
+});
+document.querySelectorAll('.metric-card').forEach(card=>{
+  card.addEventListener('mouseenter', ()=> card.classList.add('hovering'));
+  card.addEventListener('mouseleave', ()=> card.classList.remove('hovering'));
+});
+</script>
+
+</div>
+
+<script id="platform-differentiation-behavior">
+(() => {
+  const toggle = document.querySelector('.platform-story-toggle');
+  const panel = document.querySelector('.platform-story-panel');
+  const close = panel?.querySelector('button');
+  const setOpen = (open) => {
+    if (!toggle || !panel) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 教学创新工场｜作品集</title>
+
+<style>
+:root{
+  --bg:#f6f8fc; --card:#ffffff; --line:#e7ebf4; --text:#22324b; --muted:#77849d;
+  --primary:#6469ea; --primary2:#7d79f2; --green:#0f9e8b; --green-bg:#eef9f5; --green-line:#bfe9dc;
+  --orange:#eb7d28; --orange-line:#f0d1b3;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif}
+.topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#5b6af0,#745df0);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.brand-title{font-weight:800;line-height:1.1}
+.brand-title small{display:block;font-size:10px;color:#98a3b6;letter-spacing:.6px}
+.topnav{display:flex;gap:10px}
+.pill{padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#5e6e88;font-size:14px}
+.page{width:1256px;margin:18px auto 30px}
+.role-switch{display:flex;gap:4px;padding:4px;background:#fff;border:1px solid #dfe4ef;border-radius:16px;width:max-content}
+.role-item{padding:12px 18px;border-radius:12px;font-weight:700;color:#5d6d87}
+.role-item.active{background:#f1f3ff;color:#5d60e7}
+.hero{margin-top:18px;padding:24px;border-radius:20px;background:#eef9f5;border:1px solid #d7ece5;display:flex;justify-content:space-between;gap:16px}
+.hero .crumb{font-size:14px;color:#169977;font-weight:700;margin-bottom:10px}
+.hero h1{margin:0 0 10px;font-size:44px;line-height:1.1}
+.hero p{margin:0;color:#687792;font-size:15px}
+.hero-right{text-align:right;padding-top:6px}
+.hero-right .lv{font-size:22px;color:#3648c5;font-weight:800;margin-bottom:8px}
+.hero-right .meta{font-size:14px;color:#67758f}
+.stepper{display:grid;grid-template-columns:repeat(10,1fr);gap:8px;padding:24px 2px 12px}
+.step{text-align:center;min-height:96px;position:relative}
+.step:not(:last-child)::after{content:"";position:absolute;top:20px;right:-10px;width:20px;height:2px;background:#dfe5f0}
+.circle{width:30px;height:30px;border-radius:50%;margin:0 auto 8px;border:1.5px solid #d0d8e5;background:#fff;color:#8b97ac;display:flex;align-items:center;justify-content:center;font-weight:800}
+.step.done .circle{background:#ebfbf4;border-color:#31b68f;color:#159f7a}
+.step.current .circle{background:#f5f4ff;border-color:#736df0;color:#615ce9}
+.step .name{font-size:13px;font-weight:700;color:#63718a;line-height:1.28}
+.step .status-text{font-size:12px;color:#8d98ad;margin-top:4px}
+.step.done .name{color:#139977}
+.tabs{background:#fff;border:1px solid var(--line);border-radius:22px;padding:6px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.tab{min-height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;color:#5f6d86;font-size:14px;font-weight:700;line-height:1.3}
+.tab.active{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;box-shadow:0 8px 18px rgba(99,104,235,.22)}
+.score-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.score-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.score-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px}
+.score-title{font-size:16px;font-weight:800}
+.score-meta{font-size:14px;color:#42537a}
+.track{height:10px;background:#e5eaf5;border-radius:999px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#5f67e7,#7d79f2);border-radius:999px}
+.prepare-card{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px}
+.prepare-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:18px}
+.prepare-badge{font-size:13px;color:#5568ea;font-weight:800;margin-bottom:8px}
+.prepare-title{font-size:22px;font-weight:800;margin-bottom:8px}
+.prepare-desc{font-size:14px;color:#6c7a94;line-height:1.7}
+.percent-big{font-size:48px;font-weight:900;color:#4854d2;line-height:1}
+.progress-shell{margin-top:16px;height:10px;background:#edf1f7;border-radius:999px;overflow:hidden}
+.progress-bar{height:100%;width:30%;background:linear-gradient(90deg,#5e67e7,#7c79f1);border-radius:999px}
+.prepare-subline{margin-top:10px;display:flex;justify-content:space-between;gap:10px;align-items:center;color:#6d7b95;font-size:14px;flex-wrap:wrap}
+.summary-mini{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.summary-pill{padding:8px 12px;border-radius:999px;background:#f4f6fb;color:#5f6d86;font-size:13px;font-weight:700}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.check-item{border-radius:16px;border:1px solid var(--line);padding:16px 16px 14px;cursor:pointer;transition:.18s ease;background:#fff}
+.check-item:hover{transform:translateY(-1px);box-shadow:0 10px 18px rgba(90,102,146,.06)}
+.check-item.done{background:var(--green-bg);border-color:var(--green-line)}
+.item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.item-left{display:flex;gap:10px;align-items:flex-start}
+.state-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex:0 0 24px}
+.check-item.done .state-icon{background:#e4faf3;color:var(--green);border:1px solid #9fe1cc}
+.check-item.pending .state-icon{background:#fff7f1;color:var(--orange);border:1px solid #f2cbad}
+.item-title{font-size:16px;font-weight:800;line-height:1.4}
+.check-item.done .item-title{color:#087f71}
+.check-item.pending .item-title{color:#de6a11}
+.item-desc{margin-top:6px;color:#6d7b95;font-size:14px;line-height:1.6;padding-left:34px}
+.toggle-btn{border:none;border-radius:10px;padding:8px 12px;font-size:12px;font-weight:800;cursor:pointer}
+.check-item.done .toggle-btn{background:#dff7ef;color:#0a8f7e}
+.check-item.pending .toggle-btn{background:#fff1e8;color:#df6f1a}
+.layout{display:grid;grid-template-columns:1.08fr .92fr;gap:16px;margin-top:18px}
+.side-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px}
+.side-title{margin:0 0 14px;font-size:18px}
+.side-line{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed #edf1f7;color:#55637d;line-height:1.65}
+.side-line:last-child{border-bottom:none}
+.dot{width:18px;height:18px;border-radius:50%;background:#eef2ff;color:#6170ea;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 18px;margin-top:2px}
+.footer{margin-top:14px;text-align:right;color:#8d98ac;font-size:12px}
+@media (max-width:1320px){.page{width:96%}.layout,.score-grid,.check-grid{grid-template-columns:1fr}}
+</style>
+
+
+<style id="platform-differentiation-v1">
+html{scroll-behavior:smooth}
+body{min-width:320px}
+#platform-shell,#platform-shell *,.platform-statusbar,.platform-statusbar *,.platform-story-panel,.platform-story-panel *{box-sizing:border-box}
+.platform-canvas>.top,.platform-canvas>.topbar{display:none!important}
+.platform-nav{display:flex;gap:6px;align-items:center}
+.platform-nav a{text-decoration:none;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease}
+.platform-nav a:hover{transform:translateY(-2px)}
+.platform-story-toggle{font:inherit;cursor:pointer}
+.platform-story-panel{position:fixed;z-index:1000;right:24px;top:88px;width:360px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.platform-story-panel[hidden]{display:none}
+.platform-story-panel h2{margin:0 0 8px;font-size:22px}
+.platform-story-panel p{margin:0 0 18px;line-height:1.7}
+.platform-story-panel ol{margin:0;padding-left:20px;line-height:1.9}
+.platform-story-panel button{position:absolute;right:16px;top:14px;border:0;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.platform-stage{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.platform-canvas{position:relative;z-index:1}
+.platform-canvas img{max-width:100%}
+.platform-canvas :is(button,a,input,select,textarea){font-family:inherit}
+@media(max-width:900px){
+  .platform-story-panel{left:16px;right:16px;top:76px;width:auto}
+  .platform-nav{overflow-x:auto;padding-bottom:4px}
+  .platform-canvas :is(.container,.page){width:auto!important;margin-left:14px!important;margin-right:14px!important}
+  .platform-canvas :is(.grid,.metrics,.score-grid,.grid2,.check-grid,.layout,.report-layout,.chart-area){grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="studio-theme">
+body[data-platform="studio"]{margin:0;background:#fff6d8;color:#171717;font-family:"Arial Black","Microsoft YaHei",sans-serif}
+body[data-platform="studio"]:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,0,0,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.055) 1px,transparent 1px);background-size:24px 24px}
+body[data-platform="studio"] #platform-shell{position:relative;z-index:25;background:#caff3d;border-bottom:4px solid #171717}
+.studio-head{max-width:1380px;margin:auto;padding:20px 24px 14px;display:grid;grid-template-columns:1.2fr .9fr auto;gap:26px;align-items:end}
+.studio-brand{color:#111;text-decoration:none}.studio-brand small{display:block;font:800 11px Consolas,monospace;letter-spacing:.16em;margin-bottom:5px}.studio-brand strong{display:block;font-size:34px;line-height:1;letter-spacing:-.035em}
+.studio-brief{border-left:4px solid #111;padding-left:14px}.studio-brief .platform-stage{color:#6a38e6}.studio-brief p{margin:5px 0 0;font:700 13px "Microsoft YaHei",sans-serif;line-height:1.5}
+.studio-head .platform-story-toggle{background:#7a48ef;color:#fff;border:3px solid #111;padding:10px 14px;box-shadow:4px 4px 0 #111;font-weight:900}
+body[data-platform="studio"] .platform-nav{max-width:1380px;margin:auto;padding:0 24px 14px;overflow-x:auto}
+body[data-platform="studio"] .platform-nav a{color:#111;border:2px solid #111;background:#f9ffde;padding:7px 10px;font-size:12px;box-shadow:2px 2px 0 #111}
+body[data-platform="studio"] .platform-nav a.active{background:#ff643f;color:#111;transform:rotate(-1deg)}
+.studio-marquee{background:#171717;color:#fff;padding:8px 0;overflow:hidden;white-space:nowrap;font:800 12px Consolas,monospace;letter-spacing:.1em}.studio-marquee span{display:inline-block;padding-left:24px}.studio-marquee b{color:#caff3d}
+body[data-platform="studio"] .platform-story-panel{background:#fff6d8;border:3px solid #171717;border-radius:0;color:#171717;box-shadow:8px 8px 0 #171717}
+body[data-platform="studio"] .platform-canvas{padding:8px 0 52px}
+body[data-platform="studio"] .platform-canvas :is(.container,.page){max-width:1260px}
+body[data-platform="studio"] .platform-canvas :is(.card,.panel,.box,.question,.item,.metric-card,.task-card,.resource-card,.art-card,.prepare-card,.score-card,.chart-card,.info-card,.school-plan,.selected-item,.readiness-card,.soft-panel,.notice,.summary-card,.sum-card,.gate){border:2px solid #171717!important;border-radius:0!important;box-shadow:6px 6px 0 #171717!important;background:#fffdf4!important;color:#171717!important}
+body[data-platform="studio"] .platform-canvas :is(h1,h2,h3,strong,.title,.title-lg,.title-sm,.panel-title){color:#171717!important;letter-spacing:-.02em}
+body[data-platform="studio"] .platform-canvas :is(.hero,.score){background:#7a48ef!important;color:#fff!important;border:3px solid #171717!important;border-radius:0!important;box-shadow:8px 8px 0 #171717!important}
+body[data-platform="studio"] .platform-canvas :is(.hero,.score) :is(h1,h2,h3,strong,p,span){color:#fff!important}
+body[data-platform="studio"] .platform-canvas :is(.step.now,.tab.active,.main-tab.active,.sub-tab.active,.switch-item.active,.primary-btn,.btn.primary,.save-btn){background:#ff643f!important;color:#111!important;border:2px solid #111!important;border-radius:0!important;box-shadow:3px 3px 0 #111!important}
+body[data-platform="studio"] .platform-canvas :is(.step.ok,.done,.finished){background:#caff3d!important;color:#111!important}
+body[data-platform="studio"] .platform-canvas :is(.fill,.bar .fill,.progress-bar){background:#ff643f!important}
+body[data-platform="studio"] .platform-canvas :is(.badge,.pill,.tag,.chip,.soft-tag){border:1px solid #171717!important;border-radius:999px!important;background:#caff3d!important;color:#171717!important}
+body[data-platform="studio"] .platform-canvas button:hover{transform:translate(-1px,-1px)}
+@media(max-width:900px){.studio-head{grid-template-columns:1fr;align-items:start}.studio-brand strong{font-size:28px}.studio-head .platform-story-toggle{justify-self:start}.studio-marquee{font-size:10px}}
+</style>
+</head>
+<body data-platform="studio">
+<header id="platform-shell"><div class="studio-head"><a class="studio-brand" href="01-教师成长全流程与能力模型_demo03.html"><small>AI TEACHING INNOVATION STUDIO</small><strong>AI 教学创新工场</strong></a><div class="studio-brief"><span class="platform-stage">SPRINT 04 / 作品集</span><p>以项目挑战、快速原型和课堂试验孵化创新成果的平台</p></div><button class="platform-story-toggle" type="button" aria-expanded="false">打开工场任务书</button></div><nav class="platform-nav" aria-label="教学创新工场功能导航"><a href="01-教师成长全流程与能力模型_demo03.html"><span>01</span> 工场地图</a><a href="02-摸底测评-demo03.html"><span>02</span> 挑战起点</a><a href="03-能力报告与5个计分维度-demo03.html"><span>03</span> 能力雷达</a><a href="04-学校分层目标与个性化培训计划-demo03.html"><span>04</span> 冲刺计划</a><a href="05-课程学习与自主学习分轨-demo03.html"><span>05</span> 灵感补给</a><a href="06-AI实训任务与作品-demo03.html"><span>06</span> 原型车间</a><a href="07-教学应用发布-demo03.html"><span>07</span> 课堂试飞</a><a href="08-研究成果治理与共享-demo03.html"><span>08</span> 研究实验室</a><a href="09-成长报告与复测-demo03.html" class="active" aria-current="page"><span>09</span> 作品集</a><a href="10-管理端匿名教师发展聚合-demo03.html"><span>10</span> 创新热力图</a><a href="11-L1-L4四级能力等级分层培养目标-demo03.html"><span>11</span> 进阶路线</a><a href="12-事实核验、数据版权和人工责任-demo03.html"><span>12</span> 安全检查</a></nav><div class="studio-marquee"><span><b>MAKE</b> 真实挑战　/　<b>TEST</b> 快速原型　/　<b>TEACH</b> 课堂试飞　/　<b>SHARE</b> 成果路演　/　当前工位：作品集</span></div></header><aside class="platform-story-panel" hidden aria-label="平台定位说明"><button type="button" aria-label="关闭平台定位">×</button><span class="platform-stage">核心功能定位</span><h2>AI 教学创新工场</h2><p>面向创新型教师团队，用真实教学挑战组织跨学科冲刺；每一步都产出可演示原型、课堂试验数据和可分享成果。</p><ol><li>真实项目挑战</li><li>快速原型共创</li><li>课堂试飞与路演</li></ol></aside>
+<div class="platform-canvas">
+
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">AI</div>
+    <div class="brand-title">AI 教学创新工场<small>GENERAL AI TRAINING</small></div>
+  </div>
+  <div class="topnav">
+    <div class="pill">🎓 教师</div>
+    <div class="pill">👤 学生</div>
+    <div class="pill">🏫 教学管理</div>
+    <div class="pill">⟳ 重置演示</div>
+    <div class="pill" style="width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f2eeff;color:#745ff0;font-weight:800">周</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="role-switch">
+    <div class="role-item">教学工作</div>
+    <div class="role-item active">我的成长</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="crumb">周老师 · 教师个人成长空间</div>
+      <h1>我的 AI 成长</h1>
+      <p>十阶段连续闭环，以五维能力、四类证据和三项可信门槛共同支撑 L1—L4。</p>
+    </div>
+    <div class="hero-right">
+      <div class="lv">正式 L1 ・ 能力测算 L2</div>
+      <div class="meta">目标 L3 ・ 课程 0 项 ・ 实训 0 项</div>
+    </div>
+  </div>
+
+  <div class="stepper">
+    <div class="step done"><div class="circle">✓</div><div class="name">摸底测评</div><div class="status-text">已完成</div></div>
+    <div class="step done"><div class="circle">✓</div><div class="name">能力报告</div><div class="status-text">已完成</div></div>
+    <div class="step done"><div class="circle">✓</div><div class="name">冲刺计划</div><div class="status-text">已完成</div></div>
+    <div class="step current"><div class="circle">4</div><div class="name">课程学习</div><div class="status-text">可开始</div></div>
+    <div class="step current"><div class="circle">5</div><div class="name">自主学习</div><div class="status-text">可开始</div></div>
+    <div class="step current"><div class="circle">6</div><div class="name">AI 实训</div><div class="status-text">可开始</div></div>
+    <div class="step"><div class="circle">7</div><div class="name">教学应用</div><div class="status-text">待解锁</div></div>
+    <div class="step"><div class="circle">8</div><div class="name">研究成果</div><div class="status-text">待解锁</div></div>
+    <div class="step current"><div class="circle">9</div><div class="name">成果路演</div><div class="status-text">可开始</div></div>
+    <div class="step"><div class="circle">10</div><div class="name">结业复测</div><div class="status-text">待解锁</div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab">工场地图</div>
+    <div class="tab">摸底与报告</div>
+    <div class="tab">冲刺计划</div>
+    <div class="tab">课程学习与自主路径</div>
+    <div class="tab">实训记录与作品</div>
+    <div class="tab">教学应用</div>
+    <div class="tab">研究成果</div>
+    <div class="tab active">成果路演与复测</div>
+  </div>
+
+<div class="layout">
+  <div>
+    
+<div class="score-grid">
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">AI 基础认知</div><div class="score-meta">摸底 72 → 当前 85</div></div>
+    <div class="track"><div class="fill" style="width:86%"></div></div>
+  </div>
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">提示词与多模态</div><div class="score-meta">摸底 68 → 当前 82</div></div>
+    <div class="track"><div class="fill" style="width:82%"></div></div>
+  </div>
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">知识库与智能体</div><div class="score-meta">摸底 51 → 当前 51</div></div>
+    <div class="track"><div class="fill" style="width:51%"></div></div>
+  </div>
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">教学融合</div><div class="score-meta">摸底 74 → 当前 74</div></div>
+    <div class="track"><div class="fill" style="width:74%"></div></div>
+  </div>
+  <div class="score-card">
+    <div class="score-head"><div class="score-title">研究创新</div><div class="score-meta">摸底 47 → 当前 47</div></div>
+    <div class="track"><div class="fill" style="width:47%"></div></div>
+  </div>
+</div>
+
+    <div class="prepare-card">
+      <div class="prepare-head">
+        <div>
+          <div class="prepare-badge">严格复测门槛</div>
+          <div class="prepare-title">复测准备清单</div>
+          <div class="prepare-desc">全部十项满足后方开放复测提交；门槛未通过可以复测，但正式定级仍会被阻断。</div>
+        </div>
+        <div class="percent-big" id="percentValue">30%</div>
+      </div>
+      <div class="progress-shell"><div class="progress-bar" id="progressBar"></div></div>
+      <div class="prepare-subline">
+        <div class="summary-mini">
+          <span class="summary-pill">已完成 <b id="doneCount">0</b> / <b id="totalCount">0</b></span>
+          <span class="summary-pill">复测开放阈值：100%</span>
+        </div>
+      </div>
+      <div class="check-grid">
+        <div class="check-item done">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">✓</div>
+              <div class="item-title">个人冲刺计划已确认</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记未完成</button>
+          </div>
+          <div class="item-desc">已邀请并确认个人冲刺计划</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">完成至少 1 个必修课程模块</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请完成至少 1 个必修模块及检查题</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">保存自主路径并完成至少 1 项资源</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请保存自主路径并完成至少 1 项资源</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">完成至少 2 项 AI 实训</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">还需完成 2 项 AI 实训</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">至少 1 项原型作品经人工确认</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请将至少 1 项实训成果提交复审并完成人工确认</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">形成至少 1 项教学应用闭环</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请完成至少 1 个“发布—使用—回流”闭环</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">关联至少 1 项已复核研究成果</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请关联至少 1 项通过治理检查的研究成果</div>
+        </div>
+        
+        <div class="check-item done">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">✓</div>
+              <div class="item-title">三项门槛均有可复核结果</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记未完成</button>
+          </div>
+          <div class="item-desc">事实核验、数据版权和人工责任均已评价</div>
+        </div>
+        
+        <div class="check-item pending">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">!</div>
+              <div class="item-title">四类证据通道均有有效记录</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记完成</button>
+          </div>
+          <div class="item-desc">请补齐：task, artifact, application</div>
+        </div>
+        
+        <div class="check-item done">
+          <div class="item-top">
+            <div class="item-left">
+              <div class="state-icon">✓</div>
+              <div class="item-title">无待复核关键证据</div>
+            </div>
+            <button class="toggle-btn no-toggle">标记未完成</button>
+          </div>
+          <div class="item-desc">没有待复核的关键证据</div>
+        </div>
+        </div>
+    </div>
+  </div>
+  <div>
+    <div class="side-card">
+      <h3 class="side-title">复测结论</h3>
+      <div class="side-line"><div class="dot">!</div><div id="statusText">当前仍处于复测准备早期阶段，建议优先补齐课程、实训与应用闭环。</div></div>
+      <div class="side-line"><div class="dot">1</div><div>优先补齐：至少 1 个必修课程模块、2 项 AI 实训、1 个教学应用闭环。</div></div>
+      <div class="side-line"><div class="dot">2</div><div>补齐后再检查：四类证据通道记录是否完整，以及研究成果是否已完成关联。</div></div>
+      <div class="side-line"><div class="dot">3</div><div>当前已满足：个人冲刺计划、三项门槛结果、无待复核关键证据。</div></div>
+    </div>
+
+    <div class="side-card" style="margin-top:16px">
+      <h3 class="side-title">复测说明</h3>
+      <div class="side-line"><div class="dot">✓</div><div>点击左侧清单卡片可模拟完成与回退，用于演示复测准备度的动态变化。</div></div>
+      <div class="side-line"><div class="dot">✓</div><div>成果路演可作为个人补强建议入口，帮助判断哪些步骤优先完成。</div></div>
+      <div class="side-line"><div class="dot">✓</div><div>全部清单满足后，即可显示“可提交复测”的完成状态。</div></div>
+    </div>
+  </div>
+</div>
+<div class="footer">单文件网页 Demo ｜ 文件名：09-成果路演与复测-demo03.html</div>
+</div>
+
+<script>
+function initRetestPage(){
+  const percentEl = document.getElementById('percentValue');
+  const doneCountEl = document.getElementById('doneCount');
+  const totalCountEl = document.getElementById('totalCount');
+  const progressBar = document.getElementById('progressBar');
+  const statusText = document.getElementById('statusText');
+  const checklist = Array.from(document.querySelectorAll('.check-item'));
+
+  function updateSummary(){
+    const total = checklist.length;
+    const done = checklist.filter(item => item.classList.contains('done')).length;
+    const percent = Math.round(done / total * 100);
+
+    if (percentEl) percentEl.textContent = percent + '%';
+    if (doneCountEl) doneCountEl.textContent = done;
+    if (totalCountEl) totalCountEl.textContent = total;
+    if (progressBar) progressBar.style.width = percent + '%';
+
+    if(statusText){
+      if(percent < 40){
+        statusText.textContent = '当前仍处于复测准备早期阶段，建议优先补齐课程、实训与应用闭环。';
+      }else if(percent < 80){
+        statusText.textContent = '已具备部分复测条件，继续补齐关键缺口即可进入稳定复测准备状态。';
+      }else if(percent < 100){
+        statusText.textContent = '复测准备度较高，仅剩少量条件待完成。';
+      }else{
+        statusText.textContent = '所有复测条件均已满足，可以提交复测。';
+      }
+    }
+  }
+
+  checklist.forEach(item => {
+    item.addEventListener('click', function(e){
+      if (e.target.closest('.no-toggle')) return;
+      item.classList.toggle('done');
+      item.classList.toggle('pending');
+      updateSummary();
+    });
+  });
+
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      const card = btn.closest('.check-item');
+      if(!card) return;
+      card.classList.toggle('done');
+      card.classList.toggle('pending');
+      btn.textContent = card.classList.contains('done') ? '标记未完成' : '标记完成';
+      updateSummary();
+    });
+  });
+
+  updateSummary();
+}
+window.addEventListener('DOMContentLoaded', initRetestPage);
+</script>
+
+</div>
+
+<script id="platform-differentiation-behavior">
+(() => {
+  const toggle = document.querySelector('.platform-story-toggle');
+  const panel = document.querySelector('.platform-story-panel');
+  const close = panel?.querySelector('button');
+  const setOpen = (open) => {
+    if (!toggle || !panel) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+})();
+</script>
+</body>
+</html>

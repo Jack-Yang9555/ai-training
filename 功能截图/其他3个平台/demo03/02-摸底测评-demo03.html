@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 教学创新工场｜挑战起点</title>
+<style>
+
+*{box-sizing:border-box}
+body{margin:0;font-family:"Microsoft YaHei",Arial,sans-serif;background:#f5f7fc;color:#23324d}
+a{text-decoration:none;color:inherit}
+.topbar{height:68px;background:#fff;border-bottom:1px solid #e8ebf4;display:flex;align-items:center;padding:0 38px;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700}
+.brand-badge{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#5e6cf0,#6e54ea);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px}
+.brand-text{font-size:16px;line-height:1.1}
+.brand-sub{display:block;font-size:11px;color:#8b95aa;font-weight:600;letter-spacing:.5px}
+.topnav{margin-left:auto;display:flex;gap:12px;align-items:center;color:#667085}
+.topnav .pill{padding:8px 14px;border:1px solid #e4e7f2;border-radius:12px;background:#fff}
+.page{width:1260px;margin:20px auto 40px}
+.panel{background:#fff;border:1px solid #e7ebf5;border-radius:22px;padding:20px 22px;margin-bottom:18px}
+.subtle{color:#7c89a5}
+.tabs{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.tab{padding:16px 26px;border-radius:16px;color:#667085;font-weight:600}
+.tab.active{background:linear-gradient(135deg,#6469ec,#7c79f2);color:#fff;box-shadow:0 8px 20px rgba(99,104,235,.25)}
+.tab.inactive{background:#fff}
+.section-title{font-size:14px;color:#385dff;font-weight:700;margin:4px 0 12px}
+.h2{font-size:20px;font-weight:800;line-height:1.55;margin:0 0 18px}
+.desc{color:#6f7d97;line-height:1.75;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.task-item{height:42px;border:1px solid #e3e7f4;border-radius:12px;display:flex;align-items:center;padding:0 14px;color:#4f5d78;background:#fff}
+.task-item .box{width:14px;height:14px;border:1.5px solid #7f8ba7;border-radius:3px;margin-right:10px}
+.task-item .icon{margin-right:8px;color:#7a87a4}
+.tag{padding:8px 14px;border-radius:999px;background:#f1ebff;color:#7a5cf2;font-size:13px;font-weight:700}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.block-title{font-size:12px;color:#3359ff;font-weight:800;margin-bottom:8px}
+.gate-title{font-size:16px;font-weight:800;color:#1f2d47;margin:0 0 8px}
+.option-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:10px}
+.option{border:1px solid #e4e8f4;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;background:#fff;cursor:pointer;transition:.2s}
+.option:hover{border-color:#bfc8ff;box-shadow:0 4px 14px rgba(82,95,202,.08)}
+.badge-round{width:22px;height:22px;border-radius:9px;background:#eef2fb;color:#486;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#4f6287}
+.option.selected{border-color:#6f71ed;background:#f8f8ff}
+.muted{font-size:12px;color:#71809a}
+.footer-note{font-size:12px;color:#8a95ab;margin-top:10px}
+
+.page{width:1280px;display:grid;grid-template-columns:260px 1fr;gap:18px}
+.sidebar{background:#fff;border:1px solid #e7ebf5;border-radius:24px;padding:18px;height:fit-content;position:sticky;top:88px}
+.side-title{font-size:18px;font-weight:800;margin-bottom:4px}
+.side-sub{font-size:13px;color:#76849c;margin-bottom:18px}
+.side-link{padding:14px 16px;border-radius:14px;color:#5f6f8c;font-weight:600;margin-bottom:8px}
+.side-link.active{background:linear-gradient(135deg,#666aed,#7d7af4);color:#fff}
+.main .panel{border-radius:24px}
+.quick{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+.qc{padding:14px;border:1px solid #e6e9f5;border-radius:14px;background:#fbfcff}
+</style>
+
+<style id="platform-differentiation-v1">
+html{scroll-behavior:smooth}
+body{min-width:320px}
+#platform-shell,#platform-shell *,.platform-statusbar,.platform-statusbar *,.platform-story-panel,.platform-story-panel *{box-sizing:border-box}
+.platform-canvas>.top,.platform-canvas>.topbar{display:none!important}
+.platform-nav{display:flex;gap:6px;align-items:center}
+.platform-nav a{text-decoration:none;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease}
+.platform-nav a:hover{transform:translateY(-2px)}
+.platform-story-toggle{font:inherit;cursor:pointer}
+.platform-story-panel{position:fixed;z-index:1000;right:24px;top:88px;width:360px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.platform-story-panel[hidden]{display:none}
+.platform-story-panel h2{margin:0 0 8px;font-size:22px}
+.platform-story-panel p{margin:0 0 18px;line-height:1.7}
+.platform-story-panel ol{margin:0;padding-left:20px;line-height:1.9}
+.platform-story-panel button{position:absolute;right:16px;top:14px;border:0;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.platform-stage{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.platform-canvas{position:relative;z-index:1}
+.platform-canvas img{max-width:100%}
+.platform-canvas :is(button,a,input,select,textarea){font-family:inherit}
+@media(max-width:900px){
+  .platform-story-panel{left:16px;right:16px;top:76px;width:auto}
+  .platform-nav{overflow-x:auto;padding-bottom:4px}
+  .platform-canvas :is(.container,.page){width:auto!important;margin-left:14px!important;margin-right:14px!important}
+  .platform-canvas :is(.grid,.metrics,.score-grid,.grid2,.check-grid,.layout,.report-layout,.chart-area){grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="studio-theme">
+body[data-platform="studio"]{margin:0;background:#fff6d8;color:#171717;font-family:"Arial Black","Microsoft YaHei",sans-serif}
+body[data-platform="studio"]:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,0,0,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.055) 1px,transparent 1px);background-size:24px 24px}
+body[data-platform="studio"] #platform-shell{position:relative;z-index:25;background:#caff3d;border-bottom:4px solid #171717}
+.studio-head{max-width:1380px;margin:auto;padding:20px 24px 14px;display:grid;grid-template-columns:1.2fr .9fr auto;gap:26px;align-items:end}
+.studio-brand{color:#111;text-decoration:none}.studio-brand small{display:block;font:800 11px Consolas,monospace;letter-spacing:.16em;margin-bottom:5px}.studio-brand strong{display:block;font-size:34px;line-height:1;letter-spacing:-.035em}
+.studio-brief{border-left:4px solid #111;padding-left:14px}.studio-brief .platform-stage{color:#6a38e6}.studio-brief p{margin:5px 0 0;font:700 13px "Microsoft YaHei",sans-serif;line-height:1.5}
+.studio-head .platform-story-toggle{background:#7a48ef;color:#fff;border:3px solid #111;padding:10px 14px;box-shadow:4px 4px 0 #111;font-weight:900}
+body[data-platform="studio"] .platform-nav{max-width:1380px;margin:auto;padding:0 24px 14px;overflow-x:auto}
+body[data-platform="studio"] .platform-nav a{color:#111;border:2px solid #111;background:#f9ffde;padding:7px 10px;font-size:12px;box-shadow:2px 2px 0 #111}
+body[data-platform="studio"] .platform-nav a.active{background:#ff643f;color:#111;transform:rotate(-1deg)}
+.studio-marquee{background:#171717;color:#fff;padding:8px 0;overflow:hidden;white-space:nowrap;font:800 12px Consolas,monospace;letter-spacing:.1em}.studio-marquee span{display:inline-block;padding-left:24px}.studio-marquee b{color:#caff3d}
+body[data-platform="studio"] .platform-story-panel{background:#fff6d8;border:3px solid #171717;border-radius:0;color:#171717;box-shadow:8px 8px 0 #171717}
+body[data-platform="studio"] .platform-canvas{padding:8px 0 52px}
+body[data-platform="studio"] .platform-canvas :is(.container,.page){max-width:1260px}
+body[data-platform="studio"] .platform-canvas :is(.card,.panel,.box,.question,.item,.metric-card,.task-card,.resource-card,.art-card,.prepare-card,.score-card,.chart-card,.info-card,.school-plan,.selected-item,.readiness-card,.soft-panel,.notice,.summary-card,.sum-card,.gate){border:2px solid #171717!important;border-radius:0!important;box-shadow:6px 6px 0 #171717!important;background:#fffdf4!important;color:#171717!important}
+body[data-platform="studio"] .platform-canvas :is(h1,h2,h3,strong,.title,.title-lg,.title-sm,.panel-title){color:#171717!important;letter-spacing:-.02em}
+body[data-platform="studio"] .platform-canvas :is(.hero,.score){background:#7a48ef!important;color:#fff!important;border:3px solid #171717!important;border-radius:0!important;box-shadow:8px 8px 0 #171717!important}
+body[data-platform="studio"] .platform-canvas :is(.hero,.score) :is(h1,h2,h3,strong,p,span){color:#fff!important}
+body[data-platform="studio"] .platform-canvas :is(.step.now,.tab.active,.main-tab.active,.sub-tab.active,.switch-item.active,.primary-btn,.btn.primary,.save-btn){background:#ff643f!important;color:#111!important;border:2px solid #111!important;border-radius:0!important;box-shadow:3px 3px 0 #111!important}
+body[data-platform="studio"] .platform-canvas :is(.step.ok,.done,.finished){background:#caff3d!important;color:#111!important}
+body[data-platform="studio"] .platform-canvas :is(.fill,.bar .fill,.progress-bar){background:#ff643f!important}
+body[data-platform="studio"] .platform-canvas :is(.badge,.pill,.tag,.chip,.soft-tag){border:1px solid #171717!important;border-radius:999px!important;background:#caff3d!important;color:#171717!important}
+body[data-platform="studio"] .platform-canvas button:hover{transform:translate(-1px,-1px)}
+@media(max-width:900px){.studio-head{grid-template-columns:1fr;align-items:start}.studio-brand strong{font-size:28px}.studio-head .platform-story-toggle{justify-self:start}.studio-marquee{font-size:10px}}
+</style>
+</head>
+<body data-platform="studio">
+<header id="platform-shell"><div class="studio-head"><a class="studio-brand" href="01-教师成长全流程与能力模型_demo03.html"><small>AI TEACHING INNOVATION STUDIO</small><strong>AI 教学创新工场</strong></a><div class="studio-brief"><span class="platform-stage">SPRINT 04 / 挑战起点</span><p>以项目挑战、快速原型和课堂试验孵化创新成果的平台</p></div><button class="platform-story-toggle" type="button" aria-expanded="false">打开工场任务书</button></div><nav class="platform-nav" aria-label="教学创新工场功能导航"><a href="01-教师成长全流程与能力模型_demo03.html"><span>01</span> 工场地图</a><a href="02-摸底测评-demo03.html" class="active" aria-current="page"><span>02</span> 挑战起点</a><a href="03-能力报告与5个计分维度-demo03.html"><span>03</span> 能力雷达</a><a href="04-学校分层目标与个性化培训计划-demo03.html"><span>04</span> 冲刺计划</a><a href="05-课程学习与自主学习分轨-demo03.html"><span>05</span> 灵感补给</a><a href="06-AI实训任务与作品-demo03.html"><span>06</span> 原型车间</a><a href="07-教学应用发布-demo03.html"><span>07</span> 课堂试飞</a><a href="08-研究成果治理与共享-demo03.html"><span>08</span> 研究实验室</a><a href="09-成长报告与复测-demo03.html"><span>09</span> 作品集</a><a href="10-管理端匿名教师发展聚合-demo03.html"><span>10</span> 创新热力图</a><a href="11-L1-L4四级能力等级分层培养目标-demo03.html"><span>11</span> 进阶路线</a><a href="12-事实核验、数据版权和人工责任-demo03.html"><span>12</span> 安全检查</a></nav><div class="studio-marquee"><span><b>MAKE</b> 真实挑战　/　<b>TEST</b> 快速原型　/　<b>TEACH</b> 课堂试飞　/　<b>SHARE</b> 成果路演　/　当前工位：挑战起点</span></div></header><aside class="platform-story-panel" hidden aria-label="平台定位说明"><button type="button" aria-label="关闭平台定位">×</button><span class="platform-stage">核心功能定位</span><h2>AI 教学创新工场</h2><p>面向创新型教师团队，用真实教学挑战组织跨学科冲刺；每一步都产出可演示原型、课堂试验数据和可分享成果。</p><ol><li>真实项目挑战</li><li>快速原型共创</li><li>课堂试飞与路演</li></ol></aside>
+<div class="platform-canvas">
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-badge">AI</div>
+    <div class="brand-text">AI 教学创新工场<span class="brand-sub">GENERAL AI TRAINING</span></div>
+  </div>
+  <div class="topnav">
+    <div class="pill">教师</div>
+    <div class="pill">学生</div>
+    <div class="pill">教学管理</div>
+    <div class="pill">重置演示</div>
+    <div class="pill">周</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="sidebar">
+    <div class="side-title">我的 AI 成长</div>
+    <div class="side-sub">个人课程与能力数据</div>
+    <div class="side-link">工场地图</div>
+    <div class="side-link active">摸底与报告</div>
+    <div class="side-link">冲刺计划</div>
+    <div class="side-link">课程学习与自主路径</div>
+    <div class="side-link">实训记录与作品</div>
+    <div class="side-link">教学应用</div>
+    <div class="side-link">研究成果</div>
+    <div class="side-link">成果路演与复测</div>
+  </div>
+
+  <div class="main">
+    <div class="panel">
+      <div class="header-row">
+        <div>
+          <div class="section-title">C171・实操</div>
+          <div class="h2">6. 请比较两种虚构 AI 教学工具，并形成可核验的选型建议。</div>
+          <div class="desc">页面风格与截图保持接近，但改成带侧边导航的高保真平台原型版本。</div>
+        </div>
+        <div class="tag">真实操作与成果验证</div>
+      </div>
+      <div class="quick">
+        <div class="qc">统一指标<br><span class="muted">功能、数据、安全、成本</span></div>
+        <div class="qc">证据记录<br><span class="muted">记录来源、日期、版本号</span></div>
+        <div class="qc">人工结论<br><span class="muted">给出条件性选型建议</span></div>
+      </div>
+      <div class="grid2" style="margin-top:12px">
+        <div class="task-item"><div class="box"></div><span class="icon">📄</span>建立统一指标</div>
+        <div class="task-item"><div class="box"></div><span class="icon">📄</span>核验功能与限制</div>
+        <div class="task-item"><div class="box"></div><span class="icon">📄</span>比较隐私、无障碍和成本</div>
+        <div class="task-item"><div class="box"></div><span class="icon">📄</span>记录证据来源</div>
+        <div class="task-item"><div class="box"></div><span class="icon">📄</span>给出有条件的人工结论</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title">不过分・决定正式定级</div>
+      <div class="h2" style="margin-bottom:8px">三项可信应用门槛</div>
+      <div class="desc">三个门槛题用于验证事实核验、数据合规和人工责任意识。</div>
+
+      <div class="panel" style="margin:0 0 16px;border-radius:18px">
+        <div class="header-row">
+          <div>
+            <div class="block-title">G01・通关门槛</div>
+            <div class="gate-title">AI 给出一条将影响课堂安全要求的政策结论，教师发布前应怎样处理？</div>
+          </div>
+          <div class="tag">事实核验</div>
+        </div>
+        <div class="option-row">
+          <div class="option selected"><div class="badge-round">A</div><div>核对正式来源、版本和适用范围，并保留修订记录</div></div>
+          <div class="option"><div class="badge-round">B</div><div>只要模型给出引用链接即可直接发布</div></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin:0 0 16px;border-radius:18px">
+        <div class="header-row">
+          <div>
+            <div class="block-title">G02・通关门槛</div>
+            <div class="gate-title">教师使用第三方 AI 分析学生学习数据前，应先完成哪一步？</div>
+          </div>
+          <div class="tag">数据版权</div>
+        </div>
+        <div class="option-row">
+          <div class="option selected"><div class="badge-round">A</div><div>脱敏并确认授权、用途边界、平台政策与保留期限</div></div>
+          <div class="option"><div class="badge-round">B</div><div>只要不对外公开，就可以原始数据直接上传</div></div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin:0;border-radius:18px">
+        <div class="header-row">
+          <div>
+            <div class="block-title">G03・通关门槛</div>
+            <div class="gate-title">AI 生成的课堂反思报告准备纳入正式成果时，最稳妥的做法是什么？</div>
+          </div>
+          <div class="tag">人工责任</div>
+        </div>
+        <div class="option-row">
+          <div class="option selected"><div class="badge-round">A</div><div>人工复核、补证并明确说明 AI 参与方式与人工责任</div></div>
+          <div class="option"><div class="badge-round">B</div><div>只要表述专业即可作为最终成果提交</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.option').forEach(function(el){
+  el.addEventListener('click', function(){
+    const parent = el.parentElement;
+    parent.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));
+    el.classList.add('selected');
+  });
+});
+document.querySelectorAll('.task-item').forEach(function(el){
+  el.addEventListener('click', function(){
+    el.classList.toggle('done');
+    const box = el.querySelector('.box');
+    if(el.classList.contains('done')){
+      box.style.background = '#6f71ed';
+      box.style.borderColor = '#6f71ed';
+    }else{
+      box.style.background = 'transparent';
+      box.style.borderColor = '#7f8ba7';
+    }
+  });
+});
+</script>
+
+</div>
+
+<script id="platform-differentiation-behavior">
+(() => {
+  const toggle = document.querySelector('.platform-story-toggle');
+  const panel = document.querySelector('.platform-story-panel');
+  const close = panel?.querySelector('button');
+  const setOpen = (open) => {
+    if (!toggle || !panel) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+})();
+</script>
+</body>
+</html>

@@ -735,11 +735,11 @@ function App() {
           aria-label="返回角色任务首页"
         >
           <span className="brand-mark">
-            <span>Q</span>
+            <span>AI</span>
           </span>
           <span className="brand-copy">
-            <strong>启境</strong>
-            <small>AI LEARNING OS</small>
+            <strong>AI通识培训平台</strong>
+            <small>GENERAL AI TRAINING</small>
           </span>
         </button>
 
@@ -877,6 +877,10 @@ function App() {
               onResearch={() => {
                 setTeacherWorkspaceMode("teaching");
                 setStage("research");
+              }}
+              onTeaching={() => {
+                setTeacherWorkspaceMode("teaching");
+                setStage("teach");
               }}
             />
           </Suspense>
@@ -1476,6 +1480,7 @@ function App() {
                   setReviewNote={setReviewNote}
                   totalScore={totalScore}
                   onComplete={() => {
+                    demoDispatch({ type: "CONFIRM_GRADED_ASSIGNMENTS" });
                     showToast(`复核已保存，林一诺最终成绩为 ${totalScore} 分`);
                     setSelection((current) => ({
                       ...current,
@@ -3749,7 +3754,7 @@ function TrainingCenterView({
                 }
                 onToast(
                   role === "teacher"
-                    ? `${selectedTool.name}模拟实训已完成，成果已回流“我的成长”`
+                    ? `${selectedTool.name}实训任务已记录，作品需在“我的成长”中人工确认`
                     : `${selectedTool.name}已启动，练习过程将保存到个人作品集`,
                 );
                 setSelectedTool(null);

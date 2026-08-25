@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI 教学创新工场｜能力雷达</title>
+<style>
+:root{
+  --bg:#f6f8fd;--card:#fff;--line:#e8ecf4;--text:#22324a;--muted:#79859e;
+  --primary:#6468ea;--violet:#8a82ed;--green:#1fa97f;--greenbg:#eef9f5;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--text)}
+.topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#5c6af0,#735ff0);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+.brand .t{font-weight:800;line-height:1.1}
+.brand .t small{display:block;font-size:10px;color:#95a0b3;letter-spacing:.6px}
+.topnav{display:flex;gap:10px}
+.pill{padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#5e6c85;font-size:14px}
+.page{width:1258px;margin:16px auto 30px;display:grid;grid-template-columns:1fr;gap:18px}
+.step-shell{padding-top:2px}
+.stepper{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}
+.step{position:relative;text-align:center;min-height:96px}
+.step:not(:last-child)::after{content:"";position:absolute;top:18px;right:-10px;width:20px;height:2px;background:#e0e5ef}
+.step .circle{width:30px;height:30px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;border:1.5px solid #d0d8e5;background:#fff;color:#8c97ad;font-weight:800}
+.step.done .circle{background:#ebfaf4;border-color:#31b58e;color:#19a07b}
+.step.current .circle{background:#f5f4ff;border-color:#756ef0;color:#615cea}
+.step .n{font-size:13px;font-weight:700;color:#61708a;line-height:1.28}
+.step .s{font-size:12px;color:#8c97ae;margin-top:4px}
+.toolbar{background:#fff;border:1px solid var(--line);border-radius:22px;padding:6px;display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.tab{min-height:60px;display:flex;align-items:center;justify-content:center;text-align:center;border-radius:16px;color:#5e6d86;font-size:14px;font-weight:700;line-height:1.3;cursor:pointer}
+.tab.active{background:linear-gradient(135deg,#6268eb,#7c79f2);color:#fff;box-shadow:0 8px 18px rgba(99,104,235,.22)}
+.report-layout{display:grid;grid-template-columns:1.25fr .75fr;gap:16px}
+.left-stack{display:grid;gap:16px}
+.hero{background:linear-gradient(90deg,#575bd9 0%,#6e73e7 44%,#8c83eb 100%);border-radius:24px;padding:26px 24px;color:#fff;min-height:178px;display:flex;justify-content:space-between;align-items:center}
+.hero .sub{font-size:16px;font-weight:700;margin-bottom:10px}
+.hero .score{font-size:62px;font-weight:800;line-height:1;margin-bottom:8px}
+.hero .desc{font-size:15px;margin-bottom:8px}
+.hero .level{font-size:15px;font-weight:800}
+.btn{border:none;background:#fff;color:#4f5bd8;border-radius:16px;padding:14px 20px;font-size:15px;font-weight:800;cursor:pointer}
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.gate{background:var(--greenbg);border:1px solid #c1e5da;border-radius:18px;padding:16px 18px}
+.gate h4{margin:0 0 6px;display:flex;align-items:center;gap:10px;font-size:16px}
+.ic{width:30px;height:30px;border-radius:10px;background:#dff6ee;color:#1fa47d;display:flex;align-items:center;justify-content:center}
+.gate p{margin:0;font-size:14px;color:#718099;line-height:1.6}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.metric-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;transition:.18s}
+.metric-card.hovering{transform:translateY(-2px);box-shadow:0 12px 24px rgba(71,94,154,.08)}
+.metric-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.metric-head b{font-size:15px}
+.metric-head span{font-size:14px;font-weight:800;color:#5b65de}
+.bar{height:8px;background:#e8ecf3;border-radius:999px;overflow:hidden;margin-bottom:14px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#6b67eb,#8a82ed);border-radius:999px}
+.metric-card p{margin:0;font-size:14px;color:#6e7b94;line-height:1.74;min-height:78px}
+.side{display:grid;gap:16px}
+.side-panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px}
+.side-panel h3{margin:0 0 14px;font-size:18px}
+.note{display:flex;gap:10px;padding:12px 0;border-bottom:1px dashed #edf1f7;color:#54627c;line-height:1.65}
+.note:last-child{border-bottom:none}
+.dot{width:18px;height:18px;border-radius:50%;background:#eef2ff;color:#6170ea;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:0 0 18px;margin-top:2px}
+.mini-btn{display:inline-block;margin-top:14px;padding:10px 14px;border-radius:12px;background:#f2f4ff;color:#5d66e1;font-weight:700;font-size:14px;cursor:pointer}
+.footer{color:#8d98ac;font-size:12px;text-align:right}
+@media (max-width:1320px){.page{width:96%}.report-layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<style id="platform-differentiation-v1">
+html{scroll-behavior:smooth}
+body{min-width:320px}
+#platform-shell,#platform-shell *,.platform-statusbar,.platform-statusbar *,.platform-story-panel,.platform-story-panel *{box-sizing:border-box}
+.platform-canvas>.top,.platform-canvas>.topbar{display:none!important}
+.platform-nav{display:flex;gap:6px;align-items:center}
+.platform-nav a{text-decoration:none;white-space:nowrap;transition:transform .18s ease,background .18s ease,color .18s ease}
+.platform-nav a:hover{transform:translateY(-2px)}
+.platform-story-toggle{font:inherit;cursor:pointer}
+.platform-story-panel{position:fixed;z-index:1000;right:24px;top:88px;width:360px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.platform-story-panel[hidden]{display:none}
+.platform-story-panel h2{margin:0 0 8px;font-size:22px}
+.platform-story-panel p{margin:0 0 18px;line-height:1.7}
+.platform-story-panel ol{margin:0;padding-left:20px;line-height:1.9}
+.platform-story-panel button{position:absolute;right:16px;top:14px;border:0;background:transparent;color:inherit;font-size:20px;cursor:pointer}
+.platform-stage{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.platform-canvas{position:relative;z-index:1}
+.platform-canvas img{max-width:100%}
+.platform-canvas :is(button,a,input,select,textarea){font-family:inherit}
+@media(max-width:900px){
+  .platform-story-panel{left:16px;right:16px;top:76px;width:auto}
+  .platform-nav{overflow-x:auto;padding-bottom:4px}
+  .platform-canvas :is(.container,.page){width:auto!important;margin-left:14px!important;margin-right:14px!important}
+  .platform-canvas :is(.grid,.metrics,.score-grid,.grid2,.check-grid,.layout,.report-layout,.chart-area){grid-template-columns:1fr!important}
+}
+</style>
+
+<style id="studio-theme">
+body[data-platform="studio"]{margin:0;background:#fff6d8;color:#171717;font-family:"Arial Black","Microsoft YaHei",sans-serif}
+body[data-platform="studio"]:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,0,0,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.055) 1px,transparent 1px);background-size:24px 24px}
+body[data-platform="studio"] #platform-shell{position:relative;z-index:25;background:#caff3d;border-bottom:4px solid #171717}
+.studio-head{max-width:1380px;margin:auto;padding:20px 24px 14px;display:grid;grid-template-columns:1.2fr .9fr auto;gap:26px;align-items:end}
+.studio-brand{color:#111;text-decoration:none}.studio-brand small{display:block;font:800 11px Consolas,monospace;letter-spacing:.16em;margin-bottom:5px}.studio-brand strong{display:block;font-size:34px;line-height:1;letter-spacing:-.035em}
+.studio-brief{border-left:4px solid #111;padding-left:14px}.studio-brief .platform-stage{color:#6a38e6}.studio-brief p{margin:5px 0 0;font:700 13px "Microsoft YaHei",sans-serif;line-height:1.5}
+.studio-head .platform-story-toggle{background:#7a48ef;color:#fff;border:3px solid #111;padding:10px 14px;box-shadow:4px 4px 0 #111;font-weight:900}
+body[data-platform="studio"] .platform-nav{max-width:1380px;margin:auto;padding:0 24px 14px;overflow-x:auto}
+body[data-platform="studio"] .platform-nav a{color:#111;border:2px solid #111;background:#f9ffde;padding:7px 10px;font-size:12px;box-shadow:2px 2px 0 #111}
+body[data-platform="studio"] .platform-nav a.active{background:#ff643f;color:#111;transform:rotate(-1deg)}
+.studio-marquee{background:#171717;color:#fff;padding:8px 0;overflow:hidden;white-space:nowrap;font:800 12px Consolas,monospace;letter-spacing:.1em}.studio-marquee span{display:inline-block;padding-left:24px}.studio-marquee b{color:#caff3d}
+body[data-platform="studio"] .platform-story-panel{background:#fff6d8;border:3px solid #171717;border-radius:0;color:#171717;box-shadow:8px 8px 0 #171717}
+body[data-platform="studio"] .platform-canvas{padding:8px 0 52px}
+body[data-platform="studio"] .platform-canvas :is(.container,.page){max-width:1260px}
+body[data-platform="studio"] .platform-canvas :is(.card,.panel,.box,.question,.item,.metric-card,.task-card,.resource-card,.art-card,.prepare-card,.score-card,.chart-card,.info-card,.school-plan,.selected-item,.readiness-card,.soft-panel,.notice,.summary-card,.sum-card,.gate){border:2px solid #171717!important;border-radius:0!important;box-shadow:6px 6px 0 #171717!important;background:#fffdf4!important;color:#171717!important}
+body[data-platform="studio"] .platform-canvas :is(h1,h2,h3,strong,.title,.title-lg,.title-sm,.panel-title){color:#171717!important;letter-spacing:-.02em}
+body[data-platform="studio"] .platform-canvas :is(.hero,.score){background:#7a48ef!important;color:#fff!important;border:3px solid #171717!important;border-radius:0!important;box-shadow:8px 8px 0 #171717!important}
+body[data-platform="studio"] .platform-canvas :is(.hero,.score) :is(h1,h2,h3,strong,p,span){color:#fff!important}
+body[data-platform="studio"] .platform-canvas :is(.step.now,.tab.active,.main-tab.active,.sub-tab.active,.switch-item.active,.primary-btn,.btn.primary,.save-btn){background:#ff643f!important;color:#111!important;border:2px solid #111!important;border-radius:0!important;box-shadow:3px 3px 0 #111!important}
+body[data-platform="studio"] .platform-canvas :is(.step.ok,.done,.finished){background:#caff3d!important;color:#111!important}
+body[data-platform="studio"] .platform-canvas :is(.fill,.bar .fill,.progress-bar){background:#ff643f!important}
+body[data-platform="studio"] .platform-canvas :is(.badge,.pill,.tag,.chip,.soft-tag){border:1px solid #171717!important;border-radius:999px!important;background:#caff3d!important;color:#171717!important}
+body[data-platform="studio"] .platform-canvas button:hover{transform:translate(-1px,-1px)}
+@media(max-width:900px){.studio-head{grid-template-columns:1fr;align-items:start}.studio-brand strong{font-size:28px}.studio-head .platform-story-toggle{justify-self:start}.studio-marquee{font-size:10px}}
+</style>
+</head>
+<body data-platform="studio">
+<header id="platform-shell"><div class="studio-head"><a class="studio-brand" href="01-教师成长全流程与能力模型_demo03.html"><small>AI TEACHING INNOVATION STUDIO</small><strong>AI 教学创新工场</strong></a><div class="studio-brief"><span class="platform-stage">SPRINT 04 / 能力雷达</span><p>以项目挑战、快速原型和课堂试验孵化创新成果的平台</p></div><button class="platform-story-toggle" type="button" aria-expanded="false">打开工场任务书</button></div><nav class="platform-nav" aria-label="教学创新工场功能导航"><a href="01-教师成长全流程与能力模型_demo03.html"><span>01</span> 工场地图</a><a href="02-摸底测评-demo03.html"><span>02</span> 挑战起点</a><a href="03-能力报告与5个计分维度-demo03.html" class="active" aria-current="page"><span>03</span> 能力雷达</a><a href="04-学校分层目标与个性化培训计划-demo03.html"><span>04</span> 冲刺计划</a><a href="05-课程学习与自主学习分轨-demo03.html"><span>05</span> 灵感补给</a><a href="06-AI实训任务与作品-demo03.html"><span>06</span> 原型车间</a><a href="07-教学应用发布-demo03.html"><span>07</span> 课堂试飞</a><a href="08-研究成果治理与共享-demo03.html"><span>08</span> 研究实验室</a><a href="09-成长报告与复测-demo03.html"><span>09</span> 作品集</a><a href="10-管理端匿名教师发展聚合-demo03.html"><span>10</span> 创新热力图</a><a href="11-L1-L4四级能力等级分层培养目标-demo03.html"><span>11</span> 进阶路线</a><a href="12-事实核验、数据版权和人工责任-demo03.html"><span>12</span> 安全检查</a></nav><div class="studio-marquee"><span><b>MAKE</b> 真实挑战　/　<b>TEST</b> 快速原型　/　<b>TEACH</b> 课堂试飞　/　<b>SHARE</b> 成果路演　/　当前工位：能力雷达</span></div></header><aside class="platform-story-panel" hidden aria-label="平台定位说明"><button type="button" aria-label="关闭平台定位">×</button><span class="platform-stage">核心功能定位</span><h2>AI 教学创新工场</h2><p>面向创新型教师团队，用真实教学挑战组织跨学科冲刺；每一步都产出可演示原型、课堂试验数据和可分享成果。</p><ol><li>真实项目挑战</li><li>快速原型共创</li><li>课堂试飞与路演</li></ol></aside>
+<div class="platform-canvas">
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">AI</div>
+    <div class="t">AI 教学创新工场<small>GENERAL AI TRAINING</small></div>
+  </div>
+  <div class="topnav">
+    <div class="pill">🎓 教师</div>
+    <div class="pill">👤 学生</div>
+    <div class="pill">🏫 教学管理</div>
+    <div class="pill">⟳ 重置演示</div>
+    <div class="pill" style="width:34px;height:34px;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#f2eeff;color:#745ff0;font-weight:800">周</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="step-shell">
+    <div class="stepper">
+      <div class="step done"><div class="circle">✓</div><div class="n">摸底测评</div><div class="s">已完成</div></div>
+      <div class="step done"><div class="circle">✓</div><div class="n">能力报告</div><div class="s">已完成</div></div>
+      <div class="step current"><div class="circle">3</div><div class="n">冲刺计划</div><div class="s">可开始</div></div>
+      <div class="step"><div class="circle">4</div><div class="n">课程学习</div><div class="s">待解锁</div></div>
+      <div class="step"><div class="circle">5</div><div class="n">自主学习</div><div class="s">待解锁</div></div>
+      <div class="step"><div class="circle">6</div><div class="n">AI 实训</div><div class="s">待解锁</div></div>
+      <div class="step"><div class="circle">7</div><div class="n">教学应用</div><div class="s">待解锁</div></div>
+      <div class="step"><div class="circle">8</div><div class="n">研究成果</div><div class="s">待解锁</div></div>
+      <div class="step"><div class="circle">9</div><div class="n">成果路演</div><div class="s">待解锁</div></div>
+      <div class="step"><div class="circle">10</div><div class="n">结业复测</div><div class="s">待解锁</div></div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="tab">工场地图</div>
+    <div class="tab active">摸底与报告</div>
+    <div class="tab">冲刺计划</div>
+    <div class="tab">课程学习与自主路径</div>
+    <div class="tab">实训记录与作品</div>
+    <div class="tab">教学应用</div>
+    <div class="tab">研究成果</div>
+    <div class="tab">成果路演与复测</div>
+  </div>
+
+  <div class="report-layout">
+    <div class="left-stack">
+      <div class="hero">
+        <div>
+          <div class="sub">首次摸底已完成 · 刚刚 · 首次摸底</div>
+          <div class="score">64</div>
+          <div class="desc">L2 AI实践者 · 已形成详细能力证据与提升目标</div>
+          <div class="level">正式 L1 · 能力测算 L2</div>
+        </div>
+        <button class="btn mini-btn" style="margin-top:0;background:#fff;color:#4f5bd8">查看个性化冲刺计划 →</button>
+      </div>
+
+      <div class="gates">
+        <div class="gate"><h4><span class="ic">🛡</span>事实核验</h4><p>已通过 · 不计入能力分，但决定能否正式定级</p></div>
+        <div class="gate"><h4><span class="ic">🛡</span>数据版权</h4><p>已通过 · 不计入能力分，但决定能否正式定级</p></div>
+        <div class="gate"><h4><span class="ic">🛡</span>人工责任</h4><p>已通过 · 不计入能力分，但决定能否正式定级</p></div>
+      </div>
+
+      <div class="metrics">
+        <div class="metric-card"><div class="metric-head"><b>AI 基础认知</b><span>72 / 85</span></div><div class="bar"><i style="width:84.7%"></i></div><p>理论题 8/10；能够识别生成式 AI 的基本边界，知道模型输出并不等于事实本身。</p></div>
+        <div class="metric-card"><div class="metric-head"><b>提示词与多模态</b><span>68 / 82</span></div><div class="bar"><i style="width:82.9%"></i></div><p>能完成结构化提示，但多轮校验和多模态组合使用能力仍有提升空间。</p></div>
+        <div class="metric-card"><div class="metric-head"><b>知识库与智能体</b><span>51 / 78</span></div><div class="bar"><i style="width:65.4%"></i></div><p>理解检索增强与智能体概念，但独立编排与稳定调用能力尚未完全建立。</p></div>
+        <div class="metric-card"><div class="metric-head"><b>教学融合</b><span>74 / 86</span></div><div class="bar"><i style="width:86%"></i></div><p>能够将 AI 用于备课与评价，课堂应用证据较完整，流程设计清晰。</p></div>
+        <div class="metric-card"><div class="metric-head"><b>研究创新</b><span>47 / 75</span></div><div class="bar"><i style="width:62.7%"></i></div><p>具备研究问题意识，但在核验流程、披露说明与成果创新表达方面仍需补强。</p></div>
+      </div>
+    </div>
+
+    <div class="side">
+      <div class="side-panel">
+        <h3>优势证据</h3>
+        <div class="note"><span class="dot">✓</span><span>教学情境判断较准确，能够把 AI 功能与教学目标进行合理匹配。</span></div>
+        <div class="note"><span class="dot">✓</span><span>能够识别隐私与事实核验风险，具备较好的课堂应用意识。</span></div>
+        <div class="note"><span class="dot">✓</span><span>AI 备课、课堂评价与资源整理能力较稳，适合继续提升实战深度。</span></div>
+        <div class="mini-btn">查看证据清单</div>
+      </div>
+
+      <div class="side-panel">
+        <h3>优先补强</h3>
+        <div class="note"><span class="dot">!</span><span>知识库检索与引用链路：建立资料来源回溯、版本记录与校验机制。</span></div>
+        <div class="note"><span class="dot">!</span><span>科研智能体工具编排：加强任务拆解、流程设计及稳定输出验证。</span></div>
+        <div class="note"><span class="dot">!</span><span>正式成果中的 AI 披露：清晰定义 AI 参与方式与人工责任边界。</span></div>
+        <div class="mini-btn">生成补强任务</div>
+      </div>
+
+      <div class="side-panel">
+        <h3>推荐目标</h3>
+        <div class="note"><span class="dot">★</span><span>完成知识库与智能体基础实训，打通知识检索到结果输出的完整链路。</span></div>
+        <div class="note"><span class="dot">★</span><span>建立科研引用核验清单，用于后续研究成果与成果路演的统一审查。</span></div>
+        <div class="note"><span class="dot">★</span><span>在下一阶段将综合能力分提升至 72+，冲刺稳定 L2 表现。</span></div>
+        <div class="mini-btn">导出成长建议</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">单文件网页 Demo ｜ 文件名：03-能力报告与5个计分维度-demo03.html</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+document.querySelectorAll('.mini-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    alert('这是单文件 Demo 演示页，可继续扩展为跳转、抽屉或弹窗。');
+  });
+});
+document.querySelectorAll('.metric-card').forEach(card=>{
+  card.addEventListener('mouseenter', ()=> card.classList.add('hovering'));
+  card.addEventListener('mouseleave', ()=> card.classList.remove('hovering'));
+});
+</script>
+
+</div>
+
+<script id="platform-differentiation-behavior">
+(() => {
+  const toggle = document.querySelector('.platform-story-toggle');
+  const panel = document.querySelector('.platform-story-panel');
+  const close = panel?.querySelector('button');
+  const setOpen = (open) => {
+    if (!toggle || !panel) return;
+    panel.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle?.addEventListener('click', () => setOpen(panel?.hidden ?? true));
+  close?.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setOpen(false); });
+})();
+</script>
+</body>
+</html>
